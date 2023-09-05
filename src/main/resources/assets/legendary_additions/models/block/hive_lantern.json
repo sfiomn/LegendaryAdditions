@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "legendary_additions:block/hive_lantern_top",
+    "up": "legendary_additions:block/hive_lantern_top",
+    "north": "legendary_additions:block/hive_lantern",
+    "east": "legendary_additions:block/hive_lantern",
+    "south": "legendary_additions:block/hive_lantern",
+    "west": "legendary_additions:block/hive_lantern",
+    "particle": "legendary_additions:block/hive_lantern_top"
+  }
+}

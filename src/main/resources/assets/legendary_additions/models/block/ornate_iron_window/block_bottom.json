@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "legendary_additions:block/ornate_iron_window_top",
+    "up": "legendary_additions:block/ornate_iron_window_top",
+    "north": "legendary_additions:block/ornate_iron_window_pane_bottom",
+    "east": "legendary_additions:block/ornate_iron_window_pane_bottom",
+    "south": "legendary_additions:block/ornate_iron_window_pane_bottom",
+    "west": "legendary_additions:block/ornate_iron_window_pane_bottom",
+    "particle": "legendary_additions:block/ornate_iron_window_top"
+  }
+}

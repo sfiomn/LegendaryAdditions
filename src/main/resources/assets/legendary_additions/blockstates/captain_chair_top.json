@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "legendary_additions:block/captain_chair_top"
+    },
+    "facing=east": {
+      "model": "legendary_additions:block/captain_chair_top",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "legendary_additions:block/captain_chair_top",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "legendary_additions:block/captain_chair_top",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"ppp",
+		"sts",
+		"s s"
+	],
+	"key": 
+	{
+		"s":
+		{
+			"item": "minecraft:stick"
+		},
+		"p":
+		{
+			"tag": "minecraft:planks"
+		},
+		"t":
+		{
+			"tag": "forge:string"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:meat_rack"
+	}
+}

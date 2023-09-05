@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:block/handheld",
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "legendary_additions:block/obelisk"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "legendary_additions:item/obelisk_icon"
+    },
+    "fixed": {
+      "parent": "legendary_additions:item/obelisk_icon"
+    },
+    "ground": {
+      "parent": "legendary_additions:block/obelisk"
+    }
+  }
+}

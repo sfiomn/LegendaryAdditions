@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"sts",
+		"sps",
+		" s "
+	],
+	"key": 
+	{
+		"s":
+		{
+			"item": "minecraft:stick"
+		},
+		"p":
+		{
+			"tag": "minecraft:planks"
+		},
+		"t":
+		{
+			"item": "minecraft:torch"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:tribal_torch"
+	}
+}

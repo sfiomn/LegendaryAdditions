@@ -1,0 +1,7 @@
+{
+  "parent": "legendary_additions:block/vertical_pane/template_glass_pane_side_alt_top",
+  "textures": {
+    "edge": "legendary_additions:block/crimson_window_pane_edge",
+    "pane": "legendary_additions:block/crimson_window_pane_top"
+  }
+}

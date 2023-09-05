@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"###",
+		"#s#",
+		"###"
+	],
+	"key": 
+	{
+		"#":
+		{
+			"item": "minecraft:stripped_spruce_wood"
+		},
+		"s":
+		{
+			"item": "minecraft:stick"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:carved_spruce_log",
+		"count": 8
+	}
+}

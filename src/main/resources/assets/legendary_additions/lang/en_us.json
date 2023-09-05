@@ -1,0 +1,41 @@
+{
+  "block.legendary_additions.carved_oak_log": "Carved Oak Log",
+  "block.legendary_additions.carved_birch_log": "Carved Birch Log",
+  "block.legendary_additions.carved_jungle_log": "Carved Jungle Log",
+  "block.legendary_additions.carved_dark_oak_log": "Carved Dark Oak Log",
+  "block.legendary_additions.carved_acacia_log": "Carved Acacia Log",
+  "block.legendary_additions.carved_spruce_log": "Carved Spruce Log",
+
+  "block.legendary_additions.honey_pond": "Honey Pond",
+  "block.legendary_additions.honey_pond.already_full": "This Honey Pond is already full",
+  "block.legendary_additions.honey_pond.empty": "This Honey Pond is empty",
+  "block.legendary_additions.honey_pond.max_health": "Health already at the maximum",
+
+  "block.legendary_additions.meat_rack": "Meat Rack",
+  "block.legendary_additions.captain_chair": "Captain Chair",
+  "block.legendary_additions.captain_chair_top": "Captain Chair",
+  "block.legendary_additions.tribal_torch": "Tribal Torch",
+  "block.legendary_additions.wall_tribal_torch": "Tribal Torch",
+  "block.legendary_additions.obelisk": "Obelisk",
+  "block.legendary_additions.hive_lantern": "Hive Lantern",
+
+  "block.legendary_additions.clover_patch": "Clover Patch",
+  "block.legendary_additions.glowing_bulb": "Glowing Bulb",
+
+  "block.legendary_additions.crimson_window_pane": "Crimson Window Pane",
+  "block.legendary_additions.ornate_iron_window_pane": "Ornate Iron Window Pane",
+  "block.legendary_additions.warped_window_pane": "Warped Window Pane",
+  "block.legendary_additions.crimson_window": "Crimson Window",
+  "block.legendary_additions.ornate_iron_window": "Ornate Iron Window",
+  "block.legendary_additions.warped_window": "Warped Window",
+
+  "itemGroup.legendary_additions": "Legendary Additions",
+
+  "item.legendary_additions.tiny_xp_bottle": "Tiny Xp Bottle",
+  "item.legendary_additions.common_xp_bottle": "Common Xp Bottle",
+  "item.legendary_additions.rare_xp_bottle": "Rare Xp Bottle",
+  "item.legendary_additions.epic_xp_bottle": "Epic Xp Bottle",
+  "item.legendary_additions.legendary_xp_bottle": "Legendary Xp Bottle",
+
+  "sounds.legendarycreatures.iron_on_coal": "Iron On Coal Sound"
+}

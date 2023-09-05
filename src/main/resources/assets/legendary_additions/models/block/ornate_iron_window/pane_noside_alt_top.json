@@ -1,0 +1,6 @@
+{
+  "parent": "block/template_glass_pane_noside_alt",
+  "textures": {
+    "pane": "legendary_additions:block/ornate_iron_window_pane_top"
+  }
+}

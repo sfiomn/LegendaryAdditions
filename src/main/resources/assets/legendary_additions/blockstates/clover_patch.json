@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "": [
+			{ "model": "legendary_additions:block/clover_patch", "weight": 3 },
+            { "model": "legendary_additions:block/clover_patch2", "weight": 10 }
+        ]
+    }
+}

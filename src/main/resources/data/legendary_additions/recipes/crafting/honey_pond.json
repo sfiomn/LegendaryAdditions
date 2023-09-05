@@ -1,0 +1,32 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"shs",
+		" b ",
+		"ppp"
+	],
+	"key": 
+	{
+		"h":
+		{
+			"item": "minecraft:honey_bottle"
+		},
+		"s":
+		{
+			"item": "minecraft:stone"
+		},
+		"b":
+		{
+			"item": "minecraft:brewing_stand"
+		},
+		"p":
+		{
+			"tag": "minecraft:planks"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:honey_pond"
+	}
+}

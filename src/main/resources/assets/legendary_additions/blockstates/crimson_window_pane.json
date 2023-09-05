@@ -1,0 +1,308 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_post"
+      }
+    },
+    {
+      "when": {
+        "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_post_bottom"
+      }
+    },
+    {
+      "when": {
+        "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_post_top"
+      }
+    },
+    {
+      "when": {
+        "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_post_middle"
+      }
+    },
+    {
+      "when": {
+        "north": true, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side"
+      }
+    },
+    {
+      "when": {
+        "north": true, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_bottom"
+      }
+    },
+    {
+      "when": {
+        "north": true, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_top"
+      }
+    },
+    {
+      "when": {
+        "north": true, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_middle"
+      }
+    },
+    {
+      "when": {
+        "east": true, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": true, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_bottom",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": true, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_top",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": true, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_middle",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": true, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt"
+      }
+    },
+    {
+      "when": {
+        "south": true, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt_bottom"
+      }
+    },
+    {
+      "when": {
+        "south": true, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt_top"
+      }
+    },
+    {
+      "when": {
+        "south": true, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt_middle"
+      }
+    },
+    {
+      "when": {
+        "west": true, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": true, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt_bottom",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": true, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt_top",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": true, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_side_alt_middle",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "north": false, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside"
+      }
+    },
+    {
+      "when": {
+        "north": false, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_bottom"
+      }
+    },
+    {
+      "when": {
+        "north": false, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_top"
+      }
+    },
+    {
+      "when": {
+        "north": false, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_middle"
+      }
+    },
+    {
+      "when": {
+        "east": false, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt"
+      }
+    },
+    {
+      "when": {
+        "east": false, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt_bottom"
+      }
+    },
+    {
+      "when": {
+        "east": false, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt_top"
+      }
+    },
+    {
+      "when": {
+        "east": false, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt_middle"
+      }
+    },
+    {
+      "when": {
+        "south": false, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": false, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt_bottom",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": false, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt_top",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": false, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_alt_middle",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": false, "up": false, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": false, "up": true, "down": false
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_bottom",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": false, "up": false, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_top",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": false, "up": true, "down": true
+      },
+      "apply": {
+        "model": "legendary_additions:block/crimson_window/pane_noside_middle",
+        "y": 270
+      }
+    }
+  ]
+}

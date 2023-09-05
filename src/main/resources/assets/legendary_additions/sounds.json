@@ -1,0 +1,12 @@
+{
+  "iron_on_coal": {
+    "category": "neutral",
+    "subtitle": "sounds.legendary_additions.iron_on_coal",
+    "sounds": [
+      {
+        "name": "legendary_additions:iron_on_coal",
+        "stream": false
+      }
+    ]
+  }
+}

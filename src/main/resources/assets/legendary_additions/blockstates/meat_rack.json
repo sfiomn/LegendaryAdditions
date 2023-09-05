@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "meat_rack_state=0,facing=south": {
+      "model": "legendary_additions:block/meat_rack_empty", "x": 0, "y": 180
+    },
+    "meat_rack_state=0,facing=west": {
+      "model": "legendary_additions:block/meat_rack_empty", "x": 0, "y": 270
+    },
+    "meat_rack_state=0,facing=north": {
+      "model": "legendary_additions:block/meat_rack_empty", "x": 0, "y": 0
+    },
+    "meat_rack_state=0,facing=east": {
+      "model": "legendary_additions:block/meat_rack_empty", "x": 0, "y": 90
+    },
+    "meat_rack_state=1,facing=south": {
+      "model": "legendary_additions:block/meat_rack", "x": 0, "y": 180
+    },
+    "meat_rack_state=1,facing=west": {
+      "model": "legendary_additions:block/meat_rack", "x": 0, "y": 270
+    },
+    "meat_rack_state=1,facing=north": {
+      "model": "legendary_additions:block/meat_rack", "x": 0, "y": 0
+    },
+    "meat_rack_state=1,facing=east": {
+      "model": "legendary_additions:block/meat_rack", "x": 0, "y": 90
+    },
+    "meat_rack_state=2,facing=south": {
+      "model": "legendary_additions:block/meat_rack_leather", "x": 0, "y": 180
+    },
+    "meat_rack_state=2,facing=west": {
+      "model": "legendary_additions:block/meat_rack_leather", "x": 0, "y": 270
+    },
+    "meat_rack_state=2,facing=north": {
+      "model": "legendary_additions:block/meat_rack_leather", "x": 0, "y": 0
+    },
+    "meat_rack_state=2,facing=east": {
+      "model": "legendary_additions:block/meat_rack_leather", "x": 0, "y": 90
+    },
+    "meat_rack_state=3,facing=south": {
+      "model": "legendary_additions:block/meat_rack_bone", "x": 0, "y": 180
+    },
+    "meat_rack_state=3,facing=west": {
+      "model": "legendary_additions:block/meat_rack_bone", "x": 0, "y": 270
+    },
+    "meat_rack_state=3,facing=north": {
+      "model": "legendary_additions:block/meat_rack_bone", "x": 0, "y": 0
+    },
+    "meat_rack_state=3,facing=east": {
+      "model": "legendary_additions:block/meat_rack_bone", "x": 0, "y": 90
+    }
+  }
+}

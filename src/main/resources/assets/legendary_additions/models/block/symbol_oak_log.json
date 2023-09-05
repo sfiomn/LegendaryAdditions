@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "legendary_additions:block/carved_spruce_log",
+    "up": "legendary_additions:block/carved_spruce_log",
+    "north": "legendary_additions:block/symbol_oak_log",
+    "east": "legendary_additions:block/symbol_oak_log",
+    "south": "legendary_additions:block/symbol_oak_log",
+    "west": "legendary_additions:block/symbol_oak_log",
+    "particle": "legendary_additions:block/carved_spruce_log"
+  }
+}

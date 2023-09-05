@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=upper": {
+      "model": "legendary_additions:block/glowing_bulb"
+    },
+    "half=lower": {
+      "model": "legendary_additions:block/glowing_bulb_bottom"
+    }
+  }
+}

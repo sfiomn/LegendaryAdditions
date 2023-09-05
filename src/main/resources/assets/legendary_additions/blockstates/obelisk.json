@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "obelisk_empty=true": {
+      "model": "legendary_additions:block/obelisk"
+    },
+    "obelisk_empty=false": {
+      "model": "legendary_additions:block/obelisk"
+    }
+  }
+}

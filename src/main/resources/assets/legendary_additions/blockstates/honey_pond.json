@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "honey_pond_state=2": {
+      "model": "legendary_additions:block/honey_pond"
+    },
+    "honey_pond_state=0": {
+      "model": "legendary_additions:block/honey_pond_empty"
+    },
+    "honey_pond_state=1": {
+      "model": "legendary_additions:block/honey_pond_midcap"
+    }
+  }
+}

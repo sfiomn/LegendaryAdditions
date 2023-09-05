@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"###",
+		"#s#",
+		"###"
+	],
+	"key": 
+	{
+		"#":
+		{
+			"item": "minecraft:stripped_jungle_wood"
+		},
+		"s":
+		{
+			"item": "minecraft:stick"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:carved_jungle_log",
+		"count": 8
+	}
+}

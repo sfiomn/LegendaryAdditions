@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "legendary_additions:block/glowing_bulb_bottom",
+    "particle": "legendary_additions:block/glowing_bulb_bottom"
+  }
+}

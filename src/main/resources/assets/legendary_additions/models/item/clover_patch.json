@@ -1,0 +1,29 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "legendary_additions:item/clover_patch"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-13.26, -9.49, -23.78],
+			"translation": [0, 2, 0.25],
+			"scale": [0.4, 0.4, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-12.22, 8.49, 60.63],
+			"translation": [0, 2, 0.25],
+			"scale": [0.4, 0.4, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [-13.26, -9.49, -23.78],
+			"translation": [1.75, 3, 0.25],
+			"scale": [0.5, 0.5, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [157.86, 29.88, -163.45],
+			"translation": [1.75, 3, 0.25],
+			"scale": [0.5, 0.5, 1]
+		}
+	}
+}
