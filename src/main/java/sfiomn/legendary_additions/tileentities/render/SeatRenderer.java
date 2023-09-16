@@ -1,4 +1,4 @@
-package sfiomn.legendary_additions.entities.render;
+package sfiomn.legendary_additions.tileentities.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

@@ -18,16 +18,12 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
-import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.entities.MeatRackTileEntity;
 import sfiomn.legendary_additions.registry.TileEntityRegistry;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class MeatRackBlock extends HorizontalBlock {
     private static final VoxelShape Z_BASE = Block.box(0.0D, 0.0D, 2.0D, 16.0D, 14.0D, 14.0D);

@@ -25,13 +25,13 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.entities.HoneyPondTileEntity;
+import sfiomn.legendary_additions.tileentities.HoneyPondTileEntity;
 import sfiomn.legendary_additions.registry.TileEntityRegistry;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-import static sfiomn.legendary_additions.entities.HoneyPondTileEntity.MAX_HEALING_CAPACITY;
+import static sfiomn.legendary_additions.tileentities.HoneyPondTileEntity.MAX_HEALING_CAPACITY;
 
 public class HoneyPondBlock extends Block {
 

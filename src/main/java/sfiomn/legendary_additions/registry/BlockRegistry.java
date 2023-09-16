@@ -60,6 +60,8 @@ public class BlockRegistry
 	public static final RegistryObject<Block> WARPED_WINDOW_BLOCK = registerBlock("warped_window", () -> new VerticalBlock(AbstractBlock.Properties
 			.of(Material.WOOD).sound(SoundType.WOOD).strength(2f, 50f).harvestTool(ToolType.AXE).harvestLevel(4).noOcclusion()));
 
+	public static final RegistryObject<Block> FOREST_DUNGEON_GATE_BLOCK = registerBlock("forest_dungeon_gate", ForestDungeonGateBlock::new);
+
 	private static <T extends Block> RegistryObject<Block> registerBlock(String name, Supplier<T> block) {
 		RegistryObject<Block> newBlock = BLOCKS.register(name, block);
 		registerBlockItem(name, newBlock);

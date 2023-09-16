@@ -1,4 +1,4 @@
-package sfiomn.legendary_additions.entities.render;
+package sfiomn.legendary_additions.tileentities.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -7,17 +7,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 import sfiomn.legendary_additions.LegendaryAdditions;
-import sfiomn.legendary_additions.entities.ObeliskTileEntity;
-import sfiomn.legendary_additions.entities.model.ObeliskBlockModel;
+import sfiomn.legendary_additions.tileentities.ObeliskTileEntity;
+import sfiomn.legendary_additions.tileentities.model.ObeliskModel;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
 import javax.annotation.Nullable;
 
-public class ObeliskBlockRenderer extends GeoBlockRenderer<ObeliskTileEntity> {
-    public ObeliskBlockRenderer(TileEntityRendererDispatcher renderManager) {
-        super(renderManager, new ObeliskBlockModel());
-
-
+public class ObeliskRenderer extends GeoBlockRenderer<ObeliskTileEntity> {
+    public ObeliskRenderer(TileEntityRendererDispatcher renderManager) {
+        super(renderManager, new ObeliskModel());
     }
 
     @Override

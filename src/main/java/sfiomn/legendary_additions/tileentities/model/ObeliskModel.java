@@ -1,14 +1,18 @@
-package sfiomn.legendary_additions.entities.model;
+package sfiomn.legendary_additions.tileentities.model;
 
 import net.minecraft.util.ResourceLocation;
 import sfiomn.legendary_additions.LegendaryAdditions;
-import sfiomn.legendary_additions.entities.ObeliskTileEntity;
+import sfiomn.legendary_additions.tileentities.ObeliskTileEntity;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class ObeliskBlockModel extends AnimatedGeoModel<ObeliskTileEntity> {
+public class ObeliskModel extends AnimatedGeoModel<ObeliskTileEntity> {
     @Override
     public ResourceLocation getModelLocation(ObeliskTileEntity object) {
-        return new ResourceLocation(LegendaryAdditions.MOD_ID, "geo/obelisk.geo.json");
+        if (object.isDown()) {
+            return new ResourceLocation(LegendaryAdditions.MOD_ID, "geo/obelisk_down.geo.json");
+        } else {
+            return new ResourceLocation(LegendaryAdditions.MOD_ID, "geo/obelisk.geo.json");
+        }
     }
 
     @Override

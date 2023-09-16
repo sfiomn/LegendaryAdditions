@@ -1,9 +1,10 @@
-package sfiomn.legendary_additions.entities;
+package sfiomn.legendary_additions.tileentities;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import sfiomn.legendary_additions.entities.XpBottleEntity;
 import sfiomn.legendary_additions.registry.EntityTypeRegistry;
 import sfiomn.legendary_additions.registry.ItemRegistry;
 

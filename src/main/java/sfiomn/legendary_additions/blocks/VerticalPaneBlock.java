@@ -17,7 +17,7 @@ import net.minecraft.world.IWorld;
 import java.util.Map;
 
 
-public class VerticalPaneBlock extends PaneBlock {
+public class VerticalPaneBlock extends PaneBlock implements IWaterLoggable {
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
     protected static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = SixWayBlock.PROPERTY_BY_DIRECTION;

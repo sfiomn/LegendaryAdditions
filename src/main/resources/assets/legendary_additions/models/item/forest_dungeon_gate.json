@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:block/handheld",
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "legendary_additions:block/forest_dungeon_gate"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "legendary_additions:item/forest_dungeon_gate_icon"
+    },
+    "fixed": {
+      "parent": "legendary_additions:item/forest_dungeon_gate_icon"
+    },
+    "ground": {
+      "parent": "legendary_additions:block/forest_dungeon_gate"
+    }
+  }
+}

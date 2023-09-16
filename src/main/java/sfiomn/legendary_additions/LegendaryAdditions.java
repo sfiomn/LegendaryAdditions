@@ -30,8 +30,11 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.entities.render.ObeliskBlockRenderer;
-import sfiomn.legendary_additions.entities.render.SeatRenderer;
+import sfiomn.legendary_additions.entities.render.ForestKeyRenderer;
+import sfiomn.legendary_additions.tileentities.render.ForestDungeonGateRenderer;
+import sfiomn.legendary_additions.tileentities.render.ObeliskRenderer;
+import sfiomn.legendary_additions.tileentities.render.SeatRenderer;
+import sfiomn.legendary_additions.network.NetworkHandler;
 import sfiomn.legendary_additions.registry.*;
 import software.bernie.geckolib3.GeckoLib;
 
@@ -49,6 +52,8 @@ public class LegendaryAdditions
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "legendary_additions";
     public static Path configPath = FMLPaths.CONFIGDIR.get();
+
+    // modConfigPath used to create a config directory if necessary
     public static Path modConfigPath = Paths.get(configPath.toAbsolutePath().toString(), "legendary_additions");
 
     public LegendaryAdditions() {
@@ -108,7 +113,11 @@ public class LegendaryAdditions
             RenderTypeLookup.setRenderLayer(BlockRegistry.CRIMSON_WINDOW_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_BLOCK.get(), RenderType.cutout());
+
+            RenderTypeLookup.setRenderLayer(BlockRegistry.FOREST_DUNGEON_GATE_BLOCK.get(), RenderType.cutout());
         });
+
+        NetworkHandler.register();
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, LegendaryAdditions::registerEntityRendering);
 
@@ -131,6 +140,8 @@ public class LegendaryAdditions
                 RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.RARE_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
                 RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.EPIC_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
                 RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.LEGENDARY_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+
+                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.FOREST_KEY_ENTITY.get(), ForestKeyRenderer::new);
             }
         };
     }
@@ -144,7 +155,8 @@ public class LegendaryAdditions
             @Override
             public void run()
             {
-                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.OBELISK_TILE_ENTITY.get(), ObeliskBlockRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.OBELISK_TILE_ENTITY.get(), ObeliskRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.FOREST_DUNGEON_GATE_TILE_ENTITY.get(), ForestDungeonGateRenderer::new);
             }
         };
     }

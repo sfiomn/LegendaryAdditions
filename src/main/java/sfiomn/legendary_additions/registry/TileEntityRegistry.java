@@ -6,14 +6,14 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import sfiomn.legendary_additions.LegendaryAdditions;
-import sfiomn.legendary_additions.entities.HoneyPondTileEntity;
-import sfiomn.legendary_additions.entities.MeatRackTileEntity;
-import sfiomn.legendary_additions.entities.ObeliskTileEntity;
+import sfiomn.legendary_additions.tileentities.*;
 
 public class TileEntityRegistry {
     public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES =
             DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, LegendaryAdditions.MOD_ID);
-
+    public static RegistryObject<TileEntityType<ForestDungeonGateTileEntity>> FOREST_DUNGEON_GATE_TILE_ENTITY =
+            TILE_ENTITIES.register(LegendaryAdditions.MOD_ID + "forest_dungeon_gate_tile_entity", () -> TileEntityType.Builder.of(
+                    ForestDungeonGateTileEntity::new, BlockRegistry.FOREST_DUNGEON_GATE_BLOCK.get()).build(null));
     public static RegistryObject<TileEntityType<ObeliskTileEntity>> OBELISK_TILE_ENTITY =
             TILE_ENTITIES.register(LegendaryAdditions.MOD_ID + "obelisk_tile_entity", () -> TileEntityType.Builder.of(
                     ObeliskTileEntity::new, BlockRegistry.OBELISK_BLOCK.get()).build(null));

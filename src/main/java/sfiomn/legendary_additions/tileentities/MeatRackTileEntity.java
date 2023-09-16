@@ -1,4 +1,4 @@
-package sfiomn.legendary_additions.entities;
+package sfiomn.legendary_additions.tileentities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;

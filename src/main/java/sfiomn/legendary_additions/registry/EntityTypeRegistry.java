@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.entities.*;
+import sfiomn.legendary_additions.tileentities.LegendaryXpBottleEntity;
 
 public class EntityTypeRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, LegendaryAdditions.MOD_ID);
@@ -33,6 +34,13 @@ public class EntityTypeRegistry {
             () -> EntityType.Builder.of((EntityType.IFactory<LegendaryXpBottleEntity>) LegendaryXpBottleEntity::new, EntityClassification.MISC)
                     .sized(0.5F, 0.5F)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "legendary_xp_bottle").toString()));
+
+
+    public static final RegistryObject<EntityType<ForestKeyEntity>> FOREST_KEY_ENTITY = ENTITY_TYPES.register("forest_key",
+            () -> EntityType.Builder.of((EntityType.IFactory<ForestKeyEntity>) ForestKeyEntity::new, EntityClassification.MISC)
+                    .sized(1.0F, 1.0F)
+                    .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "forest_key").toString()));
+
 
     public static final RegistryObject<EntityType<SeatEntity>> SEAT_ENTITY = ENTITY_TYPES.register("seat_entity",
             () -> EntityType.Builder.of((EntityType.IFactory<SeatEntity>) SeatEntity::new, EntityClassification.MISC)

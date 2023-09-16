@@ -47,6 +47,11 @@ public class Config
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeCategories;
 
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateCanClose;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateUnbreakable;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDrop;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDropKeys;
+
 		Common(ForgeConfigSpec.Builder builder)
 		{
 			builder.comment(new String [] {
@@ -88,6 +93,16 @@ public class Config
 			glowingBulbBiomeNames = builder.comment(" In which biome names the Glowing Bulb will spawn").define("Glowing Bulb Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
 			glowingBulbBiomeCategories = builder.comment(" In which biome categories the Glowing Bulb will spawn").define("Glowing Bulb Biome Categories Spawn List", new ArrayList<>());
 			builder.pop();
+
+			builder.push("DungeonGates");
+			builder.push("ForestDungeonGate");
+			forestDungeonGateCanClose = builder.define(" Can Forest Dungeon Gate Be Closed Back", false);
+			forestDungeonGateUnbreakable = builder.define(" Can Forest Dungeon Gate Be Destroyed", true);
+			forestDungeonGateDrop = builder.define(" Can Forest Dungeon Gate Be Harvested", false);
+			forestDungeonGateDropKeys = builder.define(" Can Forest Dungeon Gate Drop Keys On Break", false);
+			builder.pop();
+			builder.push("DesertDungeonGate");
+			builder.pop();
 			builder.pop();
 		}
 	}
@@ -112,6 +127,12 @@ public class Config
 		public static List<String> glowingBulbBiomeNames;
 		public static List<String> glowingBulbBiomeCategories;
 
+
+		public static boolean forestDungeonGateCanClose;
+		public static boolean forestDungeonGateUnbreakable;
+		public static boolean forestDungeonGateDrop;
+		public static boolean forestDungeonGateDropKeys;
+
 		public static void bakeCommon()
 		{
 			try
@@ -134,6 +155,10 @@ public class Config
 				glowingBulbBiomeNames = COMMON.glowingBulbBiomeNames.get();
 				glowingBulbBiomeCategories = COMMON.glowingBulbBiomeCategories.get();
 
+				forestDungeonGateCanClose = COMMON.forestDungeonGateCanClose.get();
+				forestDungeonGateUnbreakable = COMMON.forestDungeonGateUnbreakable.get();
+				forestDungeonGateDrop = COMMON.forestDungeonGateDrop.get();
+				forestDungeonGateDropKeys = COMMON.forestDungeonGateDropKeys.get();
 			}
 			catch (Exception e)
 			{

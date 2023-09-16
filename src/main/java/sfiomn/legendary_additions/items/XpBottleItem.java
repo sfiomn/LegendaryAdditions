@@ -9,8 +9,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.entities.*;
+import sfiomn.legendary_additions.tileentities.LegendaryXpBottleEntity;
 import sfiomn.legendary_additions.util.XpBottleEnum;
 
 public class XpBottleItem extends Item {
