@@ -8,6 +8,7 @@ import sfiomn.legendary_additions.LegendaryAdditions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Config
@@ -41,6 +42,8 @@ public class Config
 		public final ForgeConfigSpec.ConfigValue<Boolean> ironOnCoalExplosionEnabled;
 		public final ForgeConfigSpec.ConfigValue<Float> ironOnCoalExplosionChance;
 
+		public final ForgeConfigSpec.ConfigValue<List<Integer>> obeliskXpValues;
+
 		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeCategories;
 
@@ -51,6 +54,7 @@ public class Config
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateUnbreakable;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDrop;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDropKeys;
+		public final ForgeConfigSpec.ConfigValue<List<String>> forestDungeonGateLock1Unlocks;
 
 		Common(ForgeConfigSpec.Builder builder)
 		{
@@ -84,6 +88,10 @@ public class Config
 			ironOnCoalExplosionChance = builder.define("Chance Of Explosion", 0.03f);
 			builder.pop();
 
+			builder.push("Obelisk");
+			obeliskXpValues = builder.define(" Default Obelisk Xp Values In Creative Tab", Arrays.asList(250, 500, 1000, 1500));
+			builder.pop();
+
 			builder.push("Flowers");
 			builder.push("CloverPatch");
 			cloverPatchBiomeNames = builder.comment(" In which biome names the Clover Patch will spawn").define("Clover Patch Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
@@ -96,10 +104,19 @@ public class Config
 
 			builder.push("DungeonGates");
 			builder.push("ForestDungeonGate");
-			forestDungeonGateCanClose = builder.define(" Can Forest Dungeon Gate Be Closed Back", false);
-			forestDungeonGateUnbreakable = builder.define(" Can Forest Dungeon Gate Be Destroyed", true);
-			forestDungeonGateDrop = builder.define(" Can Forest Dungeon Gate Be Harvested", false);
-			forestDungeonGateDropKeys = builder.define(" Can Forest Dungeon Gate Drop Keys On Break", false);
+			forestDungeonGateCanClose = builder.define(" Can Forest Dungeon Gate Be Closed Back", true);
+			forestDungeonGateUnbreakable = builder.define(" Can Forest Dungeon Gate Be Destroyed", false);
+			forestDungeonGateDrop = builder.define(" Can Forest Dungeon Gate Be Harvested", true);
+			forestDungeonGateDropKeys = builder.define(" Can Forest Dungeon Gate Drop Keys On Break", true);
+			forestDungeonGateLock1Unlocks = builder.define(" Items To Unlock Lock1", Collections.singletonList(LegendaryAdditions.MOD_ID + ":forest_key"));
+			builder.pop();
+			builder.push("DesertDungeonGate");
+			builder.pop();
+			builder.push("IcyDungeonGate");
+			builder.pop();
+			builder.push("OceanDungeonGate");
+			builder.pop();
+			builder.push("DesertDungeonGate");
 			builder.pop();
 			builder.push("DesertDungeonGate");
 			builder.pop();
@@ -121,17 +138,19 @@ public class Config
 		public static boolean ironOnCoalExplosionEnabled;
 		public static float ironOnCoalExplosionChance;
 
+		public static List<Integer> obeliskXpValues;
+
 		public static List<String> cloverPatchBiomeNames;
 		public static List<String> cloverPatchBiomeCategories;
 
 		public static List<String> glowingBulbBiomeNames;
 		public static List<String> glowingBulbBiomeCategories;
 
-
 		public static boolean forestDungeonGateCanClose;
 		public static boolean forestDungeonGateUnbreakable;
 		public static boolean forestDungeonGateDrop;
 		public static boolean forestDungeonGateDropKeys;
+		public static List<String> forestDungeonGateLock1Unlocks;
 
 		public static void bakeCommon()
 		{
@@ -149,6 +168,8 @@ public class Config
 				ironOnCoalExplosionEnabled = COMMON.ironOnCoalExplosionEnabled.get();
 				ironOnCoalExplosionChance = COMMON.ironOnCoalExplosionChance.get();
 
+				obeliskXpValues = COMMON.obeliskXpValues.get();
+
 				cloverPatchBiomeNames = COMMON.cloverPatchBiomeNames.get();
 				cloverPatchBiomeCategories = COMMON.cloverPatchBiomeCategories.get();
 
@@ -159,6 +180,7 @@ public class Config
 				forestDungeonGateUnbreakable = COMMON.forestDungeonGateUnbreakable.get();
 				forestDungeonGateDrop = COMMON.forestDungeonGateDrop.get();
 				forestDungeonGateDropKeys = COMMON.forestDungeonGateDropKeys.get();
+				forestDungeonGateLock1Unlocks = COMMON.forestDungeonGateLock1Unlocks.get();
 			}
 			catch (Exception e)
 			{

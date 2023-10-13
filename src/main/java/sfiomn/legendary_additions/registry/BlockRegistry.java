@@ -31,9 +31,9 @@ public class BlockRegistry
 	public static final RegistryObject<Block> CARVED_SPRUCE_LOG_BLOCK = registerBlock("carved_spruce_log", () -> new Block(AbstractBlock.Properties
 			.of(Material.WOOD).sound(SoundType.WOOD).strength(1f, 10f).harvestTool(ToolType.AXE).harvestLevel(1).noOcclusion()));
 
-	public static final RegistryObject<Block> HONEY_POND_BLOCK = registerBlock("honey_pond", HoneyPondBlock::new);
+	public static final RegistryObject<Block> HONEY_POND_BLOCK = BLOCKS.register("honey_pond", HoneyPondBlock::new);
 	public static final RegistryObject<Block> MEAT_RACK_BLOCK = registerBlock("meat_rack", MeatRackBlock::new);
-	public static final RegistryObject<Block> OBELISK_BLOCK = registerBlock("obelisk", ObeliskBlock::new);
+	public static final RegistryObject<Block> OBELISK_BLOCK = BLOCKS.register("obelisk", ObeliskBlock::new);
 	public static final RegistryObject<Block> CLOVER_PATCH_BLOCK = registerBlock("clover_patch", CloverPatchBlock::new);
 	public static final RegistryObject<Block> GLOWING_BULB_BLOCK = registerBlock("glowing_bulb", () -> new DoublePlantBlock(AbstractBlock.Properties
 			.of(Material.PLANT).noCollission().sound(SoundType.GRASS).instabreak().lightLevel((p_235470_0_) -> 14).emissiveRendering((bs, br, bp) -> true)));
@@ -47,6 +47,8 @@ public class BlockRegistry
 	public static final RegistryObject<Block> CAPTAIN_CHAIR_BLOCK = registerBlock("captain_chair", CaptainChairBlock::new);
 	public static final RegistryObject<Block> CAPTAIN_CHAIR_TOP_BLOCK = BLOCKS.register("captain_chair_top", CaptainChairTopBlock::new);
 
+	public static final RegistryObject<Block> ACACIA_WINDOW_PANE = registerBlock("acacia_window_pane", () -> new PaneBlock(AbstractBlock.Properties
+			.of(Material.WOOD).sound(SoundType.WOOD).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
 	public static final RegistryObject<Block> CRIMSON_WINDOW_PANE = registerBlock("crimson_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
 			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
 	public static final RegistryObject<Block> ORNATE_IRON_WINDOW_PANE = registerBlock("ornate_iron_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties

@@ -14,32 +14,55 @@ import sfiomn.legendary_additions.tileentities.LegendaryXpBottleEntity;
 public class EntityTypeRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, LegendaryAdditions.MOD_ID);
 
-    public static final RegistryObject<EntityType<TinyXpBottleEntity>> TINY_XP_BOTTLE_ENTITY = ENTITY_TYPES.register("tiny_xp_bottle",
+    public static final RegistryObject<EntityType<TinyXpBottleEntity>> TINY_XP_BOTTLE_ENTITY = ENTITY_TYPES.register( "tiny_xp_bottle",
             () -> EntityType.Builder.of((EntityType.IFactory<TinyXpBottleEntity>) TinyXpBottleEntity::new, EntityClassification.MISC)
                     .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setUpdateInterval(3)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "tiny_xp_bottle").toString()));
     public static final RegistryObject<EntityType<CommonXpBottleEntity>> COMMON_XP_BOTTLE_ENTITY = ENTITY_TYPES.register("common_xp_bottle",
             () -> EntityType.Builder.of((EntityType.IFactory<CommonXpBottleEntity>) CommonXpBottleEntity::new, EntityClassification.MISC)
                     .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setUpdateInterval(3)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "common_xp_bottle").toString()));
     public static final RegistryObject<EntityType<RareXpBottleEntity>> RARE_XP_BOTTLE_ENTITY = ENTITY_TYPES.register("rare_xp_bottle",
             () -> EntityType.Builder.of((EntityType.IFactory<RareXpBottleEntity>) RareXpBottleEntity::new, EntityClassification.MISC)
                     .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setUpdateInterval(3)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "rare_xp_bottle").toString()));
     public static final RegistryObject<EntityType<EpicXpBottleEntity>> EPIC_XP_BOTTLE_ENTITY = ENTITY_TYPES.register("epic_xp_bottle",
             () -> EntityType.Builder.of((EntityType.IFactory<EpicXpBottleEntity>) EpicXpBottleEntity::new, EntityClassification.MISC)
                     .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setUpdateInterval(3)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "epic_xp_bottle").toString()));
     public static final RegistryObject<EntityType<LegendaryXpBottleEntity>> LEGENDARY_XP_BOTTLE_ENTITY = ENTITY_TYPES.register("legendary_xp_bottle",
             () -> EntityType.Builder.of((EntityType.IFactory<LegendaryXpBottleEntity>) LegendaryXpBottleEntity::new, EntityClassification.MISC)
                     .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setUpdateInterval(3)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "legendary_xp_bottle").toString()));
 
-
     public static final RegistryObject<EntityType<ForestKeyEntity>> FOREST_KEY_ENTITY = ENTITY_TYPES.register("forest_key",
-            () -> EntityType.Builder.of((EntityType.IFactory<ForestKeyEntity>) ForestKeyEntity::new, EntityClassification.MISC)
-                    .sized(1.0F, 1.0F)
+            () -> EntityType.Builder.of(ForestKeyEntity::new, EntityClassification.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(32)
+                    .setUpdateInterval(3)
                     .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "forest_key").toString()));
+
+    public static final RegistryObject<EntityType<DesertKeyEntity>> DESERT_KEY_ENTITY = ENTITY_TYPES.register("desert_key",
+            () -> EntityType.Builder.of(DesertKeyEntity::new, EntityClassification.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(32)
+                    .setUpdateInterval(3)
+                    .build(new ResourceLocation(LegendaryAdditions.MOD_ID, "desert_key").toString()));
 
 
     public static final RegistryObject<EntityType<SeatEntity>> SEAT_ENTITY = ENTITY_TYPES.register("seat_entity",

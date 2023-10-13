@@ -29,7 +29,6 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
 
     protected static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP);
     protected static final AnimationBuilder DOWN = new AnimationBuilder().addAnimation("empty", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
-    protected static final AnimationBuilder STOP = new AnimationBuilder().addAnimation("stopped", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 
     public ObeliskTileEntity() {
         super(TileEntityRegistry.OBELISK_TILE_ENTITY.get());
@@ -48,7 +47,6 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
         } else {
             event.getController().setAnimation(DOWN);
             if (event.getController().getAnimationState().equals(AnimationState.Stopped)) {
-                this.setDown();
                 return PlayState.STOP;
             }
         }
@@ -69,28 +67,22 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
     }
 
     public boolean isDown() {
-        boolean down = true;
         if (this.level != null && this.level.getBlockState(this.worldPosition).hasProperty(ObeliskBlock.OBELISK_DOWN))
-            down = this.level.getBlockState(this.worldPosition).getValue(ObeliskBlock.OBELISK_DOWN);
-        return down;
+            return this.level.getBlockState(this.worldPosition).getValue(ObeliskBlock.OBELISK_DOWN);
+        return true;
     }
 
     public void setXp(int xp) {
         this.xp = xp;
+        if (xp == 0 && this.level != null) {
+            this.level.setBlockAndUpdate(this.worldPosition, getBlockState().setValue(ObeliskBlock.OBELISK_DOWN, true));
+            this.level.setBlockAndUpdate(this.worldPosition.above(), this.level.getBlockState(this.worldPosition.above()).setValue(ObeliskBlock.OBELISK_DOWN, true));
+        }
         this.setChanged();
     }
 
     public void setXpCapacity(int xpCapacity) {
         this.xpCapacity = xpCapacity;
-    }
-
-    public void setDown() {
-        CompoundNBT posNbt = new CompoundNBT();
-        posNbt.putInt("posX", this.worldPosition.getX());
-        posNbt.putInt("posY", this.worldPosition.getY());
-        posNbt.putInt("posZ", this.worldPosition.getZ());
-        MessageObeliskDown messageObeliskDownToServer = new MessageObeliskDown(posNbt);
-        NetworkHandler.INSTANCE.sendToServer(messageObeliskDownToServer);
     }
 
     @Override

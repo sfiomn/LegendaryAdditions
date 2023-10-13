@@ -8,11 +8,7 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 public class ObeliskModel extends AnimatedGeoModel<ObeliskTileEntity> {
     @Override
     public ResourceLocation getModelLocation(ObeliskTileEntity object) {
-        if (object.isDown()) {
-            return new ResourceLocation(LegendaryAdditions.MOD_ID, "geo/obelisk_down.geo.json");
-        } else {
-            return new ResourceLocation(LegendaryAdditions.MOD_ID, "geo/obelisk.geo.json");
-        }
+        return new ResourceLocation(LegendaryAdditions.MOD_ID, "geo/obelisk.geo.json");
     }
 
     @Override

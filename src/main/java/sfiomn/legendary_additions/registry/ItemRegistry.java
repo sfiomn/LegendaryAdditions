@@ -7,10 +7,9 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import sfiomn.legendary_additions.LegendaryAdditions;
+import sfiomn.legendary_additions.blocks.HoneyPondBlock;
 import sfiomn.legendary_additions.itemgroup.ModItemGroup;
-import sfiomn.legendary_additions.items.ForestKeyItem;
-import sfiomn.legendary_additions.items.KeyItem;
-import sfiomn.legendary_additions.items.XpBottleItem;
+import sfiomn.legendary_additions.items.*;
 import sfiomn.legendary_additions.util.XpBottleEnum;
 
 public class ItemRegistry {
@@ -23,9 +22,15 @@ public class ItemRegistry {
     public static final RegistryObject<Item> EPIC_XP_BOTTLE_ITEM = ITEMS.register("epic_xp_bottle", () -> new XpBottleItem(XpBottleEnum.EPIC, new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
     public static final RegistryObject<Item> LEGENDARY_XP_BOTTLE_ITEM = ITEMS.register("legendary_xp_bottle", () -> new XpBottleItem(XpBottleEnum.LEGENDARY, new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
 
+
+    public static final RegistryObject<Item> HONEY_POND_BLOCK_ITEM = ITEMS.register("honey_pond", () -> new HoneyPondItem(BlockRegistry.HONEY_POND_BLOCK.get(), new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
+
+    public static final RegistryObject<Item> OBELISK_BLOCK_ITEM = ITEMS.register("obelisk", () -> new ObeliskItem(BlockRegistry.OBELISK_BLOCK.get(), new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
+
     public static final RegistryObject<Item> TRIBAL_TORCH = ITEMS.register("tribal_torch", () -> new WallOrFloorItem(BlockRegistry.TRIBAL_TORCH_BLOCK.get(), BlockRegistry.TRIBAL_TORCH_WALL_BLOCK.get(), new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
 
     public static final RegistryObject<Item> FOREST_KEY = ITEMS.register("forest_key", () -> new ForestKeyItem(new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
+    public static final RegistryObject<Item> DESERT_KEY = ITEMS.register("desert_key", () -> new DesertKeyItem(new Item.Properties().tab(ModItemGroup.LEGENDARY_ADDITIONS_GROUP)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

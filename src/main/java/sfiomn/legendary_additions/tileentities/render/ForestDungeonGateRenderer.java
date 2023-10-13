@@ -19,11 +19,6 @@ public class ForestDungeonGateRenderer extends GeoBlockRenderer<ForestDungeonGat
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ForestDungeonGateTileEntity instance) {
-        return new ResourceLocation(LegendaryAdditions.MOD_ID, "textures/entity/forest_dungeon_gate.png");
-    }
-
-    @Override
     public RenderType getRenderType(ForestDungeonGateTileEntity animatable, float partialTicks, MatrixStack stack, @Nullable IRenderTypeBuffer renderTypeBuffer, @Nullable IVertexBuilder vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         stack.scale(1.0f, 1.0f, 1.0f);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);

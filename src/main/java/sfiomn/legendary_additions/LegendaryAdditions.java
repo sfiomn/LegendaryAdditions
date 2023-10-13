@@ -30,6 +30,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sfiomn.legendary_additions.config.Config;
+import sfiomn.legendary_additions.entities.render.DesertKeyRenderer;
 import sfiomn.legendary_additions.entities.render.ForestKeyRenderer;
 import sfiomn.legendary_additions.tileentities.render.ForestDungeonGateRenderer;
 import sfiomn.legendary_additions.tileentities.render.ObeliskRenderer;
@@ -98,6 +99,7 @@ public class LegendaryAdditions
         event.enqueueWork(() ->
         {
             RenderTypeLookup.setRenderLayer(BlockRegistry.MEAT_RACK_BLOCK.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.HONEY_POND_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.OBELISK_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CLOVER_PATCH_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.GLOWING_BULB_BLOCK.get(), RenderType.cutout());
@@ -107,6 +109,7 @@ public class LegendaryAdditions
             RenderTypeLookup.setRenderLayer(BlockRegistry.TRIBAL_TORCH_WALL_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.HIVE_LANTERN_BLOCK.get(), RenderType.cutout());
 
+            RenderTypeLookup.setRenderLayer(BlockRegistry.ACACIA_WINDOW_PANE.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CRIMSON_WINDOW_PANE.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_PANE.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_PANE.get(), RenderType.cutoutMipped());
@@ -142,6 +145,7 @@ public class LegendaryAdditions
                 RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.LEGENDARY_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
 
                 RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.FOREST_KEY_ENTITY.get(), ForestKeyRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.DESERT_KEY_ENTITY.get(), DesertKeyRenderer::new);
             }
         };
     }

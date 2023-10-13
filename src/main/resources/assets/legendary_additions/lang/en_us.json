@@ -22,12 +22,15 @@
   "block.legendary_additions.clover_patch": "Clover Patch",
   "block.legendary_additions.glowing_bulb": "Glowing Bulb",
 
+  "block.legendary_additions.acacia_window_pane": "Acacia Window Pane",
   "block.legendary_additions.crimson_window_pane": "Crimson Window Pane",
   "block.legendary_additions.ornate_iron_window_pane": "Ornate Iron Window Pane",
   "block.legendary_additions.warped_window_pane": "Warped Window Pane",
   "block.legendary_additions.crimson_window": "Crimson Window",
   "block.legendary_additions.ornate_iron_window": "Ornate Iron Window",
   "block.legendary_additions.warped_window": "Warped Window",
+
+  "block.legendary_additions.forest_dungeon_gate": "Forest Dungeon Gate",
 
   "itemGroup.legendary_additions": "Legendary Additions",
 
@@ -37,5 +40,10 @@
   "item.legendary_additions.epic_xp_bottle": "Epic Xp Bottle",
   "item.legendary_additions.legendary_xp_bottle": "Legendary Xp Bottle",
 
-  "sounds.legendarycreatures.iron_on_coal": "Iron On Coal Sound"
+  "item.legendary_additions.forest_key": "Forest Key",
+  "item.legendary_additions.desert_key": "Desert Key",
+
+  "sounds.legendary_additions.iron_on_coal": "Iron On Coal Sound",
+  "sounds.legendary_additions.lock_unlocked": "Lock Unlocking Sound",
+  "sounds.legendary_additions.open_gate_failed": "Blocked Open Gate Sound"
 }

@@ -19,7 +19,7 @@ public class ForestKeyRenderer extends GeoProjectilesRenderer<ForestKeyEntity> {
 
     @Override
     public RenderType getRenderType(ForestKeyEntity animatable, float partialTicks, MatrixStack stack, @Nullable IRenderTypeBuffer renderTypeBuffer, @Nullable IVertexBuilder vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
-        stack.scale(1.0f, 1.0f, 1.0f);
+        stack.scale(0.5f, 0.5f, 0.5f);
         return RenderType.entityCutoutNoCull(textureLocation);
     }
 }

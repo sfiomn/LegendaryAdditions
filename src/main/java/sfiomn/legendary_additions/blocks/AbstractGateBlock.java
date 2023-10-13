@@ -16,30 +16,29 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
-import sfiomn.legendary_additions.registry.BlockRegistry;
-import sfiomn.legendary_additions.tileentities.AbstractDungeonGateTileEntity;
-import sfiomn.legendary_additions.util.DungeonGatePartUtil;
-import sfiomn.legendary_additions.util.IDungeonGatePart;
+import sfiomn.legendary_additions.LegendaryAdditions;
+import sfiomn.legendary_additions.registry.SoundRegistry;
+import sfiomn.legendary_additions.tileentities.AbstractGateTileEntity;
+import sfiomn.legendary_additions.util.GatePartUtil;
+import sfiomn.legendary_additions.util.IGatePart;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class DungeonGateBlock extends HorizontalBlock implements IWaterLoggable {
+public abstract class AbstractGateBlock extends HorizontalBlock implements IWaterLoggable {
     public static final BooleanProperty OPENED = BooleanProperty.create("opened");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public final DungeonGatePartUtil dungeonGatePartUtil;
+    public final GatePartUtil gatePartUtil;
 
-    public DungeonGateBlock(AbstractBlock.Properties properties, IDungeonGatePart[] dungeonGateParts) {
+    public AbstractGateBlock(AbstractBlock.Properties properties, IGatePart[] gateParts) {
         super(properties);
 
-        this.dungeonGatePartUtil = new DungeonGatePartUtil(dungeonGateParts);
+        this.gatePartUtil = new GatePartUtil(gateParts);
 
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(OPENED, false)
@@ -60,10 +59,14 @@ public abstract class DungeonGateBlock extends HorizontalBlock implements IWater
 
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
+        if (!canPlace(context))
+            return null;
+
         BlockPos blockpos = context.getClickedPos();
-        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
-        int gateHeight = this.dungeonGatePartUtil.getHeight();
-        return (blockpos.getY() + gateHeight) < 255 && context.getLevel().getBlockState(blockpos.above()).canBeReplaced(context) ?
+        World world = context.getLevel();
+        FluidState fluidState = world.getFluidState(blockpos);
+        int gateHeight = this.gatePartUtil.getHeight();
+        return (blockpos.getY() + gateHeight) < 255 ?
                 this.defaultBlockState()
                         .setValue(FACING, context.getHorizontalDirection().getOpposite())
                         .setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER) : null;
@@ -82,24 +85,27 @@ public abstract class DungeonGateBlock extends HorizontalBlock implements IWater
         if (new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()))
             return ActionResultType.FAIL;
 
-        IDungeonGatePart dungeonGatePart = this.getDungeonPart(blockstate);
-        if (dungeonGatePart == null)
+        IGatePart gatePart = this.getGatePart(blockstate);
+        if (gatePart == null)
             return ActionResultType.FAIL;
 
         // retrieve the tile entity that controls the DungeonGate
         TileEntity tileEntity = world.getBlockEntity(getBasePos(blockstate, pos));
-        if (tileEntity instanceof AbstractDungeonGateTileEntity) {
-            AbstractDungeonGateTileEntity dungeonGateTE = (AbstractDungeonGateTileEntity) tileEntity;
-            Vector3i facingVector = blockstate.getValue(FACING).getNormal();
-            Vector3d hitLocationCenterGate = hit.getLocation().subtract(facingVector.getX() * getDepth() / 2, 0, facingVector.getZ() * getDepth() / 2);
-            dungeonGateTE.insertKey(player, hitLocationCenterGate);
+        if (tileEntity instanceof AbstractGateTileEntity) {
+            AbstractGateTileEntity dungeonGateTE = (AbstractGateTileEntity) tileEntity;
+            Direction gateFacing = blockstate.getValue(FACING);
+            Direction insertFacing = gateFacing.getAxis() == Direction.Axis.X ?
+                    (hit.getLocation().x - Math.floor(hit.getLocation().x)) >= 0.5 ? Direction.WEST : Direction.EAST:
+                    (hit.getLocation().z - Math.floor(hit.getLocation().z)) >= 0.5 ? Direction.NORTH : Direction.SOUTH;
+            boolean keyInserted = dungeonGateTE.insertKey(player, hit.getLocation(), insertFacing);
             if (dungeonGateTE.isUnlocked()) {
                 if (!dungeonGateTE.isOpened()) {
-                    if (canOpen(blockstate, world, pos)) {
-                        dungeonGateTE.openGate();
-                    }
-                } else
+                    dungeonGateTE.openGate();
+                } else if (canClose()) {
                     dungeonGateTE.closeGate();
+                }
+            } else if (!keyInserted && !world.isClientSide) {
+                dungeonGateTE.playFailedToOpenSound();
             }
         }
 
@@ -129,8 +135,8 @@ public abstract class DungeonGateBlock extends HorizontalBlock implements IWater
     public void onRemove(BlockState blockState, World world, BlockPos pos, BlockState newBlockState, boolean isMoving) {
         if (!blockState.is(newBlockState.getBlock())) {
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof AbstractDungeonGateTileEntity && canDropKeys()) {
-                ((AbstractDungeonGateTileEntity) tileEntity).dropKeys();
+            if (tileEntity instanceof AbstractGateTileEntity && canDropKeys()) {
+                ((AbstractGateTileEntity) tileEntity).dropKeys();
             }
         }
         super.onRemove(blockState, world, pos, newBlockState, isMoving);
@@ -138,38 +144,26 @@ public abstract class DungeonGateBlock extends HorizontalBlock implements IWater
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
-        if (!getDungeonPart(state).isBase() || !canDropGate())
+        if (!getGatePart(state).isBase() || !canDropGate())
             return Collections.emptyList();
         return super.getDrops(state, context);
     }
 
     @Override
     public boolean hasTileEntity(BlockState state) {
-        return this.getDungeonPart(state).isBase();
+        return this.getGatePart(state).isBase();
     }
-/*
-    @Override
-    public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
-        BlockPos basePos = getBasePos(state, pos);
 
-        for (IDungeonGatePart part: this.dungeonGatePartUtil.getNeighbourOffsets(getDungeonPart(state))) {
-            BlockPos partPos = basePos.offset(part.offset(state.getValue(FACING)));
+    public boolean canPlace(BlockItemUseContext context) {
+        World world = context.getLevel();
+        BlockPos basePos = context.getClickedPos();
+        Direction gateFacing = context.getHorizontalDirection().getOpposite();
+        for (IGatePart part: this.gatePartUtil.getCloseParts()) {
+            BlockPos partPos = basePos.offset(part.offset(gateFacing));
             BlockState partState = world.getBlockState(partPos);
-            if (!partState.is(this))
+            if (!partState.canBeReplaced(context)) {
                 return false;
-        }
-
-        return true;
-    }*/
-
-    public boolean canOpen(BlockState state, IWorldReader world, BlockPos pos) {
-        BlockPos basePos = getBasePos(state, pos);
-
-        for (IDungeonGatePart part: this.dungeonGatePartUtil.getOpenParts()) {
-            BlockPos partPos = basePos.offset(part.offset(state.getValue(FACING)));
-            BlockState partState = world.getBlockState(partPos);
-            if (!partState.getMaterial().isReplaceable())
-                return false;
+            }
         }
 
         return true;
@@ -181,11 +175,11 @@ public abstract class DungeonGateBlock extends HorizontalBlock implements IWater
         }
 
         BlockPos basePos = getBasePos(state, pos);
-        List<IDungeonGatePart> partsToRemove = this.dungeonGatePartUtil.getCloseParts();
+        List<IGatePart> partsToRemove = this.gatePartUtil.getCloseParts();
         if (state.getValue(OPENED))
-            partsToRemove = this.dungeonGatePartUtil.dungeonGateParts();
+            partsToRemove = this.gatePartUtil.gateParts();
 
-        for (IDungeonGatePart part: partsToRemove) {
+        for (IGatePart part: partsToRemove) {
             BlockPos partPos = basePos.offset(part.offset(state.getValue(FACING)));
             BlockState partState = world.getBlockState(partPos);
             if (partState.getBlock().is(this)) {
@@ -200,18 +194,18 @@ public abstract class DungeonGateBlock extends HorizontalBlock implements IWater
     }
 
     public BlockPos getBasePos(BlockState state, BlockPos pos) {
-        IDungeonGatePart part = getDungeonPart(state);
+        IGatePart part = getGatePart(state);
         if (part.isBase())
             return pos;
         else
-            return pos.offset(getDungeonPart(state).reverseOffset(state.getValue(FACING)));
+            return pos.offset(getGatePart(state).reverseOffset(state.getValue(FACING)));
     }
 
     abstract public TileEntity createTileEntity(BlockState state, IBlockReader world);
 
-    abstract IDungeonGatePart getDungeonPart(BlockState blockState);
+    abstract IGatePart getGatePart(BlockState blockState);
 
-    abstract public double getDepth();
+    abstract public boolean canClose();
 
     abstract public boolean canDropKeys();
     abstract public boolean canDropGate();

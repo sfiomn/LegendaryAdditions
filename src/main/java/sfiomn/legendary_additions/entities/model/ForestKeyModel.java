@@ -15,7 +15,7 @@ public class ForestKeyModel extends AnimatedGeoModel<ForestKeyEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(ForestKeyEntity object) {
-        return new ResourceLocation(LegendaryAdditions.MOD_ID, "textures/entity/forest_key.png");
+        return new ResourceLocation(LegendaryAdditions.MOD_ID, "textures/entity/forest_dungeon_gate.png");
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import sfiomn.legendary_additions.LegendaryAdditions;
+import sfiomn.legendary_additions.network.packets.MessageDungeonGateChange;
 import sfiomn.legendary_additions.network.packets.MessageObeliskDown;
 
 public class NetworkHandler
@@ -21,5 +22,6 @@ public class NetworkHandler
 		int id = -1;
 
 		INSTANCE.registerMessage(id++, MessageObeliskDown.class, MessageObeliskDown::encode, MessageObeliskDown::decode, MessageObeliskDown::handle);
+		INSTANCE.registerMessage(id++, MessageDungeonGateChange.class, MessageDungeonGateChange::encode, MessageDungeonGateChange::decode, MessageDungeonGateChange::handle);
 	}
 }

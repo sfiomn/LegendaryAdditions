@@ -146,6 +146,7 @@ public class HoneyPondBlock extends Block {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TileEntityRegistry.HONEY_POND_TILE_ENTITY.get().create();
+        HoneyPondTileEntity honeyPondTileEntity = TileEntityRegistry.HONEY_POND_TILE_ENTITY.get().create();
+        return honeyPondTileEntity;
     }
 }

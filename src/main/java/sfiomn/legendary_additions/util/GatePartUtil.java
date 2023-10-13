@@ -1,34 +1,32 @@
 package sfiomn.legendary_additions.util;
 
 import net.minecraft.util.Direction;
-import net.minecraft.world.IWorld;
-import sfiomn.legendary_additions.LegendaryAdditions;
-import sfiomn.legendary_additions.blocks.DungeonGateBlock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DungeonGatePartUtil {
-    private final List<IDungeonGatePart> dungeonGateParts;
-    private final List<IDungeonGatePart> dungeonGateCloseParts;
-    private final List<IDungeonGatePart> dungeonGateOpenParts;
-    private IDungeonGatePart mostBottomRight;
-    private IDungeonGatePart mostBottomLeft;
+public class GatePartUtil {
+    private final List<IGatePart> dungeonGateParts;
+    private final List<IGatePart> dungeonGateCloseParts;
+    private final List<IGatePart> dungeonGateOpenParts;
+    private IGatePart mostBottomRight;
+    private IGatePart mostBottomLeft;
     private int height = 0;
-    public DungeonGatePartUtil(IDungeonGatePart[] dungeonGateParts) {
+    private int width = 0;
+    public GatePartUtil(IGatePart[] dungeonGateParts) {
         this.dungeonGateParts = Arrays.asList(dungeonGateParts);
-        dungeonGateCloseParts = new ArrayList<>();
-        dungeonGateOpenParts = new ArrayList<>();
+        this.dungeonGateCloseParts = new ArrayList<>();
+        this.dungeonGateOpenParts = new ArrayList<>();
     }
 
-    public List<IDungeonGatePart> dungeonGateParts() {
+    public List<IGatePart> gateParts() {
         return dungeonGateParts;
     }
 
-    public List<IDungeonGatePart> getCloseParts() {
+    public List<IGatePart> getCloseParts() {
         if (dungeonGateCloseParts.isEmpty()) {
-            for (IDungeonGatePart part: this.dungeonGateParts) {
+            for (IGatePart part: this.dungeonGateParts) {
                 if (!part.isOpenPart()) {
                     this.dungeonGateCloseParts.add(part);
                 }
@@ -37,9 +35,9 @@ public class DungeonGatePartUtil {
         return dungeonGateCloseParts;
     }
 
-    public List<IDungeonGatePart> getOpenParts() {
+    public List<IGatePart> getOpenParts() {
         if (dungeonGateOpenParts.isEmpty()) {
-            for (IDungeonGatePart part: this.dungeonGateParts) {
+            for (IGatePart part: this.dungeonGateParts) {
                 if (part.isOpenPart()) {
                     this.dungeonGateOpenParts.add(part);
                 }
@@ -48,8 +46,8 @@ public class DungeonGatePartUtil {
         return dungeonGateOpenParts;
     }
 
-    // direction unchanged if not gateHinge or gateOpen part
-    public Direction getOpenDirection(IDungeonGatePart part, Direction gateFacing) {
+    // direction unchanged if not gateHinge or gateOpen parts
+    public Direction getOpenDirection(IGatePart part, Direction gateFacing) {
         Direction gateDirection = gateFacing;
         if (part.isOpenRight() || part.isGateHingeRight()) {
             gateDirection = gateFacing.getClockWise();
@@ -63,16 +61,16 @@ public class DungeonGatePartUtil {
         return gateDirection;
     }
 
-    public boolean isMostRight(IDungeonGatePart part) {
+    public boolean isMostRight(IGatePart part) {
         return part.offset().getX() == getMostBottomRight().offset().getX();
     }
 
-    public boolean isMostLeft(IDungeonGatePart part) {
+    public boolean isMostLeft(IGatePart part) {
         return part.offset().getX() == getMostBottomLeft().offset().getX();
     }
 
-    public boolean isTop(IDungeonGatePart part) {
-        for (IDungeonGatePart dungeonGatePart: this.dungeonGateParts) {
+    public boolean isTop(IGatePart part) {
+        for (IGatePart dungeonGatePart: this.dungeonGateParts) {
             if (dungeonGatePart.offset().getX() == part.offset().getX() && dungeonGatePart.offset().getZ() == part.offset().getZ()) {
                 if (dungeonGatePart.offset().getY() > part.offset().getY())
                     return false;
@@ -81,9 +79,9 @@ public class DungeonGatePartUtil {
         return true;
     }
 
-    public List<IDungeonGatePart> getNeighbourOffsets(IDungeonGatePart part) {
-        List<IDungeonGatePart> neighbourOffsets = new ArrayList<>();
-        for (IDungeonGatePart dungeonGatePart: this.dungeonGateParts) {
+    public List<IGatePart> getNeighbourOffsets(IGatePart part) {
+        List<IGatePart> neighbourOffsets = new ArrayList<>();
+        for (IGatePart dungeonGatePart: this.dungeonGateParts) {
             if (dungeonGatePart.offset().distManhattan(part.offset()) == 1) {
                 neighbourOffsets.add(dungeonGatePart);
             }
@@ -92,14 +90,14 @@ public class DungeonGatePartUtil {
         return neighbourOffsets;
     }
 
-    public IDungeonGatePart getMostBottomRight() {
+    public IGatePart getMostBottomRight() {
         if (mostBottomRight == null) {
             mostBottomRight = mostBottomRight();
         }
         return mostBottomRight;
     }
 
-    public IDungeonGatePart getMostBottomLeft() {
+    public IGatePart getMostBottomLeft() {
         if (mostBottomLeft == null) {
             mostBottomLeft = mostBottomLeft();
         }
@@ -113,9 +111,29 @@ public class DungeonGatePartUtil {
         return this.height;
     }
 
+    public int getWidth() {
+        if (this.width == 0) {
+            this.width = widthCalculation();
+        }
+        return this.width;
+    }
+
+    public int widthCalculation() {
+        int left = 0;
+        int right = 0;
+        for (IGatePart part: this.dungeonGateParts) {
+            if (part.offset().getX() > right) {
+                right = part.offset().getX();
+            } else if (part.offset().getX() < left) {
+                left = part.offset().getX();
+            }
+        }
+        return right - left + 1;
+    }
+
     public int heightCalculation() {
         int height = 1;
-        for (IDungeonGatePart part: this.dungeonGateParts) {
+        for (IGatePart part: this.dungeonGateParts) {
             if (part.offset().getY() + 1 > height) {
                 height = part.offset().getY() + 1;
             }
@@ -123,9 +141,9 @@ public class DungeonGatePartUtil {
         return height;
     }
 
-    public IDungeonGatePart mostBottomRight() {
-        IDungeonGatePart mostBottomRight = null;
-        for (IDungeonGatePart part: this.dungeonGateParts) {
+    public IGatePart mostBottomRight() {
+        IGatePart mostBottomRight = null;
+        for (IGatePart part: this.dungeonGateParts) {
             if (part.isBottom() && part.offset().getZ() == 0) {
                 if (mostBottomRight == null || mostBottomRight.offset().getX() < part.offset().getX()) {
                     mostBottomRight = part;
@@ -135,9 +153,9 @@ public class DungeonGatePartUtil {
         return mostBottomRight;
     }
 
-    public IDungeonGatePart mostBottomLeft() {
-        IDungeonGatePart mostBottomLeft = null;
-        for (IDungeonGatePart part: this.dungeonGateParts) {
+    public IGatePart mostBottomLeft() {
+        IGatePart mostBottomLeft = null;
+        for (IGatePart part: this.dungeonGateParts) {
             if (part.isBottom() && part.offset().getZ() == 0) {
                 if (mostBottomLeft == null || mostBottomLeft.offset().getX() > part.offset().getX()) {
                     mostBottomLeft = part;

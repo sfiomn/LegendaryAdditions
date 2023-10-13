@@ -3,14 +3,9 @@ package sfiomn.legendary_additions.util;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.vector.Vector3i;
-import sfiomn.legendary_additions.blocks.ForestDungeonGateBlock;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public interface
-IDungeonGatePart extends IStringSerializable {
+IGatePart extends IStringSerializable {
 
     String getSerializedName();
     Vector3i offset();

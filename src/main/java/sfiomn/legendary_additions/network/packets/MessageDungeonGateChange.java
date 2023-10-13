@@ -8,54 +8,54 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
-import sfiomn.legendary_additions.tileentities.AbstractDungeonGateTileEntity;
+import sfiomn.legendary_additions.tileentities.AbstractGateTileEntity;
 
 import java.util.function.Supplier;
 
-public class MessageDungeonGateOpened
+public class MessageDungeonGateChange
 {
     // SERVER side message
     CompoundNBT compound;
 
-    public MessageDungeonGateOpened()
+    public MessageDungeonGateChange()
     {
     }
 
-    public MessageDungeonGateOpened(INBT nbt)
+    public MessageDungeonGateChange(INBT nbt)
     {
         this.compound = (CompoundNBT) nbt;
     }
 
-    public static MessageDungeonGateOpened decode(PacketBuffer buffer)
+    public static MessageDungeonGateChange decode(PacketBuffer buffer)
     {
-        return new MessageDungeonGateOpened(buffer.readNbt());
+        return new MessageDungeonGateChange(buffer.readNbt());
     }
 
-    public static void encode(MessageDungeonGateOpened message, PacketBuffer buffer)
+    public static void encode(MessageDungeonGateChange message, PacketBuffer buffer)
     {
         buffer.writeNbt(message.compound);
     }
 
-    public static void handle(MessageDungeonGateOpened message, Supplier<NetworkEvent.Context> supplier)
+    public static void handle(MessageDungeonGateChange message, Supplier<NetworkEvent.Context> supplier)
     {
         final NetworkEvent.Context context = supplier.get();
 
         if (context.getDirection() == NetworkDirection.PLAY_TO_SERVER && context.getSender() != null) {
 
-            context.enqueueWork(() -> setDungeonGateOpened(context.getSender().getLevel(), message.compound));
+            context.enqueueWork(() -> changeDungeonGateState(context.getSender().getLevel(), message.compound));
         }
         supplier.get().setPacketHandled(true);
     }
 
-    public static void setDungeonGateOpened(ServerWorld world, CompoundNBT nbt) {
+    public static void changeDungeonGateState(ServerWorld world, CompoundNBT nbt) {
         int x = nbt.getInt("posX");
         int y = nbt.getInt("posY");
         int z = nbt.getInt("posZ");
 
         TileEntity tileEntity = world.getBlockEntity(new BlockPos(x, y, z));
-        if (tileEntity instanceof AbstractDungeonGateTileEntity) {
-            AbstractDungeonGateTileEntity dungeonGateTileEntity = (AbstractDungeonGateTileEntity) tileEntity;
-            dungeonGateTileEntity.setOpened(!dungeonGateTileEntity.opened);
+        if (tileEntity instanceof AbstractGateTileEntity) {
+            AbstractGateTileEntity dungeonGateTileEntity = (AbstractGateTileEntity) tileEntity;
+            dungeonGateTileEntity.resetAnimation();
         }
     }
 }
