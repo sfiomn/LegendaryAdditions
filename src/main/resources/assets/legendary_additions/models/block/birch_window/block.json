@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft:block/birch_planks",
+    "up": "minecraft:block/birch_planks",
+    "north": "legendary_additions:block/birch_window",
+    "east": "legendary_additions:block/birch_window",
+    "south": "legendary_additions:block/birch_window",
+    "west": "legendary_additions:block/birch_window",
+    "particle": "minecraft:block/birch_planks"
+  }
+}

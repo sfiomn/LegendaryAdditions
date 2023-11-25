@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"   ",
+		"ppp",
+		"ppp"
+	],
+	"key": 
+	{
+		"p":
+		{
+			"item": "legendary_additions:acacia_window"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:acacia_window_pane",
+		"count": 8
+	}
+}

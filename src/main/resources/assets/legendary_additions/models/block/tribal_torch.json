@@ -61,8 +61,7 @@
             2
           ],
           "rotation": 90,
-          "texture": "#1",
-          "cullface": "north"
+          "texture": "#1"
         },
         "east": {
           "uv": [
@@ -143,8 +142,7 @@
             5,
             12
           ],
-          "texture": "#1",
-          "cullface": "east"
+          "texture": "#1"
         },
         "south": {
           "uv": [
@@ -222,8 +220,7 @@
             5,
             0
           ],
-          "texture": "#1",
-          "cullface": "east"
+          "texture": "#1"
         },
         "up": {
           "uv": [

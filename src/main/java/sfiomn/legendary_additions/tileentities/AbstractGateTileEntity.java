@@ -51,7 +51,6 @@ import java.util.stream.IntStream;
 
 public abstract class AbstractGateTileEntity extends TileEntity implements IAnimatable, ITickableTileEntity, ISidedInventory {
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
     protected NonNullList<ItemStack> insertedKeys;
     private boolean opened;
     private boolean unlocked;
@@ -81,12 +80,10 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
     protected <E extends AbstractGateTileEntity> PlayState gateAnimController(final AnimationEvent<E> event) {
         if (this.animation == OPENING) {
             event.getController().setAnimation(OPENING_ANIM);
-            if (event.getController().getAnimationState().equals(AnimationState.Stopped)) {
-                this.animation = NO_ANIMATION;
-                this.sendResetAnimation();
-            }
         } else if (this.animation == CLOSING) {
             event.getController().setAnimation(CLOSING_ANIM);
+        }
+        if (this.animation == CLOSING || this.animation == OPENING) {
             if (event.getController().getAnimationState().equals(AnimationState.Stopped)) {
                 this.animation = NO_ANIMATION;
                 this.sendResetAnimation();
@@ -104,6 +101,8 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
 
         for (Lock lock: this.locks) {
             lock.updateTimer();
+
+            // Unlock process + drop keys if failed
             if (lock.getInsertTimerTick() == 0 && !this.insertedKeys.get(lock.id).isEmpty()) {
                 if (lock.canBeUnlocked(this.insertedKeys.get(lock.id).getItem())) {
                     unlock(lock);
@@ -249,6 +248,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
                 } else {
                     if (lock.canBeUnlocked(insertKey)) {
                         unlock(lock);
+                        this.playUnlockSound(lockPos);
 
                         player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
                         this.insertedKeys.set(lock.id, new ItemStack(insertKey));
@@ -274,11 +274,11 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         if (lock.canBeUnlocked(insertKey)) {
             lock.setInsertedKeyPosition(Vector3i.ZERO);
             lock.setInsertTimerTick(newKeyEntity.getSuccessfulInsertAnimationTicks());
-            newKeyEntity.successfulInsertInLock();
+            newKeyEntity.successfulInsertInLock(this.worldPosition);
         } else {
             lock.setInsertedKeyPosition(new Vector3i(insertKeyPos.x, insertKeyPos.y, insertKeyPos.z).relative(insertDirection.getOpposite(), 1));
             lock.setInsertTimerTick(newKeyEntity.getFailedInsertAnimationTicks());
-            newKeyEntity.failedInsertInLock();
+            newKeyEntity.failedInsertInLock(this.worldPosition);
         }
 
         this.level.addFreshEntity(newKeyEntity);
@@ -296,6 +296,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
     }
 
     public abstract void playFailedToOpenSound();
+    public abstract void playUnlockSound(Vector3d lockPos);
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
@@ -420,8 +421,8 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
 
     @Nullable
     @Override
+    // Send update to the client
     public SUpdateTileEntityPacket getUpdatePacket() {
-        LegendaryAdditions.LOGGER.debug("send update to the client");
         CompoundNBT nbt = this.getUpdateTag();
         ItemStackHelper.saveAllItems(nbt, this.insertedKeys);
         return new SUpdateTileEntityPacket(this.worldPosition, 1, nbt);
@@ -443,15 +444,14 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
             lockInfo.add(lock.getInsertedKeyPosition().getX());
             lockInfo.add(lock.getInsertedKeyPosition().getY());
             lockInfo.add(lock.getInsertedKeyPosition().getZ());
-            LegendaryAdditions.LOGGER.debug("lock info : " + lockInfo);
             nbt.putIntArray("lock" + lock.id, lockInfo);
         }
         return nbt;
     }
 
     @Override
+    // Get update from the server
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        LegendaryAdditions.LOGGER.debug("get update from the server");
         assert level != null;
         handleUpdateTag(level.getBlockState(pkt.getPos()), pkt.getTag());
     }
@@ -465,7 +465,6 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         ItemStackHelper.loadAllItems(nbt, this.insertedKeys);
         for (Lock lock: this.locks) {
             int[] lockInfo = nbt.getIntArray("lock" + lock.id);
-            LegendaryAdditions.LOGGER.debug("lock info : " + Arrays.toString(lockInfo));
             if (lockInfo[0] == 1)
                 lock.unlocked();
             lock.setInsertTimerTick(lockInfo[1]);

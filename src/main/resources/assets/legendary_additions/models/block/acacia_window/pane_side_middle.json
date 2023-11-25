@@ -1,0 +1,7 @@
+{
+  "parent": "legendary_additions:block/vertical_pane/template_glass_pane_side_middle",
+  "textures": {
+    "edge": "legendary_additions:block/acacia_window_pane_edge",
+    "pane": "legendary_additions:block/acacia_window_pane_middle"
+  }
+}

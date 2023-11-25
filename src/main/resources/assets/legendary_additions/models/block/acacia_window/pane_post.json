@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/template_glass_pane_post",
+  "parent": "block/template_glass_pane_post",
   "textures": {
-    "pane": "legendary_additions:block/acacia_window_pane",
-    "edge": "legendary_additions:block/acacia_window_pane_edge"
+    "edge": "legendary_additions:block/acacia_window_pane_edge",
+    "pane": "legendary_additions:block/acacia_window_pane"
   }
 }

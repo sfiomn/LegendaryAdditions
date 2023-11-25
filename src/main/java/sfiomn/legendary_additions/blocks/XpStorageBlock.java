@@ -8,30 +8,40 @@ import net.minecraft.block.material.PushReaction;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
+import sfiomn.legendary_additions.registry.TileEntityRegistry;
+import sfiomn.legendary_additions.tileentities.ObeliskTileEntity;
+import sfiomn.legendary_additions.tileentities.XpStorageTileEntity;
+
+import javax.annotation.Nullable;
 
 public class XpStorageBlock extends Block {
-    public static final int MAX_XP_CAPACITY = Config.Baked.xpStorageMaxXpCapacity;
-    public static final Properties properties = getProperties();
-    public static final IntegerProperty XP_CAPACITY = IntegerProperty.create("xp_capacity", 0, MAX_XP_CAPACITY);
-    public static final IntegerProperty STATE = IntegerProperty.create("state", 0, 2);
+    public static final Properties properties = getProperties();;
+    public static final IntegerProperty STATE = IntegerProperty.create("xp_storage_state", 0, 3);
 
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.GLASS)
-                .sound(SoundType.GLASS)
-                .strength(50f, 1200f)
+                .of(Material.STONE)
+                .sound(SoundType.STONE)
+                .strength(20f, 600f)
                 .harvestTool(ToolType.PICKAXE)
                 .harvestLevel(4)
                 .noOcclusion();
@@ -41,8 +51,13 @@ public class XpStorageBlock extends Block {
         super(properties);
 
         this.registerDefaultState(this.getStateDefinition().any()
-                .setValue(XP_CAPACITY, 0)
-                .setValue(STATE, 2));
+                .setValue(STATE, 3));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    {
+        builder.add(STATE);
     }
 
     @Override
@@ -55,56 +70,79 @@ public class XpStorageBlock extends Block {
     public ActionResultType use(BlockState blockstate, World world, BlockPos pos, PlayerEntity player, Hand hand,
                                 BlockRayTraceResult hit) {
         super.use(blockstate, world, pos, player, hand, hit);
-        int xpCapacity = world.getBlockState(pos).getValue(XP_CAPACITY);
-        int xpGiven = 0;
 
-        LegendaryAdditions.LOGGER.debug("player crouching while using obelisk: " + player.isCrouching());
-        if (player.isCrouching()) {
+        if (new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()))
+            return ActionResultType.FAIL;
+
+        if (player.experienceLevel == 0)
+            return ActionResultType.PASS;
+
+        TileEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof XpStorageTileEntity) {
+
+            XpStorageTileEntity xpStorageTileEntity = (XpStorageTileEntity) tileEntity;
+
+            int maxXpCapacity = xpStorageTileEntity.getXpCapacity();
+            if (maxXpCapacity == 0) {
+                xpStorageTileEntity.setXpCapacity(Config.Baked.xpStorageMaxXpCapacity);
+                maxXpCapacity = Config.Baked.xpStorageMaxXpCapacity;
+            }
+
+            if (xpStorageTileEntity.getXp() >= maxXpCapacity)
+                return ActionResultType.PASS;
+
             if (world instanceof ClientWorld) {
                 world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
             }
 
-            xpGiven = Math.min(player.totalExperience, Math.min(MAX_XP_CAPACITY / 10, MAX_XP_CAPACITY - xpCapacity));
+            int newPlayerLevel = player.experienceLevel - 1;
 
-            xpCapacity += xpGiven;
-            player.giveExperiencePoints(-xpGiven);
+            int xpLevel = this.getXpNeededForNextLevel(newPlayerLevel);
 
-        } else {
-            if (world instanceof ClientWorld) {
-                world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
-            }
+            int xpStored;
+            if (xpLevel > maxXpCapacity)
+                xpStored = maxXpCapacity;
+            else
+                xpStored = Math.min(xpLevel, maxXpCapacity - xpStorageTileEntity.getXp());
 
-            xpGiven = Math.min(MAX_XP_CAPACITY / 10, xpCapacity);
+            player.giveExperiencePoints(-xpStored);
 
-            xpCapacity -= xpGiven;
+            MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, -xpStored));
 
-            if (world instanceof ServerWorld)
-                popExperience((ServerWorld) world, pos, xpGiven);
+            xpStorageTileEntity.setXp(xpStorageTileEntity.getXp() + xpStored);
+
+            return ActionResultType.SUCCESS;
         }
-        if (xpGiven > 0) {
-            updateBlockProperties(world, pos, xpCapacity);
-        }
-        return ActionResultType.SUCCESS;
+        return ActionResultType.FAIL;
     }
 
-    private void updateBlockProperties(World world, BlockPos pos, int newXpCapacity) {
-        int state = 2;
-        if (newXpCapacity == 0) {
-            state = 0;
-        } else if (newXpCapacity <= ((float) MAX_XP_CAPACITY / 2.0f)) {
-            state = 1;
+    public int getXpNeededForNextLevel(int level) {
+        if (level >= 30) {
+            return 112 + (level - 30) * 9;
+        } else {
+            return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
         }
-        world.setBlockAndUpdate(pos, world.getBlockState(pos).setValue(XP_CAPACITY, newXpCapacity).setValue(STATE, state));
     }
 
     @Override
     public void onRemove(BlockState blockState, World world, BlockPos pos, BlockState newBlockState, boolean isMoving) {
         if (!blockState.is(newBlockState.getBlock())) {
-            int xp_stored = blockState.getValue(XP_CAPACITY);
-
-            if (world instanceof ServerWorld)
-                popExperience((ServerWorld) world, pos, xp_stored);
+            TileEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof XpStorageTileEntity && world instanceof ServerWorld) {
+                popExperience((ServerWorld) world, pos, ((XpStorageTileEntity) tileEntity).getXp());
+            }
             super.onRemove(blockState, world, pos, newBlockState, isMoving);
         }
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return TileEntityRegistry.XP_STORAGE_TILE_ENTITY.get().create();
     }
 }

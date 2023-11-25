@@ -193,8 +193,7 @@ public class ObeliskBlock extends Block {
             return false;
         }
 
-        if (world.getBlockState(pos.above()).isSolidRender(world, pos.above()) ||
-                world.getBlockState(pos.above()).isSolidRender(world, pos.above())) {
+        if (world.getBlockState(pos.above()).isSolidRender(world, pos.above())) {
             return false;
         }
 

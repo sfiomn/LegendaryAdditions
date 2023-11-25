@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"   ",
+		" p ",
+		"pgp"
+	],
+	"key": 
+	{
+		"p":
+		{
+			"item": "minecraft:oak_planks"
+		},
+		"g":
+		{
+			"tag": "forge:glass"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:oak_window"
+	}
+}

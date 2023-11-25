@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft:block/jungle_planks",
+    "up": "minecraft:block/jungle_planks",
+    "north": "legendary_additions:block/jungle_window",
+    "east": "legendary_additions:block/jungle_window",
+    "south": "legendary_additions:block/jungle_window",
+    "west": "legendary_additions:block/jungle_window",
+    "particle": "minecraft:block/jungle_planks"
+  }
+}

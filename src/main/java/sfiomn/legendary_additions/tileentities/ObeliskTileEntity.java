@@ -74,15 +74,16 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
 
     public void setXp(int xp) {
         this.xp = xp;
+        this.setChanged();
         if (xp == 0 && this.level != null) {
             this.level.setBlockAndUpdate(this.worldPosition, getBlockState().setValue(ObeliskBlock.OBELISK_DOWN, true));
             this.level.setBlockAndUpdate(this.worldPosition.above(), this.level.getBlockState(this.worldPosition.above()).setValue(ObeliskBlock.OBELISK_DOWN, true));
         }
-        this.setChanged();
     }
 
     public void setXpCapacity(int xpCapacity) {
         this.xpCapacity = xpCapacity;
+        this.setChanged();
     }
 
     @Override
@@ -110,7 +111,7 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
     @Override
     public CompoundNBT getUpdateTag() {
         CompoundNBT nbt = super.getUpdateTag();
-        nbt.putInt("xp", this.xp);
+        nbt.putInt("xp", this.getXp());
         return nbt;
     }
 
@@ -122,6 +123,6 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
 
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
-        this.xp = nbt.getInt("xp");
+        this.setXp(nbt.getInt("xp"));
     }
 }

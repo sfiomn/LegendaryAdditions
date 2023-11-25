@@ -110,11 +110,22 @@ public class LegendaryAdditions
             RenderTypeLookup.setRenderLayer(BlockRegistry.HIVE_LANTERN_BLOCK.get(), RenderType.cutout());
 
             RenderTypeLookup.setRenderLayer(BlockRegistry.ACACIA_WINDOW_PANE.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.ACACIA_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.BIRCH_WINDOW_PANE.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.BIRCH_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.DARK_OAK_WINDOW_PANE.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.DARK_OAK_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.JUNGLE_WINDOW_PANE.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.JUNGLE_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.OAK_WINDOW_PANE.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.OAK_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.SPRUCE_WINDOW_PANE.get(), RenderType.cutoutMipped());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.SPRUCE_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CRIMSON_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_PANE.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CRIMSON_WINDOW_BLOCK.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_PANE.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_BLOCK.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_PANE.get(), RenderType.cutoutMipped());
             RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_BLOCK.get(), RenderType.cutout());
 
             RenderTypeLookup.setRenderLayer(BlockRegistry.FOREST_DUNGEON_GATE_BLOCK.get(), RenderType.cutout());

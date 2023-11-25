@@ -26,6 +26,10 @@ public class TileEntityRegistry {
             TILE_ENTITIES.register(LegendaryAdditions.MOD_ID + "honey_pond_tile_entity", () -> TileEntityType.Builder.of(
                     HoneyPondTileEntity::new, BlockRegistry.HONEY_POND_BLOCK.get()).build(null));
 
+    public static RegistryObject<TileEntityType<XpStorageTileEntity>> XP_STORAGE_TILE_ENTITY =
+            TILE_ENTITIES.register(LegendaryAdditions.MOD_ID + "xp_storage_tile_entity", () -> TileEntityType.Builder.of(
+                    XpStorageTileEntity::new, BlockRegistry.XP_STORAGE_BLOCK.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);

@@ -43,16 +43,14 @@ public class ForestDungeonGateTileEntity extends AbstractGateTileEntity {
     }
 
     @Override
-    protected void unlock(Lock lock) {
-        super.unlock(lock);
-        Vector3d lockPos = lock.getLockPos(getGateFacing(), this.worldPosition);
-        if (this.level != null)
-            this.level.playSound(null, lockPos.x, lockPos.y, lockPos.z, SoundRegistry.LOCK_UNLOCKED.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
-    }
-
-    @Override
     public void playFailedToOpenSound() {
         if (this.level != null)
             this.level.playSound(null, this.worldPosition, SoundRegistry.OPEN_GATE_FAILED.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
+    }
+
+    @Override
+    public void playUnlockSound(Vector3d lockPos) {
+        if (this.level != null)
+            this.level.playSound(null, lockPos.x, lockPos.y, lockPos.z, SoundRegistry.LOCK_UNLOCKED.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
     }
 }

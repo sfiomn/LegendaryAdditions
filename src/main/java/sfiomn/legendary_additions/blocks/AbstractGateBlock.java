@@ -159,9 +159,17 @@ public abstract class AbstractGateBlock extends HorizontalBlock implements IWate
         BlockPos basePos = context.getClickedPos();
         Direction gateFacing = context.getHorizontalDirection().getOpposite();
         for (IGatePart part: this.gatePartUtil.getCloseParts()) {
-            BlockPos partPos = basePos.offset(part.offset(gateFacing));
-            BlockState partState = world.getBlockState(partPos);
-            if (!partState.canBeReplaced(context)) {
+            try {
+                LegendaryAdditions.LOGGER.debug("basePos : " + basePos);
+                LegendaryAdditions.LOGGER.debug("part : " + part);
+                LegendaryAdditions.LOGGER.debug("part offset : " + part.offset(gateFacing));
+                BlockPos partPos = basePos.offset(part.offset(gateFacing));
+                LegendaryAdditions.LOGGER.debug("partPos : " + partPos);
+                BlockState partState = world.getBlockState(partPos);
+                if (!partState.canBeReplaced(context)) {
+                    return false;
+                }
+            } catch (NullPointerException e) {
                 return false;
             }
         }

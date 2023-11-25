@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"   ",
+		" p ",
+		"pgp"
+	],
+	"key": 
+	{
+		"p":
+		{
+			"item": "minecraft:birch_planks"
+		},
+		"g":
+		{
+			"tag": "forge:glass"
+		}
+	},
+	"result":
+	{
+		"item": "legendary_additions:birch_window"
+	}
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft:block/acacia_planks",
+    "up": "minecraft:block/acacia_planks",
+    "north": "legendary_additions:block/acacia_window_pane_middle",
+    "east": "legendary_additions:block/acacia_window_pane_middle",
+    "south": "legendary_additions:block/acacia_window_pane_middle",
+    "west": "legendary_additions:block/acacia_window_pane_middle",
+    "particle": "minecraft:block/acacia_planks"
+  }
+}

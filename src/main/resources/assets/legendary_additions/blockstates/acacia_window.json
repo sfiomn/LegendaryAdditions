@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "up=true,down=true": {"model": "legendary_additions:block/acacia_window/block_middle"},
+    "up=false,down=true": {"model": "legendary_additions:block/acacia_window/block_top"},
+    "up=true,down=false": {"model": "legendary_additions:block/acacia_window/block_bottom"},
+    "up=false,down=false": {"model": "legendary_additions:block/acacia_window/block"}
+  }
+}
