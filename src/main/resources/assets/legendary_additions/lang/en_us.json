@@ -55,7 +55,8 @@
   "item.legendary_additions.forest_key": "Forest Key",
   "item.legendary_additions.desert_key": "Desert Key",
 
-  "sounds.legendary_additions.iron_on_coal": "Iron On Coal Sound",
-  "sounds.legendary_additions.lock_unlocked": "Lock Unlocking Sound",
-  "sounds.legendary_additions.open_gate_failed": "Blocked Open Gate Sound"
+  "sounds.legendary_additions.iron_on_coal": "Iron Scratches Coal",
+  "sounds.legendary_additions.lock_unlocked": "Lock Unlocks",
+  "sounds.legendary_additions.open_gate_successful": "Gate Opens",
+  "sounds.legendary_additions.open_gate_failed": "Blocked Gate"
 }

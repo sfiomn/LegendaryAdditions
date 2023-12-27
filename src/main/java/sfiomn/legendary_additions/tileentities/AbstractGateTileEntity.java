@@ -134,6 +134,8 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
                 this.opened = true;
                 this.setChanged();
 
+                this.playSuccessfulOpenSound();
+
                 Direction gateFacing = getGateFacing();
                 // Update closed gate parts (gateway + hinges) as opened
                 for (IGatePart part : this.gatePartUtil.getCloseParts()) {
@@ -295,6 +297,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         }
     }
 
+    public abstract void playSuccessfulOpenSound();
     public abstract void playFailedToOpenSound();
     public abstract void playUnlockSound(Vector3d lockPos);
 

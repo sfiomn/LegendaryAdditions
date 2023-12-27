@@ -14,7 +14,9 @@ public class SoundRegistry {
 
     public static final RegistryObject<SoundEvent> IRON_ON_COAL = registerSoundEvent("iron_on_coal");
     public static final RegistryObject<SoundEvent> LOCK_UNLOCKED = registerSoundEvent("lock_unlocked");
+    public static final RegistryObject<SoundEvent> OPEN_GATE_SUCCESSFUL = registerSoundEvent("open_gate_successful");
     public static final RegistryObject<SoundEvent> OPEN_GATE_FAILED = registerSoundEvent("open_gate_failed");
+
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent(

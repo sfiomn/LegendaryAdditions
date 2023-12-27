@@ -28,11 +28,11 @@
 							"vector": [0, 0, -10]
 						},
 						"1.0": {
-							"vector": [0, 0, 0],
+							"vector": [0, 0, -2],
 							"easing": "easeInOutCubic"
 						},
 						"2.0": {
-							"vector": [0, 0, 0],
+							"vector": [0, 0, -2],
 							"easing": "easeInOutSine"
 						}
 					},
@@ -89,15 +89,15 @@
 							"vector": [0, 0, -10]
 						},
 						"1.0": {
-							"vector": [0, 0, 0],
+							"vector": [0, 0, -2],
 							"easing": "easeInOutCubic"
 						},
 						"2.0": {
-							"vector": [0, 0, 0],
+							"vector": [0, 0, -2],
 							"easing": "easeInOutSine"
 						},
 						"3.0": {
-							"vector": [0, 0, 0],
+							"vector": [0, 0, -2],
 							"easing": "easeInOutSine"
 						},
 						"4.0": {

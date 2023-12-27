@@ -43,6 +43,12 @@ public class ForestDungeonGateTileEntity extends AbstractGateTileEntity {
     }
 
     @Override
+    public void playSuccessfulOpenSound() {
+        if (this.level != null)
+            this.level.playSound(null, this.worldPosition, SoundRegistry.OPEN_GATE_SUCCESSFUL.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
+    }
+
+    @Override
     public void playFailedToOpenSound() {
         if (this.level != null)
             this.level.playSound(null, this.worldPosition, SoundRegistry.OPEN_GATE_FAILED.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);

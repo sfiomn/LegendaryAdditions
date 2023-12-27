@@ -13,7 +13,7 @@ IGatePart extends IStringSerializable {
     DungeonGatePartTypeEnum partType();
 
     // By default, offset x+1 = right block, offset x-1 = left block
-    // Facing south (z+) => offset x+1 = right block, offset x-1 = left bl  ock
+    // Facing south (z+) => offset x+1 = right block, offset x-1 = left block
     // Facing north (z-) => offset x-1 = right block, offset x+1 = left block
     // Facing west (x-) => offset z+1 = right block, offset z-1 = left block
     // Facing east (x+) => offset z-1 = right block, offset z+1 = left block

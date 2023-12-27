@@ -1,7 +1,8 @@
 {
+	"credit": "Made with Blockbench",
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "legendary_additions:item/forest_key"
+		"layer0": "legendary_additions:item/desert_key"
 	},
 	"display": {
 		"thirdperson_righthand": {
@@ -15,8 +16,8 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_righthand": {
-			"rotation": [-74.51, -70.95, -158.84],
-			"translation": [1.75, 3.75, 0],
+			"rotation": [-177.25, 81.4, -12.48],
+			"translation": [1.75, 3.75, -0.5],
 			"scale": [0.45, 0.45, 0.45]
 		},
 		"firstperson_lefthand": {

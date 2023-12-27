@@ -27,6 +27,16 @@
       }
     ]
   },
+  "open_gate_successful": {
+    "category": "neutral",
+    "subtitle": "sounds.legendary_additions.open_gate_successful",
+    "sounds": [
+      {
+        "name": "legendary_additions:open_successful",
+        "stream": false
+      }
+    ]
+  },
   "open_gate_failed": {
     "category": "neutral",
     "subtitle": "sounds.legendary_additions.open_gate_failed",
