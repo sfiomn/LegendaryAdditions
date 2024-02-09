@@ -55,16 +55,6 @@ public class CaptainChairBlock extends HorizontalBlock {
                 : null;
     }
 
-    @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
-    {
-        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-        if (world.getBlockState(pos.above()).getBlock() != BlockRegistry.CAPTAIN_CHAIR_TOP_BLOCK.get())
-        {
-            world.destroyBlock(pos, true);
-        }
-    }
-
     @SuppressWarnings("deprecation")
     @Override
     public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving)
@@ -90,5 +80,6 @@ public class CaptainChairBlock extends HorizontalBlock {
                 seat.remove();
             }
         }
+        world.destroyBlock(pos.above(), true);
     }
 }

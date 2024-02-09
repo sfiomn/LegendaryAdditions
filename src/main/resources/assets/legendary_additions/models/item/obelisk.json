@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/handheld",
+  "parent": "minecraft:item/handheld",
   "loader": "forge:separate-perspective",
   "base": {
     "parent": "legendary_additions:block/obelisk"

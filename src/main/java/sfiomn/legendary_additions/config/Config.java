@@ -6,10 +6,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 import sfiomn.legendary_additions.LegendaryAdditions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Config
 {
@@ -43,6 +40,7 @@ public class Config
 		public final ForgeConfigSpec.ConfigValue<Float> ironOnCoalExplosionChance;
 
 		public final ForgeConfigSpec.ConfigValue<List<Integer>> obeliskXpValues;
+		public final ForgeConfigSpec.ConfigValue<Boolean> obeliskBreakable;
 
 		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeCategories;
@@ -51,10 +49,26 @@ public class Config
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeCategories;
 
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateCanClose;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateUnbreakable;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateOpenWhenUnlocked;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateBreakable;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDrop;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDropKeys;
 		public final ForgeConfigSpec.ConfigValue<List<String>> forestDungeonGateLock1Unlocks;
+		public final ForgeConfigSpec.ConfigValue<Integer> forestDungeonGateMobCheckRange;
+		public final ForgeConfigSpec.ConfigValue<Integer> forestDungeonGateMobCheckFrequency;
+
+		public final ForgeConfigSpec.ConfigValue<List<String>> dungeonHeartItemsBlocked;
+		public final ForgeConfigSpec.ConfigValue<Boolean> dungeonHeartBlockPlaceBlocked;
+		public final ForgeConfigSpec.ConfigValue<Boolean> dungeonHeartBlockBreakBlocked;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartActiveBreakable;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartBreakable;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartDrop;
+		public final ForgeConfigSpec.ConfigValue<String> forestDungeonHeartDeactivationByItem;
+		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartDeactivationByRedStone;
+
+		public final ForgeConfigSpec.ConfigValue<Integer> spiderEggsHorizontalDetectionRangeInBlocks;
+		public final ForgeConfigSpec.ConfigValue<Integer> spiderEggsYDetectionRangeInBlocks;
+		public final ForgeConfigSpec.ConfigValue<Map<String, Integer>> spiderEggsMobsSpawned;
 
 		Common(ForgeConfigSpec.Builder builder)
 		{
@@ -90,25 +104,31 @@ public class Config
 
 			builder.push("Obelisk");
 			obeliskXpValues = builder.define(" Default Obelisk Xp Values In Creative Tab", Arrays.asList(250, 500, 1000, 1500));
+			obeliskBreakable = builder.define(" Can Obelisk Be Destroyed", false);
 			builder.pop();
 
 			builder.push("Flowers");
 			builder.push("CloverPatch");
-			cloverPatchBiomeNames = builder.comment(" In which biome names the Clover Patch will spawn").define("Clover Patch Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
-			cloverPatchBiomeCategories = builder.comment(" In which biome categories the Clover Patch will spawn").define("Clover Patch Biome Categories Spawn List", new ArrayList<>());
+			cloverPatchBiomeNames = builder.comment(" In Which Biome Names The Clover Patch Will Spawn").define("Clover Patch Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
+			cloverPatchBiomeCategories = builder.comment(" In Which Biome Categories The Clover Patch Will Spawn").define("Clover Patch Biome Categories Spawn List", new ArrayList<>());
 			builder.pop();
 			builder.push("GlowingBulb");
-			glowingBulbBiomeNames = builder.comment(" In which biome names the Glowing Bulb will spawn").define("Glowing Bulb Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
-			glowingBulbBiomeCategories = builder.comment(" In which biome categories the Glowing Bulb will spawn").define("Glowing Bulb Biome Categories Spawn List", new ArrayList<>());
+			glowingBulbBiomeNames = builder.comment(" In Which Biome Names The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
+			glowingBulbBiomeCategories = builder.comment(" In Which Biome Categories The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Categories Spawn List", new ArrayList<>());
+			builder.pop();
 			builder.pop();
 
 			builder.push("DungeonGates");
 			builder.push("ForestDungeonGate");
 			forestDungeonGateCanClose = builder.define(" Can Forest Dungeon Gate Be Closed Back", true);
-			forestDungeonGateUnbreakable = builder.define(" Can Forest Dungeon Gate Be Destroyed", false);
-			forestDungeonGateDrop = builder.define(" Can Forest Dungeon Gate Be Harvested", true);
+			forestDungeonGateOpenWhenUnlocked = builder.define(" Will Forest Dungeon Gate Open When Unlocked", false);
+			forestDungeonGateBreakable = builder.define(" Can Forest Dungeon Gate Be Destroyed", true);
+			forestDungeonGateDrop = builder.define(" Can Forest Dungeon Gate Be Dropped", true);
 			forestDungeonGateDropKeys = builder.define(" Can Forest Dungeon Gate Drop Keys On Break", true);
 			forestDungeonGateLock1Unlocks = builder.define(" Items To Unlock Lock1", Collections.singletonList(LegendaryAdditions.MOD_ID + ":forest_key"));
+			forestDungeonGateMobCheckRange = builder.comment(" To choose a mob for which its presence forces the gate to stay locked, " +
+					"use an entity spawn egg and use it on the gate in creative mode.").define(" Mob Check Range In Blocks", 20);
+			forestDungeonGateMobCheckFrequency = builder.define(" Mob Check Frequency In Ticks", 20);
 			builder.pop();
 			builder.push("DesertDungeonGate");
 			builder.pop();
@@ -119,6 +139,32 @@ public class Config
 			builder.push("DesertDungeonGate");
 			builder.pop();
 			builder.push("DesertDungeonGate");
+			builder.pop();
+			builder.pop();
+
+			builder.push("DungeonHearts");
+			builder.push("Effects");
+			// grapplemod:grapplinghook
+			dungeonHeartItemsBlocked = builder.define(" Items Disabled While Dungeon Heart Active", Collections.singletonList("minecraft:stick"));
+			dungeonHeartBlockPlaceBlocked = builder.define(" Block Placement Disabled While Dungeon Heart Active", true);
+			dungeonHeartBlockBreakBlocked = builder.define(" Block Break Disabled While Dungeon Heart Active", true);
+			builder.pop();
+			builder.push("ForestDungeonHeartBlock");
+			forestDungeonHeartActiveBreakable = builder.comment("If Forest Dungeon Heart can't be destroyed, this configuration is de facto set to false").define(" Can Forest Dungeon Heart Be Destroyed While Active", true);
+			forestDungeonHeartBreakable = builder.define(" Can Forest Dungeon Heart Be Destroyed", true);
+			forestDungeonHeartDrop = builder.define(" Can Forest Dungeon Heart Be Dropped", true);
+			forestDungeonHeartDeactivationByItem = builder.comment("No item defined means no item needed to deactivate it").define(" Item Use To Deactivate Forest Dungeon Heart", "minecraft:apple");
+			forestDungeonHeartDeactivationByRedStone = builder.define(" Can Forest Dungeon Heart Be Deactivated By Receiving RedStone Signal", true);
+			builder.pop();
+			builder.pop();
+
+			builder.push("Spawners");
+			builder.push("SpiderEggs");
+			spiderEggsHorizontalDetectionRangeInBlocks = builder.define(" Horizontal Detection Range Of Spider Eggs In Blocks", 10);
+			spiderEggsYDetectionRangeInBlocks = builder.define(" Y Ratio Detection Range Of Spider Eggs", 4);
+			HashMap<String, Integer> spidersEggsSpawnerMap = new HashMap<>();
+			spidersEggsSpawnerMap.put("minecraft:spider", 20);
+			spiderEggsMobsSpawned = builder.define(" Detection Range Of Spider Eggs In Blocks", spidersEggsSpawnerMap);
 			builder.pop();
 			builder.pop();
 		}
@@ -139,6 +185,7 @@ public class Config
 		public static float ironOnCoalExplosionChance;
 
 		public static List<Integer> obeliskXpValues;
+		public static boolean obeliskBreakable;
 
 		public static List<String> cloverPatchBiomeNames;
 		public static List<String> cloverPatchBiomeCategories;
@@ -147,10 +194,26 @@ public class Config
 		public static List<String> glowingBulbBiomeCategories;
 
 		public static boolean forestDungeonGateCanClose;
-		public static boolean forestDungeonGateUnbreakable;
+		public static boolean forestDungeonGateOpenWhenUnlocked;
+		public static boolean forestDungeonGateBreakable;
 		public static boolean forestDungeonGateDrop;
 		public static boolean forestDungeonGateDropKeys;
 		public static List<String> forestDungeonGateLock1Unlocks;
+		public static int forestDungeonGateMobCheckRange;
+		public static int forestDungeonGateMobCheckFrequency;
+
+		public static List<String> dungeonHeartItemsBlocked;
+		public static boolean dungeonHeartBlockPlaceBlocked;
+		public static boolean dungeonHeartBlockBreakBlocked;
+		public static boolean forestDungeonHeartActiveBreakable;
+		public static boolean forestDungeonHeartBreakable;
+		public static boolean forestDungeonHeartDrop;
+		public static String forestDungeonHeartDeactivationByItem;
+		public static boolean forestDungeonHeartDeactivationByRedStone;
+
+		public static int spiderEggsHorizontalDetectionRangeInBlocks;
+		public static float spiderEggsYDetectionRangeInBlocks;
+		public static Map<String, Integer> spiderEggsMobsSpawned;
 
 		public static void bakeCommon()
 		{
@@ -169,6 +232,7 @@ public class Config
 				ironOnCoalExplosionChance = COMMON.ironOnCoalExplosionChance.get();
 
 				obeliskXpValues = COMMON.obeliskXpValues.get();
+				obeliskBreakable = COMMON.obeliskBreakable.get();
 
 				cloverPatchBiomeNames = COMMON.cloverPatchBiomeNames.get();
 				cloverPatchBiomeCategories = COMMON.cloverPatchBiomeCategories.get();
@@ -177,10 +241,27 @@ public class Config
 				glowingBulbBiomeCategories = COMMON.glowingBulbBiomeCategories.get();
 
 				forestDungeonGateCanClose = COMMON.forestDungeonGateCanClose.get();
-				forestDungeonGateUnbreakable = COMMON.forestDungeonGateUnbreakable.get();
+				forestDungeonGateOpenWhenUnlocked = COMMON.forestDungeonGateOpenWhenUnlocked.get();
+				forestDungeonGateBreakable = COMMON.forestDungeonGateBreakable.get();
 				forestDungeonGateDrop = COMMON.forestDungeonGateDrop.get();
 				forestDungeonGateDropKeys = COMMON.forestDungeonGateDropKeys.get();
 				forestDungeonGateLock1Unlocks = COMMON.forestDungeonGateLock1Unlocks.get();
+				forestDungeonGateMobCheckRange = COMMON.forestDungeonGateMobCheckRange.get();
+				forestDungeonGateMobCheckFrequency = COMMON.forestDungeonGateMobCheckFrequency.get();
+
+				dungeonHeartItemsBlocked = COMMON.dungeonHeartItemsBlocked.get();
+				dungeonHeartBlockPlaceBlocked = COMMON.dungeonHeartBlockPlaceBlocked.get();
+				dungeonHeartBlockBreakBlocked = COMMON.dungeonHeartBlockBreakBlocked.get();
+
+				forestDungeonHeartActiveBreakable = COMMON.forestDungeonHeartActiveBreakable.get();
+				forestDungeonHeartBreakable = COMMON.forestDungeonHeartBreakable.get();
+				forestDungeonHeartDrop = COMMON.forestDungeonHeartDrop.get();
+				forestDungeonHeartDeactivationByItem = COMMON.forestDungeonHeartDeactivationByItem.get();
+				forestDungeonHeartDeactivationByRedStone = COMMON.forestDungeonHeartDeactivationByRedStone.get();
+
+				spiderEggsHorizontalDetectionRangeInBlocks = COMMON.spiderEggsHorizontalDetectionRangeInBlocks.get();
+				spiderEggsYDetectionRangeInBlocks = COMMON.spiderEggsYDetectionRangeInBlocks.get();
+				spiderEggsMobsSpawned = COMMON.spiderEggsMobsSpawned.get();
 			}
 			catch (Exception e)
 			{

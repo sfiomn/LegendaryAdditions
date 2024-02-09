@@ -7,7 +7,6 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
@@ -25,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
-import sfiomn.legendary_additions.LegendaryAdditions;
+import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.tileentities.ObeliskTileEntity;
 import sfiomn.legendary_additions.registry.BlockRegistry;
 import sfiomn.legendary_additions.registry.TileEntityRegistry;
@@ -51,15 +50,21 @@ public class ObeliskBlock extends Block {
 
     public static Properties getProperties()
     {
-        return Properties
+        Properties properties = Properties
                 .of(Material.STONE)
                 .sound(SoundType.STONE)
-                .strength(50f, 1200f)
+                .strength(12f, 100f)
                 .harvestTool(ToolType.PICKAXE)
                 .harvestLevel(4)
                 .lightLevel((state) -> state.getValue(OBELISK_DOWN) ? 0: 15)
                 .noOcclusion();
+
+        if (!Config.Baked.obeliskBreakable)
+            properties.strength(50f, 1200f);
+
+        return properties;
     }
+
     public ObeliskBlock() {
         super(properties);
 
@@ -96,16 +101,11 @@ public class ObeliskBlock extends Block {
         if (new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()))
             return ActionResultType.FAIL;
 
-        if (!blockstate.getValue(PART).isBase()) {
-            return world.getBlockState(pos.below()).use(world, player, hand, hit);
-        }
+        BlockPos basePos = getBasePos(blockstate, pos);
 
         int remainingXp = 0;
         int xpCapacity = 0;
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity == null) {
-            tileEntity = world.getBlockEntity(pos.below());
-        }
+        TileEntity tileEntity = world.getBlockEntity(basePos);
         if (tileEntity instanceof ObeliskTileEntity) {
             remainingXp = ((ObeliskTileEntity) tileEntity).getXp();
             xpCapacity = ((ObeliskTileEntity) tileEntity).getXpCapacity();
@@ -172,6 +172,13 @@ public class ObeliskBlock extends Block {
         } else if (!state.getValue(PART).isBase() && !worldIn.getBlockState(pos.below()).is(BlockRegistry.OBELISK_BLOCK.get())) {
             worldIn.removeBlock(pos, false);
         }
+    }
+
+    public boolean isBase(BlockState state) {
+        return state.getValue(PART).isBase();
+    }
+    public BlockPos getBasePos(BlockState state, BlockPos pos) {
+        return isBase(state) ? pos : pos.below();
     }
 
     @Override

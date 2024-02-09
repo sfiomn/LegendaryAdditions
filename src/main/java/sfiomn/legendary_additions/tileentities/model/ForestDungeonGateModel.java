@@ -16,7 +16,7 @@ public class ForestDungeonGateModel extends AnimatedGeoModel<ForestDungeonGateTi
 
     @Override
     public ResourceLocation getTextureLocation(ForestDungeonGateTileEntity animatable) {
-        if (animatable.isUnlocked()) {
+        if (animatable.isUnlocked() || animatable.isOpened()) {
             return new ResourceLocation(LegendaryAdditions.MOD_ID, "textures/entity/forest_dungeon_gate_unlocked.png");
         } else {
             return new ResourceLocation(LegendaryAdditions.MOD_ID, "textures/entity/forest_dungeon_gate.png");

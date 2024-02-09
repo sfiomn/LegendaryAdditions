@@ -19,11 +19,6 @@ public class ObeliskRenderer extends GeoBlockRenderer<ObeliskTileEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ObeliskTileEntity instance) {
-        return new ResourceLocation(LegendaryAdditions.MOD_ID, "textures/entity/obelisk.png");
-    }
-
-    @Override
     public RenderType getRenderType(ObeliskTileEntity animatable, float partialTicks, MatrixStack stack, @Nullable IRenderTypeBuffer renderTypeBuffer, @Nullable IVertexBuilder vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         stack.scale(1.0f, 1.0f, 1.0f);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);

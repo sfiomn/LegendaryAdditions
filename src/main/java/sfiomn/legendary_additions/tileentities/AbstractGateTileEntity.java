@@ -3,6 +3,8 @@ package sfiomn.legendary_additions.tileentities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
@@ -22,6 +24,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.registry.Registry;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.blocks.AbstractGateBlock;
 import sfiomn.legendary_additions.entities.KeyEntity;
@@ -44,22 +47,22 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public abstract class AbstractGateTileEntity extends TileEntity implements IAnimatable, ITickableTileEntity, ISidedInventory {
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     protected NonNullList<ItemStack> insertedKeys;
+    protected final GatePartUtil gatePartUtil;
+    protected List<Lock> locks;
+    private String entityLock;
     private boolean opened;
     private boolean unlocked;
     private int animation;
+    private int updateUnlockedCounter;
     private static final int NO_ANIMATION = 0;
     private static final int OPENING = 1;
     private static final int CLOSING = 2;
-    protected final GatePartUtil gatePartUtil;
-    protected List<Lock> locks;
     protected static final AnimationBuilder OPENING_ANIM = new AnimationBuilder().addAnimation("opening", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
     protected static final AnimationBuilder CLOSING_ANIM = new AnimationBuilder().addAnimation("closing", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 
@@ -67,6 +70,8 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         super(tileEntityType);
         this.locks = new ArrayList<>();
         this.opened = false;
+        this.entityLock = "";
+        this.animation = NO_ANIMATION;
         this.unlocked = false;
 
         this.gatePartUtil = new GatePartUtil(gateParts);
@@ -92,11 +97,20 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         return PlayState.CONTINUE;
     }
 
+    public void sendResetAnimation() {
+        CompoundNBT posNbt = new CompoundNBT();
+        posNbt.putInt("posX", this.worldPosition.getX());
+        posNbt.putInt("posY", this.worldPosition.getY());
+        posNbt.putInt("posZ", this.worldPosition.getZ());
+        MessageDungeonGateChange messageDungeonGateChange = new MessageDungeonGateChange(posNbt);
+        NetworkHandler.INSTANCE.sendToServer(messageDungeonGateChange);
+    }
+
     @Override
     public void tick() {
-        if (!this.unlocked && this.locks.size() == 0) {
-            this.unlocked = true;
-            this.setChanged();
+        if (updateUnlockedCounter++ >= this.getMobCheckFrequencyInTicks()) {
+            this.updateUnlockedCounter = 0;
+            this.updateUnlocked();
         }
 
         for (Lock lock: this.locks) {
@@ -121,7 +135,30 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         }
     }
 
+    protected boolean checkEntityUnlocked(EntityType<?> entityTypeLock) {
+        assert this.level != null;
+        int range = getMobCheckRangeInBlocks();
+        AxisAlignedBB box = new AxisAlignedBB(this.worldPosition.getX()-range,
+                this.worldPosition.getY()-(range*0.5),
+                this.worldPosition.getZ()-range,
+                this.worldPosition.getX()+range,
+                this.worldPosition.getY()+(range*0.5),
+                this.worldPosition.getZ()+range);
+        Set<LivingEntity> matchedEntities = new HashSet<>(this.level.getEntitiesOfClass(
+                LivingEntity.class, box, entity -> Objects.nonNull(entity) && entity.getType() == entityTypeLock));
+        return matchedEntities.size() == 0;
+    }
+
     abstract BlockState getOpenPartBlockState(IGatePart part, BlockPos partPos, Direction gateFacing);
+
+    public abstract void playSuccessfulOpenSound();
+    public abstract void playFailedToOpenSound();
+    public abstract void playUnlockSound(Vector3d lockPos);
+    public abstract boolean openWhenUnlocked();
+    public abstract int getMobCheckRangeInBlocks();
+    public abstract int getMobCheckFrequencyInTicks();
+
+    abstract public boolean canDropKeys();
 
     public void resetAnimation() {
         this.animation = NO_ANIMATION;
@@ -129,7 +166,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
 
     public boolean openGate() {
         if (this.level != null && this.animation == NO_ANIMATION) {
-            if (canOpen()) {
+            if (isOpenFree()) {
                 this.animation = OPENING;
                 this.opened = true;
                 this.setChanged();
@@ -138,12 +175,12 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
 
                 Direction gateFacing = getGateFacing();
                 // Update closed gate parts (gateway + hinges) as opened
-                for (IGatePart part : this.gatePartUtil.getCloseParts()) {
+                for (IGatePart part : this.gatePartUtil.getClosedGateParts()) {
                     BlockState partState = this.level.getBlockState(this.worldPosition.offset(part.offset(gateFacing)));
                     this.level.setBlockAndUpdate(this.worldPosition.offset(part.offset(gateFacing)), partState.setValue(AbstractGateBlock.OPENED, true));
                 }
                 // Create new blocks in the opened gate part locations
-                for (IGatePart part : this.gatePartUtil.getOpenParts()) {
+                for (IGatePart part : this.gatePartUtil.getOpenedGateParts()) {
                     BlockPos partPos = this.worldPosition.offset(part.offset(gateFacing));
                     this.level.setBlockAndUpdate(partPos, this.getOpenPartBlockState(part, partPos, gateFacing));
                 }
@@ -162,12 +199,12 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
             this.setChanged();
 
             Direction gateFacing = getGateFacing();
-            for (IGatePart part : this.gatePartUtil.getCloseParts()) {
+            for (IGatePart part : this.gatePartUtil.getClosedGateParts()) {
                 BlockState partState = this.level.getBlockState(this.worldPosition.offset(part.offset(gateFacing)));
                 this.level.setBlockAndUpdate(this.worldPosition.offset(part.offset(gateFacing)), partState.setValue(AbstractGateBlock.OPENED, false));
             }
             // Remove the open gate part blocks
-            for (IGatePart part : this.gatePartUtil.getOpenParts()) {
+            for (IGatePart part : this.gatePartUtil.getOpenedGateParts()) {
                 BlockPos partPos = this.worldPosition.offset(part.offset(gateFacing));
                 BlockState partState = this.level.getBlockState(partPos);
                 this.level.setBlockAndUpdate(partPos, partState.getValue(AbstractGateBlock.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState());
@@ -179,12 +216,12 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         return this.opened;
     }
 
-    public boolean canOpen() {
+    public boolean isOpenFree() {
         if (this.level == null)
             return false;
         Direction gateFacing = getGateFacing();
 
-        for (IGatePart part: this.gatePartUtil.getOpenParts()) {
+        for (IGatePart part: this.gatePartUtil.getOpenedGateParts()) {
             BlockPos partPos = this.worldPosition.offset(part.offset(gateFacing));
             BlockState partState = this.level.getBlockState(partPos);
             if (!partState.getMaterial().isReplaceable()) {
@@ -198,20 +235,29 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         return getBlockState().getValue(AbstractGateBlock.FACING);
     }
 
-    public void sendResetAnimation() {
-        CompoundNBT posNbt = new CompoundNBT();
-        posNbt.putInt("posX", this.worldPosition.getX());
-        posNbt.putInt("posY", this.worldPosition.getY());
-        posNbt.putInt("posZ", this.worldPosition.getZ());
-        MessageDungeonGateChange messageDungeonGateChange = new MessageDungeonGateChange(posNbt);
-        NetworkHandler.INSTANCE.sendToServer(messageDungeonGateChange);
+    public void setEntityLock(EntityType<?> entityType) {
+        this.entityLock = Registry.ENTITY_TYPE.getKey(entityType).toString();
+        this.setChanged();
     }
 
-    public boolean checkUnlocked() {
+    public Optional<EntityType<?>> getEntityLock() {
+        return EntityType.byString(this.entityLock);
+    }
+
+    public boolean checkLocksUnlocked() {
         for (Lock lock: this.locks) {
             if (!lock.isUnlocked()) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    public boolean checkEntityUnlocked() {
+        if (this.getEntityLock().isPresent()) {
+            EntityType<?> entityTypeLock = this.getEntityLock().get();
+            return this.checkEntityUnlocked(entityTypeLock);
         }
         return true;
     }
@@ -220,8 +266,29 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         return this.unlocked;
     }
 
+    public void updateUnlocked() {
+        if (this.level == null || this.level.isClientSide)
+            return;
+
+        boolean wasUnlocked = this.unlocked;
+        this.unlocked = checkLocksUnlocked() && checkEntityUnlocked();
+        if (wasUnlocked == this.unlocked)
+            return;
+
+        this.setChanged();
+        if (this.unlocked && this.openWhenUnlocked() && !this.isOpened()) {
+            if (!this.openGate()) {
+                // Force the client to update the gate texture to unlocked if it can't be opened
+                this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+            }
+        } else {
+            // Force the client to update the gate texture
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
+
     public void dropKeys() {
-        if (this.level != null) {
+        if (this.level != null && canDropKeys()) {
             InventoryHelper.dropContents(this.level, this.worldPosition, this.insertedKeys);
         }
     }
@@ -288,18 +355,8 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
 
     protected void unlock(Lock lock) {
         lock.unlocked();
-        this.unlocked = this.checkUnlocked();
-        this.setChanged();
-        if (this.unlocked) {
-            if (this.level != null && !this.openGate()) {
-                this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-            }
-        }
+        this.updateUnlocked();
     }
-
-    public abstract void playSuccessfulOpenSound();
-    public abstract void playFailedToOpenSound();
-    public abstract void playUnlockSound(Vector3d lockPos);
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
@@ -390,6 +447,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         this.opened = nbt.getBoolean("opened");
         this.unlocked = nbt.getBoolean("unlocked");
         this.animation = nbt.getInt("animation");
+        this.entityLock = nbt.getString("entityLock");
         for (Lock lock: this.locks) {
             int[] lockInfo = nbt.getIntArray("lock" + lock.id);
             if (lockInfo[0] == 1)
@@ -407,6 +465,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         nbt.putBoolean("opened", this.opened);
         nbt.putBoolean("unlocked", this.unlocked);
         nbt.putInt("animation", this.animation);
+        nbt.putString("entityLock", this.entityLock);
         for (Lock lock: this.locks) {
             List<Integer> lockInfo = new ArrayList<>();
             if (lock.isUnlocked())
@@ -437,6 +496,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         nbt.putBoolean("opened", this.opened);
         nbt.putBoolean("unlocked", this.unlocked);
         nbt.putInt("animation", this.animation);
+        nbt.putString("entityLock", this.entityLock);
         for (Lock lock: this.locks) {
             List<Integer> lockInfo = new ArrayList<>();
             if (lock.isUnlocked())
@@ -464,6 +524,7 @@ public abstract class AbstractGateTileEntity extends TileEntity implements IAnim
         this.opened = nbt.getBoolean("opened");
         this.unlocked = nbt.getBoolean("unlocked");
         this.animation = nbt.getInt("animation");
+        this.entityLock = nbt.getString("entityLock");
         this.insertedKeys = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(nbt, this.insertedKeys);
         for (Lock lock: this.locks) {

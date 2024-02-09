@@ -10,7 +10,6 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -19,8 +18,8 @@ import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.registry.SoundRegistry;
 import sfiomn.legendary_additions.registry.TileEntityRegistry;
 import sfiomn.legendary_additions.util.DungeonGatePartTypeEnum;
 import sfiomn.legendary_additions.util.IGatePart;
@@ -36,17 +35,17 @@ public class ForestDungeonGateBlock extends AbstractGateBlock {
     private static final double gateShapeThickness = 8.0D;
     public static Properties getProperties()
     {
-
         Properties properties = Properties
                 .of(Material.WOOD)
                 .sound(SoundType.STONE)
-                .strength(50f, 100f)
+                .strength(12f, 100f)
                 .harvestTool(ToolType.AXE)
                 .harvestLevel(4)
                 .noOcclusion();
 
-        if (Config.Baked.forestDungeonGateUnbreakable)
+        if (!Config.Baked.forestDungeonGateBreakable)
             properties.strength(-1.0f, 3600000.0F);
+
         return properties;
     }
 
@@ -82,7 +81,7 @@ public class ForestDungeonGateBlock extends AbstractGateBlock {
         super.setPlacedBy(world, pos, state, player, itemStack);
         if (!world.isClientSide) {
             Direction gateFacing = state.getValue(FACING);
-            for (IGatePart part : this.gatePartUtil.getCloseParts()) {
+            for (IGatePart part : this.gatePartUtil.getClosedGateParts()) {
                 if (!part.isBase() && part instanceof ForestDungeonGatePart) {
                     ForestDungeonGatePart forestPart = (ForestDungeonGatePart) part;
                     world.setBlockAndUpdate(pos.offset(part.offset(gateFacing)), state.setValue(PART, forestPart));
@@ -108,13 +107,18 @@ public class ForestDungeonGateBlock extends AbstractGateBlock {
     }
 
     @Override
-    public boolean canDropKeys() {
-        return Config.Baked.forestDungeonGateDropKeys;
+    public boolean isBreakable() {
+        return Config.Baked.forestDungeonGateBreakable;
     }
 
     @Override
     public boolean canDropGate() {
         return Config.Baked.forestDungeonGateDrop;
+    }
+
+    @Override
+    public boolean isOpenPart(BlockState state) {
+        return state.getValue(PART).isOpenPart();
     }
 
     @Override

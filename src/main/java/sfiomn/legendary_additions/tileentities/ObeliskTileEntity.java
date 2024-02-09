@@ -38,7 +38,7 @@ public class ObeliskTileEntity extends TileEntity implements IAnimatable {
     @Override
     public void registerControllers(AnimationData data) {
         if (!isDown())
-            data.addAnimationController(new AnimationController<>(this, "animController", 0, this::animController));
+            data.addAnimationController(new AnimationController<>(this, "animController", 10, this::animController));
     }
 
     protected <E extends ObeliskTileEntity> PlayState animController(final AnimationEvent<E> event) {

@@ -3,6 +3,7 @@ package sfiomn.legendary_additions;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
@@ -32,7 +33,9 @@ import org.apache.logging.log4j.Logger;
 import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.entities.render.DesertKeyRenderer;
 import sfiomn.legendary_additions.entities.render.ForestKeyRenderer;
+import sfiomn.legendary_additions.screens.DungeonHeartScreen;
 import sfiomn.legendary_additions.tileentities.render.ForestDungeonGateRenderer;
+import sfiomn.legendary_additions.tileentities.render.ForestDungeonHeartRenderer;
 import sfiomn.legendary_additions.tileentities.render.ObeliskRenderer;
 import sfiomn.legendary_additions.tileentities.render.SeatRenderer;
 import sfiomn.legendary_additions.network.NetworkHandler;
@@ -62,15 +65,6 @@ public class LegendaryAdditions
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
-        BlockRegistry.register(modBus);
-        ItemRegistry.register(modBus);
-        EntityTypeRegistry.register(modBus);
-        SoundRegistry.register(modBus);
-        TileEntityRegistry.register(modBus);
-
-        Config.register();
-        Config.Baked.bakeCommon();
-
         // Register the setup method for modloading
         modBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -79,6 +73,16 @@ public class LegendaryAdditions
         modBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         modBus.addListener(this::doClientStuff);
+
+        BlockRegistry.register(modBus);
+        EffectRegistry.register(modBus);
+        ItemRegistry.register(modBus);
+        EntityTypeRegistry.register(modBus);
+        SoundRegistry.register(modBus);
+        TileEntityRegistry.register(modBus);
+
+        Config.register();
+        Config.Baked.bakeCommon();
 
         GeckoLib.initialize();
 
@@ -90,9 +94,7 @@ public class LegendaryAdditions
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        NetworkHandler.register();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -103,6 +105,7 @@ public class LegendaryAdditions
             RenderTypeLookup.setRenderLayer(BlockRegistry.OBELISK_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CLOVER_PATCH_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.GLOWING_BULB_BLOCK.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.MOSS_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CAPTAIN_CHAIR_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.CAPTAIN_CHAIR_TOP_BLOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.TRIBAL_TORCH_BLOCK.get(), RenderType.cutout());
@@ -129,9 +132,10 @@ public class LegendaryAdditions
             RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_BLOCK.get(), RenderType.cutout());
 
             RenderTypeLookup.setRenderLayer(BlockRegistry.FOREST_DUNGEON_GATE_BLOCK.get(), RenderType.cutout());
-        });
+            RenderTypeLookup.setRenderLayer(BlockRegistry.FOREST_DUNGEON_HEART_BLOCK.get(), RenderType.cutout());
 
-        NetworkHandler.register();
+            RenderTypeLookup.setRenderLayer(BlockRegistry.SPIDER_EGGS_BLOCK.get(), RenderType.cutout());
+        });
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, LegendaryAdditions::registerEntityRendering);
 
@@ -172,6 +176,7 @@ public class LegendaryAdditions
             {
                 ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.OBELISK_TILE_ENTITY.get(), ObeliskRenderer::new);
                 ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.FOREST_DUNGEON_GATE_TILE_ENTITY.get(), ForestDungeonGateRenderer::new);
+                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.FOREST_DUNGEON_HEART_TILE_ENTITY.get(), ForestDungeonHeartRenderer::new);
             }
         };
     }

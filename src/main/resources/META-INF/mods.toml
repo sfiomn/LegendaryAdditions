@@ -34,7 +34,7 @@ credits="Sfiomn" #optional
 authors="Sfiomn" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Legendary creatures is a mod including sevrel little features and nice-to-have items or blocks.
+Includes several little features and nice-to-have items or blocks.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.legendary_additions]] #optional

@@ -59,4 +59,24 @@ public class ForestDungeonGateTileEntity extends AbstractGateTileEntity {
         if (this.level != null)
             this.level.playSound(null, lockPos.x, lockPos.y, lockPos.z, SoundRegistry.LOCK_UNLOCKED.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
     }
+
+    @Override
+    public int getMobCheckRangeInBlocks() {
+        return Config.Baked.forestDungeonGateMobCheckRange;
+    }
+
+    @Override
+    public int getMobCheckFrequencyInTicks() {
+        return Config.Baked.forestDungeonGateMobCheckFrequency;
+    }
+
+    @Override
+    public boolean openWhenUnlocked() {
+        return Config.Baked.forestDungeonGateOpenWhenUnlocked;
+    }
+
+    @Override
+    public boolean canDropKeys() {
+        return Config.Baked.forestDungeonGateDropKeys;
+    }
 }

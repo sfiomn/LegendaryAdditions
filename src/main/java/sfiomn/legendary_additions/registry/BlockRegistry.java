@@ -31,6 +31,8 @@ public class BlockRegistry
 	public static final RegistryObject<Block> CARVED_SPRUCE_LOG_BLOCK = registerBlock("carved_spruce_log", () -> new Block(AbstractBlock.Properties
 			.of(Material.WOOD).sound(SoundType.WOOD).strength(1f, 10f).harvestTool(ToolType.AXE).harvestLevel(1).noOcclusion()));
 
+	public static final RegistryObject<Block> MOSS_BLOCK = registerBlock("moss", MossBlock::new);
+
 	public static final RegistryObject<Block> HONEY_POND_BLOCK = BLOCKS.register("honey_pond", HoneyPondBlock::new);
 	public static final RegistryObject<Block> MEAT_RACK_BLOCK = registerBlock("meat_rack", MeatRackBlock::new);
 	public static final RegistryObject<Block> OBELISK_BLOCK = BLOCKS.register("obelisk", ObeliskBlock::new);
@@ -86,6 +88,10 @@ public class BlockRegistry
 			.of(Material.WOOD).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.AXE).harvestLevel(4).noOcclusion()));
 
 	public static final RegistryObject<Block> FOREST_DUNGEON_GATE_BLOCK = registerBlock("forest_dungeon_gate", ForestDungeonGateBlock::new);
+
+	public static final RegistryObject<Block> FOREST_DUNGEON_HEART_BLOCK = registerBlock("forest_dungeon_heart", ForestDungeonHeartBlock::new);
+
+	public static final RegistryObject<Block> SPIDER_EGGS_BLOCK = registerBlock("spider_eggs", SpiderEggsBlock::new);
 
 	private static <T extends Block> RegistryObject<Block> registerBlock(String name, Supplier<T> block) {
 		RegistryObject<Block> newBlock = BLOCKS.register(name, block);

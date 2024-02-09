@@ -1,0 +1,21 @@
+{
+	"textures": {
+		"2": "legendary_additions:block/moss_side",
+		"3": "legendary_additions:block/moss_top",
+		"particle": "legendary_additions:block/moss_top"
+	},
+	"elements": [
+		{
+			"name": "moss",
+			"from": [-0.01, -9, -0.01],
+			"to": [16.01, 1, 16.01],
+			"faces": {
+				"north": {"uv": [16, 0, 0, 10], "texture": "#2", "cullface": "north", "tintindex": 1 },
+				"east": {"uv": [16, 0, 0, 10], "texture": "#2", "cullface": "east", "tintindex": 1 },
+				"south": {"uv": [16, 0, 0, 10], "texture": "#2", "cullface": "south", "tintindex": 1 },
+				"west": {"uv": [16, 0, 0, 10], "texture": "#2", "cullface": "west", "tintindex": 1 },
+				"up": {"uv": [0, 0, 16, 16], "texture": "#3", "tintindex": 1 }
+			}
+		}
+	]
+}
