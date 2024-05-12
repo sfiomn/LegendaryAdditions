@@ -65,8 +65,13 @@ public abstract class AbstractDungeonHeartBlock extends Block {
         }
 
         if (world.isClientSide && player.isCreative() && Minecraft.getInstance().screen == null) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            ClientHooks.openDungeonHeartScreen(tileEntity);
+            TileEntity tileEntity = world.getBlockEntity(basePos);
+
+            if (tileEntity instanceof AbstractDungeonHeartTileEntity) {
+                ClientHooks.openDungeonHeartScreen(tileEntity);
+            } else {
+                LegendaryAdditions.LOGGER.debug("Tile entity container is not correct at pos " + basePos);
+            }
             return ActionResultType.SUCCESS;
         }
 
@@ -108,6 +113,11 @@ public abstract class AbstractDungeonHeartBlock extends Block {
         return state.getValue(BASE);
     }
     public BlockPos getBasePos(BlockState state, BlockPos pos) {
+        if (isBase(state)) {
+            LegendaryAdditions.LOGGER.debug("is base, return pos " + pos);
+        } else {
+            LegendaryAdditions.LOGGER.debug("is not base, return pos " + pos.below());
+        }
         return isBase(state) ? pos : pos.below();
     }
     abstract public boolean canDrop();

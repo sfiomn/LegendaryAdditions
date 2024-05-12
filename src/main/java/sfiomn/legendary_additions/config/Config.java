@@ -68,7 +68,7 @@ public class Config
 
 		public final ForgeConfigSpec.ConfigValue<Integer> spiderEggsHorizontalDetectionRangeInBlocks;
 		public final ForgeConfigSpec.ConfigValue<Integer> spiderEggsYDetectionRangeInBlocks;
-		public final ForgeConfigSpec.ConfigValue<Map<String, Integer>> spiderEggsMobsSpawned;
+		public final ForgeConfigSpec.ConfigValue<List<String>> spiderEggsMobsSpawned;
 
 		Common(ForgeConfigSpec.Builder builder)
 		{
@@ -162,9 +162,7 @@ public class Config
 			builder.push("SpiderEggs");
 			spiderEggsHorizontalDetectionRangeInBlocks = builder.define(" Horizontal Detection Range Of Spider Eggs In Blocks", 10);
 			spiderEggsYDetectionRangeInBlocks = builder.define(" Y Ratio Detection Range Of Spider Eggs", 4);
-			HashMap<String, Integer> spidersEggsSpawnerMap = new HashMap<>();
-			spidersEggsSpawnerMap.put("minecraft:spider", 20);
-			spiderEggsMobsSpawned = builder.define(" Detection Range Of Spider Eggs In Blocks", spidersEggsSpawnerMap);
+			spiderEggsMobsSpawned = builder.define(" Detection Range Of Spider Eggs In Blocks", Collections.singletonList("minecraft:spider;20"));
 			builder.pop();
 			builder.pop();
 		}
@@ -213,7 +211,7 @@ public class Config
 
 		public static int spiderEggsHorizontalDetectionRangeInBlocks;
 		public static float spiderEggsYDetectionRangeInBlocks;
-		public static Map<String, Integer> spiderEggsMobsSpawned;
+		public static List<String> spiderEggsMobsSpawned;
 
 		public static void bakeCommon()
 		{

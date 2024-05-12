@@ -53,7 +53,7 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
-            args '--username', 'Armkath', '--userType', 'microsoft', '--accessToken', 'eyJraWQiOiJhYzg0YSIsImFsZyI6IkhTMjU2In0.eyJ4dWlkIjoiMjUzNTQxMjExMTgwMTc2NiIsImFnZyI6IkFkdWx0Iiwic3ViIjoiNTkzZmNlNDctN2IxOS00MjI3LWFjM2ItMThjZmQzODNjNWFjIiwiYXV0aCI6IlhCT1giLCJucyI6ImRlZmF1bHQiLCJyb2xlcyI6W10sImlzcyI6ImF1dGhlbnRpY2F0aW9uIiwiZmxhZ3MiOlsidHdvZmFjdG9yYXV0aCIsIm1pbmVjcmFmdF9uZXQiLCJtc2FtaWdyYXRpb25fc3RhZ2U0Iiwib3JkZXJzXzIwMjIiLCJtdWx0aXBsYXllciJdLCJwcm9maWxlcyI6eyJtYyI6IjVmNTU4NWFhLTUzNGEtNDU4OS05ZThlLWQ2YWUyMGUzNWEzOSJ9LCJwbGF0Zm9ybSI6IlVOS05PV04iLCJ5dWlkIjoiZWU5MmU4NTY2M2VkNTZlNTQ2NjRmMGRlYmI1YTYzYTYiLCJuYmYiOjE3MDY3NTY0NTMsImV4cCI6MTcwNjg0Mjg1MywiaWF0IjoxNzA2NzU2NDUzfQ.WbhUPTjIDkdtRDdzeebeUU5zmG8DIKk0W97wMYbpQa0'
+            args '--username', 'Armkath', '--userType', 'microsoft', '--accessToken', 'eyJraWQiOiJhYzg0YSIsImFsZyI6IkhTMjU2In0.eyJ4dWlkIjoiMjUzNTQxMjExMTgwMTc2NiIsImFnZyI6IkFkdWx0Iiwic3ViIjoiNTkzZmNlNDctN2IxOS00MjI3LWFjM2ItMThjZmQzODNjNWFjIiwiYXV0aCI6IlhCT1giLCJucyI6ImRlZmF1bHQiLCJyb2xlcyI6W10sImlzcyI6ImF1dGhlbnRpY2F0aW9uIiwiZmxhZ3MiOlsidHdvZmFjdG9yYXV0aCIsIm1pbmVjcmFmdF9uZXQiLCJtc2FtaWdyYXRpb25fc3RhZ2U0Iiwib3JkZXJzXzIwMjIiLCJtdWx0aXBsYXllciJdLCJwcm9maWxlcyI6eyJtYyI6IjVmNTU4NWFhLTUzNGEtNDU4OS05ZThlLWQ2YWUyMGUzNWEzOSJ9LCJwbGF0Zm9ybSI6IlVOS05PV04iLCJ5dWlkIjoiZWU5MmU4NTY2M2VkNTZlNTQ2NjRmMGRlYmI1YTYzYTYiLCJuYmYiOjE3MTQzMjU4MzEsImV4cCI6MTcxNDQxMjIzMSwiaWF0IjoxNzE0MzI1ODMxfQ.L99H_DsCM524N-NfIj23B0x4gsRv3dzYtpzI_rq59eE'
 
             mods {
                 examplemod {

@@ -6,7 +6,7 @@
 				"identifier": "geometry.obelisk",
 				"texture_width": 64,
 				"texture_height": 64,
-				"visible_bounds_width": 4,
+				"visible_bounds_width": 3,
 				"visible_bounds_height": 3.5,
 				"visible_bounds_offset": [0, 1.25, 0]
 			},
@@ -415,7 +415,7 @@
 				{
 					"name": "particles2",
 					"parent": "top",
-					"pivot": [0, -8, 0],
+					"pivot": [0, 13, 0],
 					"rotation": [0, -85, 0]
 				},
 				{
