@@ -77,20 +77,23 @@ public class DungeonHeartScreen extends Screen {
 
     private Consumer<String> setRangeValue(TextFieldWidget textBox, Direction direction) {
         return (String s) -> {
-            while (!isInt(s))
-                textBox.deleteChars(1);
-            if (s.length() == 0) {
-                this.tileEntity.setRange(direction, 0);
-                this.sendUpdateRange(direction, 0);
-            } else {
-                this.tileEntity.setRange(direction, Integer.parseInt(s));
-                this.sendUpdateRange(direction, Integer.parseInt(s));
+            while (!isInt(s)) {
+                if (!s.isEmpty())
+                    s = s.substring(0, s.length() - 1);
+                else
+                    s = "0";
             }
+            if (textBox != null)
+                textBox.setValue(s);
+            if (s.isEmpty())
+                s = "0";
+            this.tileEntity.setRange(direction, Integer.parseInt(s));
+            this.sendUpdateRange(direction, Integer.parseInt(s));
         };
     }
 
     private boolean isInt(String s) {
-        if (s.length() == 0)
+        if (s.isEmpty())
             return true;
         try {
             int i = Integer.parseInt(s);

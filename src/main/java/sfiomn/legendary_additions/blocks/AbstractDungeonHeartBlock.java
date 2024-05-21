@@ -19,6 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.screens.ClientHooks;
 import sfiomn.legendary_additions.tileentities.AbstractDungeonHeartTileEntity;
@@ -68,9 +70,9 @@ public abstract class AbstractDungeonHeartBlock extends Block {
             TileEntity tileEntity = world.getBlockEntity(basePos);
 
             if (tileEntity instanceof AbstractDungeonHeartTileEntity) {
-                ClientHooks.openDungeonHeartScreen(tileEntity);
+                DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> ClientHooks.openDungeonHeartScreen(tileEntity));
             } else {
-                LegendaryAdditions.LOGGER.debug("Tile entity container is not correct at pos " + basePos);
+                LegendaryAdditions.LOGGER.debug("Tile entity container is not correct at pos {}", basePos);
             }
             return ActionResultType.SUCCESS;
         }
@@ -113,11 +115,6 @@ public abstract class AbstractDungeonHeartBlock extends Block {
         return state.getValue(BASE);
     }
     public BlockPos getBasePos(BlockState state, BlockPos pos) {
-        if (isBase(state)) {
-            LegendaryAdditions.LOGGER.debug("is base, return pos " + pos);
-        } else {
-            LegendaryAdditions.LOGGER.debug("is not base, return pos " + pos.below());
-        }
         return isBase(state) ? pos : pos.below();
     }
     abstract public boolean canDrop();
