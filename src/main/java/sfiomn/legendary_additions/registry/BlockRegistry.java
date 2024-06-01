@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.util.Rotation;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -29,6 +30,9 @@ public class BlockRegistry
 	public static final RegistryObject<Block> CARVED_DARK_OAK_LOG_BLOCK = registerBlock("carved_dark_oak_log", () -> new Block(AbstractBlock.Properties
 			.of(Material.WOOD).sound(SoundType.WOOD).strength(1f, 10f).harvestTool(ToolType.AXE).harvestLevel(1).noOcclusion()));
 	public static final RegistryObject<Block> CARVED_SPRUCE_LOG_BLOCK = registerBlock("carved_spruce_log", () -> new Block(AbstractBlock.Properties
+			.of(Material.WOOD).sound(SoundType.WOOD).strength(1f, 10f).harvestTool(ToolType.AXE).harvestLevel(1).noOcclusion()));
+
+	public static final RegistryObject<Block> ANCESTRAL_WOOD = registerBlock("ancestral_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties
 			.of(Material.WOOD).sound(SoundType.WOOD).strength(1f, 10f).harvestTool(ToolType.AXE).harvestLevel(1).noOcclusion()));
 
 	public static final RegistryObject<Block> MOSS_BLOCK = registerBlock("moss", MossBlock::new);

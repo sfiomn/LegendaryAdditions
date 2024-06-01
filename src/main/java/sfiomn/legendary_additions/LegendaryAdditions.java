@@ -1,9 +1,7 @@
 package sfiomn.legendary_additions;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
@@ -33,7 +31,6 @@ import org.apache.logging.log4j.Logger;
 import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.entities.render.DesertKeyRenderer;
 import sfiomn.legendary_additions.entities.render.ForestKeyRenderer;
-import sfiomn.legendary_additions.screens.DungeonHeartScreen;
 import sfiomn.legendary_additions.tileentities.render.ForestDungeonGateRenderer;
 import sfiomn.legendary_additions.tileentities.render.ForestDungeonHeartRenderer;
 import sfiomn.legendary_additions.tileentities.render.ObeliskRenderer;

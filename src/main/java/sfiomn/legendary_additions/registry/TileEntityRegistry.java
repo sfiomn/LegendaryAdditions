@@ -6,9 +6,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import sfiomn.legendary_additions.LegendaryAdditions;
-import sfiomn.legendary_additions.blocks.SpiderEggsBlock;
 import sfiomn.legendary_additions.tileentities.*;
-import sun.security.provider.ConfigFile;
 
 public class TileEntityRegistry {
     public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES =
