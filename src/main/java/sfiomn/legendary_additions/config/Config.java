@@ -109,12 +109,12 @@ public class Config
 
 			builder.push("Flowers");
 			builder.push("CloverPatch");
-			cloverPatchBiomeNames = builder.comment(" In Which Biome Names The Clover Patch Will Spawn").define("Clover Patch Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
-			cloverPatchBiomeCategories = builder.comment(" In Which Biome Categories The Clover Patch Will Spawn").define("Clover Patch Biome Categories Spawn List", new ArrayList<>());
+			cloverPatchBiomeNames = builder.comment(" In Which Biome Names The Clover Patch Will Spawn").define("Clover Patch Biome Names Spawn List", new ArrayList<>());
+			cloverPatchBiomeCategories = builder.comment(" In Which Biome Categories The Clover Patch Will Spawn").define("Clover Patch Biome Categories Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
 			builder.pop();
 			builder.push("GlowingBulb");
-			glowingBulbBiomeNames = builder.comment(" In Which Biome Names The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Names Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
-			glowingBulbBiomeCategories = builder.comment(" In Which Biome Categories The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Categories Spawn List", new ArrayList<>());
+			glowingBulbBiomeNames = builder.comment(" In Which Biome Names The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Names Spawn List", new ArrayList<>());
+			glowingBulbBiomeCategories = builder.comment(" In Which Biome Categories The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Categories Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
 			builder.pop();
 			builder.pop();
 
