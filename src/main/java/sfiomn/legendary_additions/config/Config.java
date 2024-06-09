@@ -44,9 +44,13 @@ public class Config
 
 		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeCategories;
+		public final ForgeConfigSpec.ConfigValue<Integer> cloverPatchCount;
+		public final ForgeConfigSpec.ConfigValue<Integer> cloverPatchTries;
 
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeCategories;
+		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbCount;
+		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbTries;
 
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateCanClose;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateOpenWhenUnlocked;
@@ -111,10 +115,14 @@ public class Config
 			builder.push("CloverPatch");
 			cloverPatchBiomeNames = builder.comment(" In Which Biome Names The Clover Patch Will Spawn").define("Clover Patch Biome Names Spawn List", new ArrayList<>());
 			cloverPatchBiomeCategories = builder.comment(" In Which Biome Categories The Clover Patch Will Spawn").define("Clover Patch Biome Categories Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
+			cloverPatchCount = builder.comment(" Number of clover patches that spawn in the same time").defineInRange("Clover Patch Tries", 4, 0, Integer.MAX_VALUE);
+			cloverPatchTries = builder.comment(" Number of tries to spawn a group of clover patch").defineInRange("Clover Patch Count", 4, 0, Integer.MAX_VALUE);
 			builder.pop();
 			builder.push("GlowingBulb");
 			glowingBulbBiomeNames = builder.comment(" In Which Biome Names The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Names Spawn List", new ArrayList<>());
 			glowingBulbBiomeCategories = builder.comment(" In Which Biome Categories The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Categories Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
+			glowingBulbCount = builder.comment(" Number of glowing bulbs that spawn in the same time").defineInRange("Glowing Bulb Tries", 4, 0, Integer.MAX_VALUE);
+			glowingBulbTries = builder.comment(" Number of tries to spawn a group of glowing bulbs").defineInRange("Glowing Bulb Count", 4, 0, Integer.MAX_VALUE);
 			builder.pop();
 			builder.pop();
 
@@ -187,9 +195,13 @@ public class Config
 
 		public static List<String> cloverPatchBiomeNames;
 		public static List<String> cloverPatchBiomeCategories;
+		public static int cloverPatchCount;
+		public static int cloverPatchTries;
 
 		public static List<String> glowingBulbBiomeNames;
 		public static List<String> glowingBulbBiomeCategories;
+		public static int glowingBulbCount;
+		public static int glowingBulbTries;
 
 		public static boolean forestDungeonGateCanClose;
 		public static boolean forestDungeonGateOpenWhenUnlocked;
@@ -234,9 +246,13 @@ public class Config
 
 				cloverPatchBiomeNames = COMMON.cloverPatchBiomeNames.get();
 				cloverPatchBiomeCategories = COMMON.cloverPatchBiomeCategories.get();
+				cloverPatchCount = COMMON.cloverPatchCount.get();
+				cloverPatchTries = COMMON.cloverPatchTries.get();
 
 				glowingBulbBiomeNames = COMMON.glowingBulbBiomeNames.get();
 				glowingBulbBiomeCategories = COMMON.glowingBulbBiomeCategories.get();
+				glowingBulbCount = COMMON.glowingBulbCount.get();
+				glowingBulbTries = COMMON.glowingBulbTries.get();
 
 				forestDungeonGateCanClose = COMMON.forestDungeonGateCanClose.get();
 				forestDungeonGateOpenWhenUnlocked = COMMON.forestDungeonGateOpenWhenUnlocked.get();

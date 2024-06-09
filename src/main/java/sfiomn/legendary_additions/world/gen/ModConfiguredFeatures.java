@@ -9,6 +9,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.placement.NoiseDependant;
 import net.minecraft.world.gen.placement.Placement;
+import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.registry.BlockRegistry;
 
 public class ModConfiguredFeatures {
@@ -16,17 +17,17 @@ public class ModConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> CLOVER_PATCH_CONFIG = Feature.FLOWER
             .configured((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(BlockRegistry.CLOVER_PATCH_BLOCK.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE))
-                    .tries(5)
+                    .tries(Config.Baked.cloverPatchCount)
                     .build())
             .decorated(Features.Placements.HEIGHTMAP_WORLD_SURFACE)
-            .count(8);
+            .count(Config.Baked.cloverPatchCount);
 
     public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = Feature.RANDOM_PATCH
             .configured((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState()), DoublePlantBlockPlacer.INSTANCE))
-                    .tries(8)
+                    .tries(Config.Baked.glowingBulbTries)
                     .noProjection()
                     .build())
             .decorated(Features.Placements.HEIGHTMAP_SQUARE)
-            .decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8, 0, 1)));
+            .count(Config.Baked.glowingBulbCount);
 }
