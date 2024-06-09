@@ -43,7 +43,7 @@ public class BlockRegistry
 	public static final RegistryObject<Block> XP_STORAGE_BLOCK = registerBlock("xp_storage", XpStorageBlock::new);
 	public static final RegistryObject<Block> CLOVER_PATCH_BLOCK = registerBlock("clover_patch", CloverPatchBlock::new);
 	public static final RegistryObject<Block> GLOWING_BULB_BLOCK = registerBlock("glowing_bulb", () -> new DoublePlantBlock(AbstractBlock.Properties
-			.of(Material.PLANT).noCollission().sound(SoundType.GRASS).instabreak().lightLevel((p_235470_0_) -> 14).emissiveRendering((bs, br, bp) -> true)));
+			.of(Material.REPLACEABLE_PLANT).noCollission().sound(SoundType.GRASS).instabreak().lightLevel((p_235470_0_) -> 14).emissiveRendering((bs, br, bp) -> true)));
 	public static final RegistryObject<Block> TRIBAL_TORCH_BLOCK = BLOCKS.register("tribal_torch", TribalTorchBlock::new);
 	public static final RegistryObject<Block> TRIBAL_TORCH_DOWN_BLOCK = BLOCKS.register("tribal_torch_down", TribalTorchDownBlock::new);
 	public static final RegistryObject<Block> TRIBAL_TORCH_WALL_BLOCK = BLOCKS.register("tribal_torch_wall", TribalTorchWallBlock::new);

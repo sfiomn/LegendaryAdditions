@@ -16,16 +16,17 @@ public class ModConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> CLOVER_PATCH_CONFIG = Feature.FLOWER
             .configured((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(BlockRegistry.CLOVER_PATCH_BLOCK.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE))
-                    .tries(16)
+                    .tries(5)
                     .build())
             .decorated(Features.Placements.HEIGHTMAP_WORLD_SURFACE)
-            .count(10);
+            .count(8);
 
-    public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = Feature.FLOWER
+    public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = Feature.RANDOM_PATCH
             .configured((new BlockClusterFeatureConfig.Builder(
                     new SimpleBlockStateProvider(BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState()), DoublePlantBlockPlacer.INSTANCE))
-                    .tries(20)
+                    .tries(8)
+                    .noProjection()
                     .build())
-            .decorated(Features.Placements.HEIGHTMAP_WORLD_SURFACE)
+            .decorated(Features.Placements.HEIGHTMAP_SQUARE)
             .decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8, 0, 1)));
 }
