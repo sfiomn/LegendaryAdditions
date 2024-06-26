@@ -3,10 +3,7 @@ package sfiomn.legendary_additions.world.gen;
 import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.Features;
+import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placement.NoiseDependant;
 import net.minecraft.world.gen.placement.Placement;
 import sfiomn.legendary_additions.config.Config;
@@ -28,6 +25,7 @@ public class ModConfiguredFeatures {
                     .tries(Config.Baked.glowingBulbTries)
                     .noProjection()
                     .build())
+            .count(FeatureSpread.of(1, 4))
             .decorated(Features.Placements.HEIGHTMAP_SQUARE)
-            .count(Config.Baked.glowingBulbCount);
+            .chance(Config.Baked.glowingBulbCount);
 }
