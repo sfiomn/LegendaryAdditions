@@ -73,8 +73,8 @@ public class LegendaryAdditions
 
         BlockRegistry.register(modBus);
         EffectRegistry.register(modBus);
-        ItemRegistry.register(modBus);
         EntityTypeRegistry.register(modBus);
+        ItemRegistry.register(modBus);
         SoundRegistry.register(modBus);
         TileEntityRegistry.register(modBus);
 

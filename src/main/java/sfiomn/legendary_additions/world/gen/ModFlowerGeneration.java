@@ -1,19 +1,14 @@
 package sfiomn.legendary_additions.world.gen;
 
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class ModFlowerGeneration {

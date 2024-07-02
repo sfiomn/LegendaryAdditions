@@ -49,8 +49,9 @@ public class Config
 
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeCategories;
-		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbCount;
-		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbTries;
+		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbCountMin;
+		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbCountMax;
+		public final ForgeConfigSpec.ConfigValue<Double> glowingBulbSpawnChance;
 
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateCanClose;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateOpenWhenUnlocked;
@@ -121,8 +122,9 @@ public class Config
 			builder.push("GlowingBulb");
 			glowingBulbBiomeNames = builder.comment(" In Which Biome Names The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Names Spawn List", new ArrayList<>());
 			glowingBulbBiomeCategories = builder.comment(" In Which Biome Categories The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Categories Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
-			glowingBulbCount = builder.comment(" Number of glowing bulbs that spawn in the same time").defineInRange("Glowing Bulb Tries", 4, 0, Integer.MAX_VALUE);
-			glowingBulbTries = builder.comment(" Number of tries to spawn a group of glowing bulbs").defineInRange("Glowing Bulb Count", 4, 0, Integer.MAX_VALUE);
+			glowingBulbCountMin = builder.comment(" Min number of glowing bulbs that spawn within a patch").define("Glowing Bulb Count Min", 1);
+			glowingBulbCountMax = builder.comment(" Max number of glowing bulbs that spawn within a patch").defineInRange("Glowing Bulb Count Max", 10, 0, Integer.MAX_VALUE);
+			glowingBulbSpawnChance = builder.comment(" Chance to spawn a glowing bulb patch per chunk").defineInRange("Glowing Bulb Chance Spawn", 0.02, 0, 1);
 			builder.pop();
 			builder.pop();
 
@@ -200,8 +202,9 @@ public class Config
 
 		public static List<String> glowingBulbBiomeNames;
 		public static List<String> glowingBulbBiomeCategories;
-		public static int glowingBulbCount;
-		public static int glowingBulbTries;
+		public static int glowingBulbCountMin;
+		public static int glowingBulbCountMax;
+		public static double glowingBulbSpawnChance;
 
 		public static boolean forestDungeonGateCanClose;
 		public static boolean forestDungeonGateOpenWhenUnlocked;
@@ -251,8 +254,9 @@ public class Config
 
 				glowingBulbBiomeNames = COMMON.glowingBulbBiomeNames.get();
 				glowingBulbBiomeCategories = COMMON.glowingBulbBiomeCategories.get();
-				glowingBulbCount = COMMON.glowingBulbCount.get();
-				glowingBulbTries = COMMON.glowingBulbTries.get();
+				glowingBulbCountMin = COMMON.glowingBulbCountMin.get();
+				glowingBulbCountMax = COMMON.glowingBulbCountMax.get();
+				glowingBulbSpawnChance = COMMON.glowingBulbSpawnChance.get();
 
 				forestDungeonGateCanClose = COMMON.forestDungeonGateCanClose.get();
 				forestDungeonGateOpenWhenUnlocked = COMMON.forestDungeonGateOpenWhenUnlocked.get();
