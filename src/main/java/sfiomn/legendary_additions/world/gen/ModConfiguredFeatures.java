@@ -4,6 +4,9 @@ import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placement.ChanceConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
 import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.registry.BlockRegistry;
 import sfiomn.legendary_additions.registry.FeatureRegistry;
@@ -21,15 +24,11 @@ public class ModConfiguredFeatures {
             .decorated(Features.Placements.HEIGHTMAP_SQUARE)
             .count(Config.Baked.cloverPatchCount);
 
-    public static final ConfiguredFeature<?, ?> GLOWING_BULB_FEATURE = FeatureRegistry.GLOWING_BULB.get().configured((new BlockClusterFeatureConfig.Builder(
+    public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = FeatureRegistry.GLOWING_BULB.get().configured((new BlockClusterFeatureConfig.Builder(
                 new SimpleBlockStateProvider(BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState()), DoublePlantBlockPlacer.INSTANCE))
                     .tries(1)
                     .canReplace()
                     .build())
-            .count(FeatureSpread.of(3, 5));
-
-    public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = Feature.RANDOM_SELECTOR
-            .configured(
-                    new MultipleRandomFeatureConfig(Collections.singletonList(GLOWING_BULB_FEATURE.weighted((float) Config.Baked.glowingBulbSpawnChance)), Feature.NO_OP.configured(IFeatureConfig.NONE))
-            );
+            .count(FeatureSpread.of(3, 5))
+            .decorated(Placement.CHANCE.configured(new ChanceConfig(Config.Baked.glowingBulbSpawnChance)));
 }

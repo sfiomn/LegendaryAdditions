@@ -49,7 +49,7 @@ public class Config
 
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeNames;
 		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeCategories;
-		public final ForgeConfigSpec.ConfigValue<Double> glowingBulbSpawnChance;
+		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbSpawnChance;
 
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateCanClose;
 		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateOpenWhenUnlocked;
@@ -120,7 +120,7 @@ public class Config
 			builder.push("GlowingBulb");
 			glowingBulbBiomeNames = builder.comment(" In Which Biome Names The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Names Spawn List", new ArrayList<>());
 			glowingBulbBiomeCategories = builder.comment(" In Which Biome Categories The Glowing Bulb Will Spawn").define("Glowing Bulb Biome Categories Spawn List", Arrays.asList("PLAINS", "FOREST", "TAIGA"));
-			glowingBulbSpawnChance = builder.comment(" Chance to spawn a glowing bulb patch per chunk").defineInRange("Glowing Bulb Chance Spawn", 0.02, 0, 1);
+			glowingBulbSpawnChance = builder.comment(" 1/X chance to spawn a glowing bulb patch per chunk. Increasing this number reduces the spawn chance.").defineInRange("Glowing Bulb Chance Spawn", 50, 1, Integer.MAX_VALUE);
 			builder.pop();
 			builder.pop();
 
@@ -198,7 +198,7 @@ public class Config
 
 		public static List<String> glowingBulbBiomeNames;
 		public static List<String> glowingBulbBiomeCategories;
-		public static double glowingBulbSpawnChance;
+		public static int glowingBulbSpawnChance;
 
 		public static boolean forestDungeonGateCanClose;
 		public static boolean forestDungeonGateOpenWhenUnlocked;
