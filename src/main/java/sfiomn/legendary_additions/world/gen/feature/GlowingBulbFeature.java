@@ -24,11 +24,8 @@ public class GlowingBulbFeature extends DefaultFlowersFeature {
     public boolean place(ISeedReader worldIn, ChunkGenerator generator, Random rand, BlockPos pos, BlockClusterFeatureConfig config) {
         BlockState blockstate = BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState();
         int i = 0;
-        LegendaryAdditions.LOGGER.debug("Try place the plant");
 
         for (int j = 0; j < this.getCount(config); ++j) {
-            LegendaryAdditions.LOGGER.debug("tries : " + j);
-            LegendaryAdditions.LOGGER.debug("initial pos place : " + pos);
             BlockPos blockpos = this.getPos(rand, pos, config);
             blockpos = worldIn.getHeightmapPos(Heightmap.Type.WORLD_SURFACE_WG, blockpos);
             if ((worldIn.isEmptyBlock(blockpos) || config.canReplace && worldIn.getBlockState(blockpos).getMaterial().isReplaceable()) && blockpos.getY() < worldIn.getMaxBuildHeight() - 1 && blockstate.canSurvive(worldIn, blockpos) && this.isValid(worldIn, blockpos, config)) {
