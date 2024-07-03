@@ -6,6 +6,7 @@ import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.registry.BlockRegistry;
+import sfiomn.legendary_additions.registry.FeatureRegistry;
 
 import java.util.Collections;
 
@@ -16,15 +17,16 @@ public class ModConfiguredFeatures {
                     new SimpleBlockStateProvider(BlockRegistry.CLOVER_PATCH_BLOCK.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE))
                     .tries(Config.Baked.cloverPatchTries)
                     .build())
-            .decorated(Features.Placements.HEIGHTMAP_WORLD_SURFACE)
+            .decorated(Features.Placements.ADD_32)
+            .decorated(Features.Placements.HEIGHTMAP_SQUARE)
             .count(Config.Baked.cloverPatchCount);
 
-    public static final ConfiguredFeature<?, ?> GLOWING_BULB_FEATURE = Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(
+    public static final ConfiguredFeature<?, ?> GLOWING_BULB_FEATURE = FeatureRegistry.GLOWING_BULB.get().configured((new BlockClusterFeatureConfig.Builder(
                 new SimpleBlockStateProvider(BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState()), DoublePlantBlockPlacer.INSTANCE))
-                        .tries(1)
-                        .build())
-            .count(FeatureSpread.of(Config.Baked.glowingBulbCountMin, Config.Baked.glowingBulbCountMax))
-            .decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE);
+                    .tries(1)
+                    .canReplace()
+                    .build())
+            .count(FeatureSpread.of(3, 5));
 
     public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = Feature.RANDOM_SELECTOR
             .configured(
