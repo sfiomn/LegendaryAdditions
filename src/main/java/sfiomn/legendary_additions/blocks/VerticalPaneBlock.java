@@ -1,37 +1,42 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.*;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CrossCollisionBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.Map;
 
 
-public class VerticalPaneBlock extends PaneBlock implements IWaterLoggable {
+public class VerticalPaneBlock extends CrossCollisionBlock {
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
-    protected static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = SixWayBlock.PROPERTY_BY_DIRECTION;
-    public VerticalPaneBlock(Properties properties) {
-        super(properties);
+    protected static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION;
+
+    public VerticalPaneBlock(BlockBehaviour.Properties properties) {
+        super(1.0F, 1.0F, 16.0F, 16.0F, 16.0F, properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(UP, Boolean.FALSE).setValue(DOWN, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.getStateForPlacement(context.getLevel(), context.getClickedPos());
     }
 
-    public BlockState getStateForPlacement(IBlockReader blockReader, BlockPos pos) {
+    public BlockState getStateForPlacement(BlockGetter blockReader, BlockPos pos) {
         FluidState fluidstate = blockReader.getFluidState(pos);
         Block blockDown = blockReader.getBlockState(pos.below()).getBlock();
         Block blockUp = blockReader.getBlockState(pos.above()).getBlock();
@@ -50,34 +55,29 @@ public class VerticalPaneBlock extends PaneBlock implements IWaterLoggable {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, WATERLOGGED);
     }
 
     public final boolean canAttachTo(BlockState blockState, boolean isFaceSturdy) {
         Block block = blockState.getBlock();
-        return !isExceptionForConnection(block) && isFaceSturdy || block instanceof PaneBlock || block.is(BlockTags.WALLS) || block instanceof VerticalBlock;
+        return (!isExceptionForConnection(blockState) && isFaceSturdy) || block instanceof CrossCollisionBlock || blockState.is(BlockTags.WALLS);
     }
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockStateIn, IWorld world, BlockPos pos, BlockPos posIn) {
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockStateIn, LevelAccessor level, BlockPos pos, BlockPos posIn) {
         if (blockState.getValue(WATERLOGGED)) {
-            world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
         // If update coming from horizontal, just do legacy Panel check
         if (direction.getAxis().isHorizontal()) {
             return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction),
-                    this.attachsTo(blockStateIn, blockStateIn.isFaceSturdy(world, posIn, direction.getOpposite())));
+                    this.canAttachTo(blockStateIn, blockStateIn.isFaceSturdy(level, posIn, direction.getOpposite())));
         }
 
         // If update coming from vertical, checks if it's a Vertical Panel
         return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction),
                 blockStateIn.getBlock() == this);
-    }
-
-    @Override
-    public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
-        return true;
     }
 }

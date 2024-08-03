@@ -4,6 +4,7 @@
 		"3": "legendary_additions:block/moss_top",
 		"particle": "legendary_additions:block/moss_top"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "moss",

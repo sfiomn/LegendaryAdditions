@@ -1,49 +1,47 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.registry.TileEntityRegistry;
-import sfiomn.legendary_additions.tileentities.ObeliskTileEntity;
-import sfiomn.legendary_additions.tileentities.XpStorageTileEntity;
+import sfiomn.legendary_additions.registry.BlockEntityRegistry;
+import sfiomn.legendary_additions.blockentities.XpStorageBlockEntity;
 
 import javax.annotation.Nullable;
 
-public class XpStorageBlock extends Block {
+public class XpStorageBlock extends BaseEntityBlock {
     public static final Properties properties = getProperties();;
     public static final IntegerProperty STATE = IntegerProperty.create("xp_storage_state", 0, 3);
 
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.STONE)
+                .of()
+                .mapColor(MapColor.STONE)
                 .sound(SoundType.STONE)
                 .strength(20f, 600f)
-                .harvestTool(ToolType.PICKAXE)
-                .harvestLevel(4)
+                .noLootTable()
                 .noOcclusion();
     }
 
@@ -51,13 +49,18 @@ public class XpStorageBlock extends Block {
         super(properties);
 
         this.registerDefaultState(this.getStateDefinition().any()
-                .setValue(STATE, 3));
+                .setValue(STATE, 0));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(STATE);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -67,32 +70,30 @@ public class XpStorageBlock extends Block {
 
 
     @Override
-    public ActionResultType use(BlockState blockstate, World world, BlockPos pos, PlayerEntity player, Hand hand,
-                                BlockRayTraceResult hit) {
-        super.use(blockstate, world, pos, player, hand, hit);
+    public InteractionResult use(BlockState blockstate, Level level, BlockPos pos, Player player, InteractionHand hand,
+                                 BlockHitResult hit) {
+        super.use(blockstate, level, pos, player, hand, hit);
 
-        if (new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()))
-            return ActionResultType.FAIL;
+        if (new Vec3(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.BLOCK_REACH.get()))
+            return InteractionResult.FAIL;
 
         if (player.experienceLevel == 0)
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
 
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof XpStorageTileEntity) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof XpStorageBlockEntity xpStorageBlockEntity) {
 
-            XpStorageTileEntity xpStorageTileEntity = (XpStorageTileEntity) tileEntity;
-
-            int maxXpCapacity = xpStorageTileEntity.getXpCapacity();
+            int maxXpCapacity = xpStorageBlockEntity.getXpCapacity();
             if (maxXpCapacity == 0) {
-                xpStorageTileEntity.setXpCapacity(Config.Baked.xpStorageMaxXpCapacity);
+                xpStorageBlockEntity.setXpCapacity(Config.Baked.xpStorageMaxXpCapacity);
                 maxXpCapacity = Config.Baked.xpStorageMaxXpCapacity;
             }
 
-            if (xpStorageTileEntity.getXp() >= maxXpCapacity)
-                return ActionResultType.PASS;
+            if (xpStorageBlockEntity.getXp() >= maxXpCapacity)
+                return InteractionResult.PASS;
 
-            if (world instanceof ClientWorld) {
-                world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
+            if (level instanceof ClientLevel) {
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
             }
 
             int newPlayerLevel = player.experienceLevel - 1;
@@ -103,17 +104,17 @@ public class XpStorageBlock extends Block {
             if (xpLevel > maxXpCapacity)
                 xpStored = maxXpCapacity;
             else
-                xpStored = Math.min(xpLevel, maxXpCapacity - xpStorageTileEntity.getXp());
+                xpStored = Math.min(xpLevel, maxXpCapacity - xpStorageBlockEntity.getXp());
 
             player.giveExperiencePoints(-xpStored);
 
             MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, -xpStored));
 
-            xpStorageTileEntity.setXp(xpStorageTileEntity.getXp() + xpStored);
+            xpStorageBlockEntity.setXp(xpStorageBlockEntity.getXp() + xpStored);
 
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     public int getXpNeededForNextLevel(int level) {
@@ -125,24 +126,19 @@ public class XpStorageBlock extends Block {
     }
 
     @Override
-    public void onRemove(BlockState blockState, World world, BlockPos pos, BlockState newBlockState, boolean isMoving) {
+    public void onRemove(BlockState blockState, Level level, BlockPos pos, BlockState newBlockState, boolean isMoving) {
         if (!blockState.is(newBlockState.getBlock())) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof XpStorageTileEntity && world instanceof ServerWorld) {
-                popExperience((ServerWorld) world, pos, ((XpStorageTileEntity) tileEntity).getXp());
+            BlockEntity tileEntity = level.getBlockEntity(pos);
+            if (tileEntity instanceof XpStorageBlockEntity && level instanceof ServerLevel) {
+                popExperience((ServerLevel) level, pos, ((XpStorageBlockEntity) tileEntity).getXp());
             }
-            super.onRemove(blockState, world, pos, newBlockState, isMoving);
+            super.onRemove(blockState, level, pos, newBlockState, isMoving);
         }
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TileEntityRegistry.XP_STORAGE_TILE_ENTITY.get().create();
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return BlockEntityRegistry.XP_STORAGE_BLOCK_ENTITY.get().create(blockPos, blockState);
     }
 }

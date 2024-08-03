@@ -6,6 +6,7 @@
     "0": "legendary_additions:block/honey_pond",
     "particle": "minecraft:block/stone"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "base",

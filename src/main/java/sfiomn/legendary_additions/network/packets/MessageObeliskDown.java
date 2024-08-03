@@ -1,15 +1,12 @@
 package sfiomn.legendary_additions.network.packets;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Dimension;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.DimensionSavedDataManager;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkEvent;
 import sfiomn.legendary_additions.blocks.ObeliskBlock;
 
 import java.util.function.Supplier;
@@ -17,23 +14,23 @@ import java.util.function.Supplier;
 public class MessageObeliskDown
 {
     // SERVER side message
-    CompoundNBT compound;
+    CompoundTag compound;
 
     public MessageObeliskDown()
     {
     }
 
-    public MessageObeliskDown(INBT nbt)
+    public MessageObeliskDown(Tag nbt)
     {
-        this.compound = (CompoundNBT) nbt;
+        this.compound = (CompoundTag) nbt;
     }
 
-    public static MessageObeliskDown decode(PacketBuffer buffer)
+    public static MessageObeliskDown decode(FriendlyByteBuf buffer)
     {
         return new MessageObeliskDown(buffer.readNbt());
     }
 
-    public static void encode(MessageObeliskDown message, PacketBuffer buffer)
+    public static void encode(MessageObeliskDown message, FriendlyByteBuf buffer)
     {
         buffer.writeNbt(message.compound);
     }
@@ -44,17 +41,17 @@ public class MessageObeliskDown
 
         if (context.getDirection() == NetworkDirection.PLAY_TO_SERVER && context.getSender() != null) {
 
-            context.enqueueWork(() -> setObeliskDown(context.getSender().getLevel(), message.compound));
+            context.enqueueWork(() -> setObeliskDown(context.getSender().serverLevel(), message.compound));
         }
         supplier.get().setPacketHandled(true);
     }
 
-    public static void setObeliskDown(ServerWorld world, CompoundNBT nbt) {
+    public static void setObeliskDown(ServerLevel level, CompoundTag nbt) {
         int x = nbt.getInt("posX");
         int y = nbt.getInt("posY");
         int z = nbt.getInt("posZ");
 
-        world.setBlockAndUpdate(new BlockPos(x, y, z), world.getBlockState(new BlockPos(x, y, z)).setValue(ObeliskBlock.OBELISK_DOWN, true));
-        world.setBlockAndUpdate(new BlockPos(x, y, z).above(), world.getBlockState(new BlockPos(x, y, z).above()).setValue(ObeliskBlock.OBELISK_DOWN, true));
+        level.setBlockAndUpdate(new BlockPos(x, y, z), level.getBlockState(new BlockPos(x, y, z)).setValue(ObeliskBlock.OBELISK_DOWN, true));
+        level.setBlockAndUpdate(new BlockPos(x, y, z).above(), level.getBlockState(new BlockPos(x, y, z).above()).setValue(ObeliskBlock.OBELISK_DOWN, true));
     }
 }

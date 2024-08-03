@@ -1,29 +1,24 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.TorchBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.TorchBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.registry.BlockRegistry;
 import sfiomn.legendary_additions.registry.ItemRegistry;
-import software.bernie.shadowed.fasterxml.jackson.databind.ser.Serializers;
 
 public class TribalTorchBlock extends TorchBlock {
     public static final Properties properties = getProperties();
@@ -36,9 +31,8 @@ public class TribalTorchBlock extends TorchBlock {
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.DECORATION)
+                .of()
                 .strength(1f, 10f)
-                .harvestTool(ToolType.AXE)
                 .lightLevel((p_235470_0_) -> {
                     return 14;})
                 .sound(SoundType.WOOD);
@@ -46,35 +40,38 @@ public class TribalTorchBlock extends TorchBlock {
 
 
     @Override
-    public ActionResultType use(BlockState blockstate, World world, BlockPos pos, PlayerEntity player, Hand hand,
-                                BlockRayTraceResult hit) {
-        super.use(blockstate, world, pos, player, hand, hit);
+    public InteractionResult use(BlockState blockstate, Level level, BlockPos pos, Player player, InteractionHand hand,
+                                 BlockHitResult hit) {
+        super.use(blockstate, level, pos, player, hand, hit);
 
         if (player.getItemInHand(hand).getItem() == ItemRegistry.TRIBAL_TORCH.get()) {
-            if (world.isEmptyBlock(pos.above()))
+            if (level.isEmptyBlock(pos.above()))
             {
-                world.setBlock(pos.above(), BlockRegistry.TRIBAL_TORCH_BLOCK.get().defaultBlockState(), 2);
-                world.setBlock(pos, BlockRegistry.TRIBAL_TORCH_DOWN_BLOCK.get().defaultBlockState(), 2);
-                player.getItemInHand(hand).shrink(1);
+                level.setBlockAndUpdate(pos.above(), BlockRegistry.TRIBAL_TORCH_BLOCK.get().defaultBlockState());
+                level.setBlockAndUpdate(pos, BlockRegistry.TRIBAL_TORCH_DOWN_BLOCK.get().defaultBlockState());
+                if (level.isClientSide)
+                    level.playLocalSound(pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f, false);
+                if (!player.isCreative())
+                    player.getItemInHand(hand).shrink(1);
             }
         }
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
     {
         return BASE_SHAPE;
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
     {
-        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-        if (world.isEmptyBlock(pos.below()))
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+        if (level.isEmptyBlock(pos.below()))
         {
-            world.destroyBlock(pos, true);
+            level.destroyBlock(pos, true);
         }
     }
 }

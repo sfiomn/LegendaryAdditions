@@ -1,34 +1,41 @@
 package sfiomn.legendary_additions.world.gen;
 
-import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.placement.ChanceConfig;
-import net.minecraft.world.gen.placement.IPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
-import sfiomn.legendary_additions.config.Config;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.features.FeatureUtils;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.registry.BlockRegistry;
-import sfiomn.legendary_additions.registry.FeatureRegistry;
-
-import java.util.Collections;
 
 public class ModConfiguredFeatures {
 
-    public static final ConfiguredFeature<?, ?> CLOVER_PATCH_CONFIG = Feature.FLOWER
-            .configured((new BlockClusterFeatureConfig.Builder(
-                    new SimpleBlockStateProvider(BlockRegistry.CLOVER_PATCH_BLOCK.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE))
-                    .tries(Config.Baked.cloverPatchTries)
-                    .build())
-            .decorated(Features.Placements.ADD_32)
-            .decorated(Features.Placements.HEIGHTMAP_SQUARE)
-            .count(Config.Baked.cloverPatchCount);
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GLOWING_BULB_CONFIG_KEY = registerKey("glowing_bulb_config_feature");
 
-    public static final ConfiguredFeature<?, ?> GLOWING_BULB_CONFIG = FeatureRegistry.GLOWING_BULB.get().configured((new BlockClusterFeatureConfig.Builder(
-                new SimpleBlockStateProvider(BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState()), DoublePlantBlockPlacer.INSTANCE))
-                    .tries(1)
-                    .canReplace()
-                    .build())
-            .count(FeatureSpread.of(3, 5))
-            .decorated(Placement.CHANCE.configured(new ChanceConfig(Config.Baked.glowingBulbSpawnChance)));
+    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(LegendaryAdditions.MOD_ID, name));
+    }
+
+    public static void registerSimpleRandomPatchConfig(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> resourceKey, BlockState blockState) {
+        FeatureUtils.register(context,
+                resourceKey,
+                Feature.RANDOM_PATCH,
+                new RandomPatchConfiguration(1, 5, 3,
+                        PlacementUtils.filtered(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(BlockStateProvider.simple(blockState)),
+                                BlockPredicate.replaceable())));
+    }
+
+    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+        registerSimpleRandomPatchConfig(context, GLOWING_BULB_CONFIG_KEY, BlockRegistry.GLOWING_BULB_BLOCK.get().defaultBlockState());
+    }
 }

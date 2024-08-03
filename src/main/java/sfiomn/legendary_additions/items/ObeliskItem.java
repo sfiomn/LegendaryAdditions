@@ -1,14 +1,10 @@
 package sfiomn.legendary_additions.items;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import sfiomn.legendary_additions.config.Config;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 public class ObeliskItem extends BlockItem {
     public ObeliskItem(Block block, Properties properties) {
@@ -16,45 +12,31 @@ public class ObeliskItem extends BlockItem {
     }
 
     @Override
-    public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> stacks) {
-        super.fillItemCategory(itemGroup, stacks);
-        CompoundNBT tag;
-
-        if (this.category == itemGroup) {
-            for (int xp: Config.Baked.obeliskXpValues) {
-                ItemStack stack = new ItemStack(this);
-                tag = setXpInTag(stack.getTag(), xp);
-                stack.setTag(tag);
-                stacks.add(stack);
-            }
-        }
-    }
-
-    @Override
-    public ITextComponent getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         int xp = 0;
         if (stack.getTag() != null)
             xp = getXpFromTag(stack.getTag());
-        return new StringTextComponent(super.getName(stack).getString()).append(" XP " + xp);
+        return Component.literal(super.getName(stack).getString()).append(" XP " + xp);
     }
 
-    public CompoundNBT setXpInTag(CompoundNBT tag, int xp) {
-        CompoundNBT blockEntityTag = new CompoundNBT();
+    public static CompoundTag setXpInTag(CompoundTag tag, int xp) {
+        CompoundTag blockEntityTag = new CompoundTag();
         if (tag != null) {
-            if (tag.contains("BlockEntityTag")) {
-                blockEntityTag = tag.getCompound("BlockEntityTag");
+            if (tag.contains(BLOCK_ENTITY_TAG)) {
+                blockEntityTag = tag.getCompound(BLOCK_ENTITY_TAG);
             }
         } else {
-            tag = new CompoundNBT();
+            tag = new CompoundTag();
         }
         blockEntityTag.putInt("xp", xp);
-        tag.put("BlockEntityTag", blockEntityTag);
+        blockEntityTag.putInt("xpCapacity", xp);
+        tag.put(BLOCK_ENTITY_TAG, blockEntityTag);
         return tag;
     }
 
-    private int getXpFromTag(CompoundNBT tag) {
-        if (tag.contains("BlockEntityTag")) {
-            return tag.getCompound("BlockEntityTag").getInt("xp");
+    private int getXpFromTag(CompoundTag tag) {
+        if (tag.contains(BLOCK_ENTITY_TAG)) {
+            return tag.getCompound(BLOCK_ENTITY_TAG).getInt("xp");
         }
         return 0;
     }

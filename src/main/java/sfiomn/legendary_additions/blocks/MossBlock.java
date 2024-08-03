@@ -1,27 +1,26 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CarpetBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.WoolCarpetBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 
-public class MossBlock extends CarpetBlock {
+public class MossBlock extends WoolCarpetBlock {
 
     public static final Properties properties = getProperties();
 
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.GRASS)
+                .of()
+                .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
                 .strength(0.1F)
-                .harvestTool(ToolType.SHOVEL)
+                .noLootTable()
                 .noOcclusion();
     }
 
@@ -30,7 +29,7 @@ public class MossBlock extends CarpetBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState blockState, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState blockState, LevelReader world, BlockPos pos) {
         return super.canSurvive(blockState, world, pos) && world.getBlockState(pos.below()).isFaceSturdy(world, pos.below(), Direction.UP);
     }
 }

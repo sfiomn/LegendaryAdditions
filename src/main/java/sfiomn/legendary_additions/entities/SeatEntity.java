@@ -1,36 +1,37 @@
 package sfiomn.legendary_additions.entities;
 
-import com.google.common.cache.RemovalCause;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.TransportationHelper;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import sfiomn.legendary_additions.LegendaryAdditions;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.DismountHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import sfiomn.legendary_additions.registry.EntityTypeRegistry;
 
 import java.util.List;
 
 // Retrieved from https://github.com/MrCrayfish/MrCrayfishFurnitureMod/blob/1.16.X/src/main/java/com/mrcrayfish/furniture/entity/SeatEntity.java
 public class SeatEntity extends Entity {
-    private SeatEntity(World world, BlockPos pos, double yOffset, Direction direction)
+    private SeatEntity(Level level, BlockPos pos, double yOffset, Direction direction)
     {
-        this(EntityTypeRegistry.SEAT_ENTITY.get(), world);
+        this(EntityTypeRegistry.SEAT_ENTITY.get(), level);
         this.setPos(pos.getX() + 0.5, pos.getY() + yOffset, pos.getZ() + 0.5);
         this.setRot(direction.toYRot(), 0F);
     }
-    public SeatEntity(EntityType<? extends SeatEntity> entityType, World world) {
-        super(entityType, world);
+
+    public SeatEntity(EntityType<? extends SeatEntity> entityType, Level level) {
+        super(entityType, level);
         this.noPhysics = true;
     }
 
@@ -38,23 +39,23 @@ public class SeatEntity extends Entity {
     public void tick()
     {
         super.tick();
-        if(!this.level.isClientSide)
+        if(!this.level().isClientSide)
         {
-            if(this.getPassengers().isEmpty() || this.level.isEmptyBlock(this.blockPosition()))
+            if(this.getPassengers().isEmpty() || this.level().isEmptyBlock(this.blockPosition()))
             {
-                this.remove();
-                this.level.updateNeighbourForOutputSignal(blockPosition(), this.level.getBlockState(blockPosition()).getBlock());
+                this.remove(RemovalReason.DISCARDED);
+                this.level().updateNeighbourForOutputSignal(blockPosition(), this.level().getBlockState(blockPosition()).getBlock());
             }
         }
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT p_70037_1_) {
+    protected void readAdditionalSaveData(CompoundTag p_70037_1_) {
 
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT p_213281_1_) {
+    protected void addAdditionalSaveData(CompoundTag p_213281_1_) {
 
     }
 
@@ -74,34 +75,34 @@ public class SeatEntity extends Entity {
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket()
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket()
     {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    public static ActionResultType create(World world, BlockPos pos, double yOffset, PlayerEntity player, Direction direction)
+    public static InteractionResult create(Level level, BlockPos pos, double yOffset, Player player, Direction direction)
     {
-        if(!world.isClientSide())
+        if(!level.isClientSide())
         {
-            List<SeatEntity> seats = world.getEntitiesOfClass(SeatEntity.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0, pos.getY() + 1.0, pos.getZ() + 1.0));
+            List<SeatEntity> seats = level.getEntitiesOfClass(SeatEntity.class, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0, pos.getY() + 1.0, pos.getZ() + 1.0));
             if(seats.isEmpty())
             {
-                SeatEntity seat = new SeatEntity(world, pos, yOffset, direction);
-                world.addFreshEntity(seat);
+                SeatEntity seat = new SeatEntity(level, pos, yOffset, direction);
+                level.addFreshEntity(seat);
                 player.startRiding(seat, false);
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public Vector3d getDismountLocationForPassenger(LivingEntity entity)
+    public @NotNull Vec3 getDismountLocationForPassenger(@NotNull LivingEntity entity)
     {
         Direction original = this.getDirection();
         Direction[] offsets = {original, original.getClockWise(), original.getCounterClockWise(), original.getOpposite()};
         for(Direction dir : offsets)
         {
-            Vector3d safeVec = TransportationHelper.findSafeDismountLocation(entity.getType(), this.level, this.blockPosition().relative(dir), false);
+            Vec3 safeVec = DismountHelper.findSafeDismountLocation(entity.getType(), this.level(), this.blockPosition().relative(dir), false);
             if(safeVec != null)
             {
                 return safeVec.add(0, 0.25, 0);
@@ -115,12 +116,18 @@ public class SeatEntity extends Entity {
     {
         super.addPassenger(entity);
 
-        entity.yRot = this.yRot;
-        entity.xRot = this.xRot;
+        entity.setYRot(this.getYRot());
+        entity.setXRot(this.getXRot());
     }
 
     @Override
-    public void onPassengerTurned(Entity entity)
+    protected void positionRider(@NotNull Entity passenger, @NotNull MoveFunction moveFunction) {
+        super.positionRider(passenger, moveFunction);
+        this.clampRotation(passenger);
+    }
+
+    @Override
+    public void onPassengerTurned(@NotNull Entity entity)
     {
         clampRotation(entity);
     }
@@ -128,11 +135,11 @@ public class SeatEntity extends Entity {
     // Clamp rotation from Boat onPassengerTurned minecraft impl
     private void clampRotation(Entity passenger)
     {
-        passenger.setYBodyRot(this.yRot);
-        float f = MathHelper.wrapDegrees(passenger.yRot - this.yRot);
-        float f1 = MathHelper.clamp(f, -105.0F, 105.0F);
+        passenger.setYBodyRot(this.getYRot());
+        float f = Mth.wrapDegrees(passenger.getYRot() - this.getYRot());
+        float f1 = Mth.clamp(f, -105.0F, 105.0F);
         passenger.yRotO += f1 - f;
-        passenger.yRot += f1 - f;
-        passenger.setYHeadRot(passenger.yRot);
+        passenger.setYRot(passenger.getYRot() + f1 - f);
+        passenger.setYHeadRot(passenger.getYRot());
     }
 }

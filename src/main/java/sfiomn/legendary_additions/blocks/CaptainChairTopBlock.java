@@ -1,21 +1,20 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
-import sfiomn.legendary_additions.registry.BlockRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
-public class CaptainChairTopBlock extends HorizontalBlock {
+public class CaptainChairTopBlock extends HorizontalDirectionalBlock {
 
     public static final Properties properties = getProperties();
     private static final VoxelShape NORTH_SHAPE_CHAIR_BACK = Block.box(0.0d, 0.0d, 13.0d, 16.0d, 16.0d, 16.0d);
@@ -30,36 +29,35 @@ public class CaptainChairTopBlock extends HorizontalBlock {
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.WOOD)
+                .of()
+                .mapColor(MapColor.WOOD)
                 .sound(SoundType.WOOD)
                 .strength(1f, 10f)
-                .harvestTool(ToolType.AXE)
                 .noOcclusion();
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context)
     {
         Direction direction = state.getValue(FACING);
-        switch(direction) {
-            case NORTH:
-                return NORTH_SHAPE_CHAIR_BACK;
-            case SOUTH:
-                return SOUTH_SHAPE_CHAIR_BACK;
-            case WEST:
-                return WEST_SHAPE_CHAIR_BACK;
-            default:
-                return EAST_SHAPE_CHAIR_BACK;
-        }
+        return switch (direction) {
+            case NORTH -> NORTH_SHAPE_CHAIR_BACK;
+            case SOUTH -> SOUTH_SHAPE_CHAIR_BACK;
+            case WEST -> WEST_SHAPE_CHAIR_BACK;
+            default -> EAST_SHAPE_CHAIR_BACK;
+        };
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean p_196243_5_) {
-        super.onRemove(state, world, pos, newState, p_196243_5_);
-        world.destroyBlock(pos.below(), true);
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_196243_5_) {
+        super.onRemove(state, level, pos, newState, p_196243_5_);
+        if(!state.is(newState.getBlock()) && level.getBlockState(pos.below()).getBlock() instanceof CaptainChairBlock)
+        {
+            level.removeBlock(pos.below(), false);
+        }
     }
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(FACING);
     }

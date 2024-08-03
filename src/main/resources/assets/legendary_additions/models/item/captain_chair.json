@@ -1,5 +1,5 @@
 {
-  "parent": "legendary_additions:block/captain_chair_item_icon",
+  "parent": "legendary_additions:block/captain_chair_item",
   "display": {
     "thirdperson": {
       "rotation": [

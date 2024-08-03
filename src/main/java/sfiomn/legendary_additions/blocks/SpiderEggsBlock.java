@@ -1,13 +1,12 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.common.ToolType;
-import sfiomn.legendary_additions.config.Config;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
+
+import javax.annotation.Nullable;
 
 public class SpiderEggsBlock extends AbstractSpawnerBlock {
 
@@ -17,15 +16,12 @@ public class SpiderEggsBlock extends AbstractSpawnerBlock {
     {
         Properties properties =
                 Properties
-                        .of(Material.WOOD)
+                        .of()
+                        .mapColor(MapColor.WOOD)
                         .sound(SoundType.WOOD)
                         .strength(12f, 1200f)
-                        .harvestTool(ToolType.AXE)
-                        .harvestLevel(4)
+                        .noLootTable()
                         .noOcclusion();
-
-        if (!Config.Baked.forestDungeonHeartBreakable)
-            properties.strength(-1.0f, 3600000.0F);
 
         return properties;
     }
@@ -34,8 +30,9 @@ public class SpiderEggsBlock extends AbstractSpawnerBlock {
         super(properties);
     }
 
+    @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return null;
     }
 

@@ -5,6 +5,15 @@
 		"0": "legendary_additions:block/obelisk",
 		"particle": "legendary_additions:block/obelisk"
 	},
+	"render_type": "cutout",
+	"display": {
+		"gui": {
+			"parent": "legendary_additions:item/obelisk_item"
+		},
+		"fixed": {
+			"parent": "legendary_additions:item/obelisk_item"
+		}
+	},
 	"elements": [
 		{
 			"name": "support",

@@ -5,6 +5,7 @@
 		"0": "legendary_additions:block/spider_eggs",
 		"particle": "legendary_additions:block/spider_eggs"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "egg",

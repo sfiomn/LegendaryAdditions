@@ -5,6 +5,7 @@
 		"0": "giant_spider_nest",
 		"particle": "giant_spider_nest"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "big_bottom",

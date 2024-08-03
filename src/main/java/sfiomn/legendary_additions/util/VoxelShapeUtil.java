@@ -1,11 +1,10 @@
 package sfiomn.legendary_additions.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import sfiomn.legendary_additions.LegendaryAdditions;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class VoxelShapeUtil {
     public static VoxelShape xCentered(double thickness) {
@@ -33,8 +32,8 @@ public class VoxelShapeUtil {
     }
 
     public static VoxelShape moveTo(VoxelShape shape, Direction facing, double moveValue) {
-        Vector3d moveVector = Vector3d.atLowerCornerOf(facing.getNormal()).multiply(moveValue / 16.0, moveValue / 16.0, moveValue / 16.0);
-        AxisAlignedBB bounds = shape.bounds().move(moveVector);
+        Vec3 moveVector = Vec3.atLowerCornerOf(facing.getNormal()).multiply(moveValue / 16.0, moveValue / 16.0, moveValue / 16.0);
+        AABB bounds = shape.bounds().move(moveVector);
         return shape.isEmpty() ? shape: Block.box(Math.min(bounds.minX, 1.0D) * 16, Math.min(bounds.minY, 1.0D) * 16, Math.min(bounds.minZ, 1.0D) * 16, Math.min(bounds.maxX, 1.0D) * 16, Math.min(bounds.maxY, 1.0D) * 16, Math.min(bounds.maxZ, 1.0D) * 16);
     }
 }

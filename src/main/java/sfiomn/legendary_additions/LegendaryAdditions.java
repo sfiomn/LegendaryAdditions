@@ -1,46 +1,31 @@
 package sfiomn.legendary_additions;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.client.resources.ReloadListener;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.entities.render.DesertKeyRenderer;
-import sfiomn.legendary_additions.entities.render.ForestKeyRenderer;
-import sfiomn.legendary_additions.tileentities.render.ForestDungeonGateRenderer;
-import sfiomn.legendary_additions.tileentities.render.ForestDungeonHeartRenderer;
-import sfiomn.legendary_additions.tileentities.render.ObeliskRenderer;
-import sfiomn.legendary_additions.tileentities.render.SeatRenderer;
+import sfiomn.legendary_additions.blockentities.render.SeatRenderer;
 import sfiomn.legendary_additions.network.NetworkHandler;
 import sfiomn.legendary_additions.registry.*;
-import software.bernie.geckolib3.GeckoLib;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
@@ -63,104 +48,30 @@ public class LegendaryAdditions
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         // Register the setup method for modloading
-        modBus.addListener(this::setup);
+        modBus.addListener(this::commonSetup);
         // Register the enqueueIMC method for modloading
         modBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         modBus.addListener(this::processIMC);
-        // Register the doClientStuff method for modloading
-        modBus.addListener(this::doClientStuff);
+        modBus.addListener(this::onModConfigLoadEvent);
 
         BlockRegistry.register(modBus);
-        EffectRegistry.register(modBus);
         EntityTypeRegistry.register(modBus);
-        FeatureRegistry.register(modBus);
         ItemRegistry.register(modBus);
         SoundRegistry.register(modBus);
-        TileEntityRegistry.register(modBus);
+        BlockEntityRegistry.register(modBus);
+        CreativeTabRegistry.register(modBus);
 
         Config.register();
-        Config.Baked.bakeCommon();
-
-        GeckoLib.initialize();
-
-        forgeBus.addListener(this::reloadJsonConfig);
 
         // Register ourselves for server and other game events we are interested in
         forgeBus.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        Config.Baked.bakeCommon();
+
         NetworkHandler.register();
-    }
-
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        event.enqueueWork(() ->
-        {
-            RenderTypeLookup.setRenderLayer(BlockRegistry.MEAT_RACK_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.HONEY_POND_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.OBELISK_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CLOVER_PATCH_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.GLOWING_BULB_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.MOSS_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CAPTAIN_CHAIR_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CAPTAIN_CHAIR_TOP_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.TRIBAL_TORCH_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.TRIBAL_TORCH_WALL_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.HIVE_LANTERN_BLOCK.get(), RenderType.cutout());
-
-            RenderTypeLookup.setRenderLayer(BlockRegistry.ACACIA_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.ACACIA_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.BIRCH_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.BIRCH_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.DARK_OAK_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.DARK_OAK_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.JUNGLE_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.JUNGLE_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.OAK_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.OAK_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.SPRUCE_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.SPRUCE_WINDOW_BLOCK.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CRIMSON_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CRIMSON_WINDOW_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.ORNATE_IRON_WINDOW_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_PANE.get(), RenderType.cutoutMipped());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.WARPED_WINDOW_BLOCK.get(), RenderType.cutout());
-
-            RenderTypeLookup.setRenderLayer(BlockRegistry.FOREST_DUNGEON_GATE_BLOCK.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.FOREST_DUNGEON_HEART_BLOCK.get(), RenderType.cutout());
-
-            RenderTypeLookup.setRenderLayer(BlockRegistry.SPIDER_EGGS_BLOCK.get(), RenderType.cutout());
-        });
-
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, LegendaryAdditions::registerEntityRendering);
-
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, LegendaryAdditions::registerTileEntityRenderer);
-    }
-
-    private static DistExecutor.SafeRunnable registerEntityRendering() {
-
-        return new DistExecutor.SafeRunnable()
-        {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void run()
-            {
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.SEAT_ENTITY.get(), SeatRenderer::new);
-
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.TINY_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.COMMON_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.RARE_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.EPIC_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.LEGENDARY_XP_BOTTLE_ENTITY.get(), renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.FOREST_KEY_ENTITY.get(), ForestKeyRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(EntityTypeRegistry.DESERT_KEY_ENTITY.get(), DesertKeyRenderer::new);
-            }
-        };
     }
 
     private static DistExecutor.SafeRunnable registerTileEntityRenderer() {
@@ -172,9 +83,7 @@ public class LegendaryAdditions
             @Override
             public void run()
             {
-                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.OBELISK_TILE_ENTITY.get(), ObeliskRenderer::new);
-                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.FOREST_DUNGEON_GATE_TILE_ENTITY.get(), ForestDungeonGateRenderer::new);
-                ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.FOREST_DUNGEON_HEART_TILE_ENTITY.get(), ForestDungeonHeartRenderer::new);
+                //ClientRegistry.bindTileEntityRenderer(BlockEntityRegistry.OBELISK_BLOCK_ENTITY.get(), ObeliskRenderer::new);
             }
         };
     }
@@ -192,44 +101,41 @@ public class LegendaryAdditions
                 map(m->m.getMessageSupplier().get()).
                 collect(Collectors.toList()));
     }
+
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
+    public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
 
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // register a new block here
-            LOGGER.info("HELLO from Register Block");
-        }
+    private void onModConfigLoadEvent(ModConfigEvent.Loading event)
+    {
+        final ModConfig config = event.getConfig();
+
+        if (config.getSpec() == Config.COMMON_SPEC)
+            Config.Baked.bakeCommon();
     }
 
-    private void reloadJsonConfig(final AddReloadListenerEvent event)
+    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @Mod.EventBusSubscriber(modid = LegendaryAdditions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents
     {
-        event.addListener(new ReloadListener<Void>()
-              {
-                  @Nonnull
-                  @ParametersAreNonnullByDefault
-                  @Override
-                  protected Void prepare(IResourceManager manager, IProfiler profiler)
-                  {
-                      return null;
-                  }
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event)
+        {
+            DistExecutor.safeRunWhenOn(Dist.CLIENT, LegendaryAdditions::registerTileEntityRenderer);
+        }
 
-                  @ParametersAreNonnullByDefault
-                  @Override
-                  protected void apply(Void objectIn, IResourceManager resourceManagerIn, IProfiler profilerIn)
-                  {
-                      Config.Baked.bakeCommon();
-                  }
+        @SubscribeEvent
+        public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(EntityTypeRegistry.SEAT_ENTITY.get(), SeatRenderer::new);
 
-              }
-        );
+            event.registerEntityRenderer(EntityTypeRegistry.TINY_XP_BOTTLE_ENTITY.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(EntityTypeRegistry.COMMON_XP_BOTTLE_ENTITY.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(EntityTypeRegistry.RARE_XP_BOTTLE_ENTITY.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(EntityTypeRegistry.EPIC_XP_BOTTLE_ENTITY.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(EntityTypeRegistry.LEGENDARY_XP_BOTTLE_ENTITY.get(), ThrownItemRenderer::new);
+        }
     }
 }

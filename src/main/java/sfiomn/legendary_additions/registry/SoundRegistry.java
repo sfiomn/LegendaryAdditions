@@ -1,11 +1,11 @@
 package sfiomn.legendary_additions.registry;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import sfiomn.legendary_additions.LegendaryAdditions;
 
 public class SoundRegistry {
@@ -13,13 +13,9 @@ public class SoundRegistry {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, LegendaryAdditions.MOD_ID);
 
     public static final RegistryObject<SoundEvent> IRON_ON_COAL = registerSoundEvent("iron_on_coal");
-    public static final RegistryObject<SoundEvent> LOCK_UNLOCKED = registerSoundEvent("lock_unlocked");
-    public static final RegistryObject<SoundEvent> OPEN_GATE_SUCCESSFUL = registerSoundEvent("open_gate_successful");
-    public static final RegistryObject<SoundEvent> OPEN_GATE_FAILED = registerSoundEvent("open_gate_failed");
-
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        return SOUND_EVENTS.register(name, () -> new SoundEvent(
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(
                 new ResourceLocation(LegendaryAdditions.MOD_ID, name)
             ));
     }

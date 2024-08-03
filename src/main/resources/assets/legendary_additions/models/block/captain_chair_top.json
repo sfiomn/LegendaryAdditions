@@ -6,6 +6,7 @@
 		"0": "legendary_additions:block/captain_chair",
 		"particle": "minecraft:block/red_wool"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "top",

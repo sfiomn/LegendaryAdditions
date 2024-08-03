@@ -6,6 +6,7 @@
     "1": "legendary_additions:block/tribal_torch",
     "particle": "minecraft:block/oak_planks"
   },
+  "render_type": "cutout",
   "elements": [
     {
       "name": "post",

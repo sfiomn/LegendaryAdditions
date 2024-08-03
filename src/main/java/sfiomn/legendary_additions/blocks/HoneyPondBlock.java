@@ -1,42 +1,39 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolType;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
-import sfiomn.legendary_additions.tileentities.HoneyPondTileEntity;
-import sfiomn.legendary_additions.registry.TileEntityRegistry;
+import sfiomn.legendary_additions.blockentities.HoneyPondBlockEntity;
+import sfiomn.legendary_additions.registry.BlockEntityRegistry;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-import static sfiomn.legendary_additions.tileentities.HoneyPondTileEntity.MAX_HEALING_CAPACITY;
+public class HoneyPondBlock extends BaseEntityBlock {
 
-public class HoneyPondBlock extends Block {
-
-    public static final int HEALTH_RESTORED = Config.Baked.honeyPondHealthRestored;
-    public static final int HEALING_CAPACITY_RESTORED_HONEY = Config.Baked.honeyPondHoneyCapacityRestored;
     public static final Properties properties = getProperties();
     public static final IntegerProperty HONEY_POND_STATE = IntegerProperty.create("honey_pond_state", 0, 2);
     public static Random rand = new Random();
@@ -44,13 +41,13 @@ public class HoneyPondBlock extends Block {
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.STONE)
+                .of()
+                .mapColor(MapColor.STONE)
                 .sound(SoundType.STONE)
                 .strength(2f, 30f)
-                .harvestTool(ToolType.PICKAXE)
-                .harvestLevel(4)
                 .noOcclusion();
     }
+
     public HoneyPondBlock() {
         super(properties);
 
@@ -59,7 +56,7 @@ public class HoneyPondBlock extends Block {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(HONEY_POND_STATE);
     }
@@ -69,84 +66,82 @@ public class HoneyPondBlock extends Block {
         return PushReaction.DESTROY;
     }
 
-    @Override
-    public ActionResultType use(BlockState blockstate, World world, BlockPos pos, PlayerEntity player, Hand hand,
-                                             BlockRayTraceResult hit) {
-        super.use(blockstate, world, pos, player, hand, hit);
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
 
-        if (new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()) / 2)
-            return ActionResultType.FAIL;
+    @Override
+    public InteractionResult use(BlockState blockstate, Level level, BlockPos pos, Player player, InteractionHand hand,
+                                 BlockHitResult hit) {
+        super.use(blockstate, level, pos, player, hand, hit);
+
+        if (new Vec3(pos.getX(), pos.getY(), pos.getZ()).distanceTo(player.position()) > player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) / 2)
+            return InteractionResult.FAIL;
 
         int healingCapacity = 0;
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof HoneyPondTileEntity)
-            healingCapacity = ((HoneyPondTileEntity) tileEntity).getHealingCapacity();
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof HoneyPondBlockEntity)
+            healingCapacity = ((HoneyPondBlockEntity) blockEntity).getHealingCapacity();
 
-        if (player.getMainHandItem().sameItem(new ItemStack(Items.HONEY_BOTTLE))) {
-            if (healingCapacity == MAX_HEALING_CAPACITY) {
-                player.displayClientMessage(new TranslationTextComponent("block." + LegendaryAdditions.MOD_ID + ".honey_pond.already_full"), true);
+        if (player.getMainHandItem().is(Items.HONEY_BOTTLE)) {
+            if (healingCapacity == Config.Baked.honeyPondMaxCapacity) {
+                player.displayClientMessage(Component.translatable("block." + LegendaryAdditions.MOD_ID + ".honey_pond.already_full"), true);
             } else {
                 player.getMainHandItem().shrink(1);
 
-                if (tileEntity instanceof HoneyPondTileEntity)
-                    ((HoneyPondTileEntity) tileEntity).addHealingCharges(HEALING_CAPACITY_RESTORED_HONEY);
-                if (world instanceof ClientWorld) {
-                    world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BEACON_POWER_SELECT, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
+                if (blockEntity instanceof HoneyPondBlockEntity)
+                    ((HoneyPondBlockEntity) blockEntity).addHealingCharges(Config.Baked.honeyPondHoneyCapacityRestored);
+                if (level.isClientSide) {
+                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BEACON_POWER_SELECT, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                 }
             }
         } else {
             if (healingCapacity > 0) {
                 if (player.getHealth() == player.getMaxHealth()) {
-                    player.displayClientMessage(new TranslationTextComponent("block." + LegendaryAdditions.MOD_ID + ".honey_pond.max_health"), true);
+                    player.displayClientMessage(Component.translatable("block." + LegendaryAdditions.MOD_ID + ".honey_pond.max_health"), true);
                 } else {
-                    player.heal(HEALTH_RESTORED);
-                    if (world instanceof ClientWorld) {
-                        for (int i = 0; i < Math.round((float) HEALTH_RESTORED / 2.0f); i++) {
+                    player.heal(Config.Baked.honeyPondHealthRestored);
+                    if (level.isClientSide) {
+                        for (int i = 0; i < Math.round((float) Config.Baked.honeyPondHealthRestored / 2.0f); i++) {
                             float xr = rand.nextFloat() / 2 + 0.25f;
                             float yr = rand.nextFloat() / 2 + 0.75f;
                             float zr = rand.nextFloat() / 2 + 0.25f;
-                            world.addParticle(ParticleTypes.HEART, false, pos.getX() + xr, pos.getY() + yr, pos.getZ() + zr, 0, 0, 0);
+                            level.addParticle(ParticleTypes.HEART, false, pos.getX() + xr, pos.getY() + yr, pos.getZ() + zr, 0, 0, 0);
                         }
-                        world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
+                        level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                     }
 
-                    ((HoneyPondTileEntity) tileEntity).useOneHealingCharge();
+                    ((HoneyPondBlockEntity) blockEntity).useOneHealingCharge();
                 }
             } else {
-                player.displayClientMessage(new TranslationTextComponent("block." + LegendaryAdditions.MOD_ID + ".honey_pond.empty"), true);
+                player.displayClientMessage(Component.translatable("block." + LegendaryAdditions.MOD_ID + ".honey_pond.empty"), true);
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof HoneyPondTileEntity) {
-                int healingCapacity = ((HoneyPondTileEntity) tileEntity).getHealingCapacity();
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof HoneyPondBlockEntity) {
+                int healingCapacity = ((HoneyPondBlockEntity) blockEntity).getHealingCapacity();
 
-                int nbHoneyBottle = (int) ((float) healingCapacity / (float) HEALING_CAPACITY_RESTORED_HONEY);
+                int nbHoneyBottle = (int) ((float) healingCapacity / (float) Config.Baked.honeyPondHoneyCapacityRestored);
                 ItemStack honeyBottles = new ItemStack(Items.HONEY_BOTTLE);
                 honeyBottles.setCount(nbHoneyBottle);
-                popResource(world, pos, honeyBottles);
+                popResource(level, pos, honeyBottles);
             }
-            if (tileEntity != null)
-                tileEntity.setRemoved();
+            if (blockEntity != null)
+                blockEntity.setRemoved();
         }
-        super.onRemove(state, world, pos, newState, isMoving);
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        HoneyPondTileEntity honeyPondTileEntity = TileEntityRegistry.HONEY_POND_TILE_ENTITY.get().create();
-        return honeyPondTileEntity;
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return BlockEntityRegistry.HONEY_POND_BLOCK_ENTITY.get().create(blockPos, blockState);
     }
 }

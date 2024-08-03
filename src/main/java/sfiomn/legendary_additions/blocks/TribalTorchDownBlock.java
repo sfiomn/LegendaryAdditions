@@ -1,15 +1,14 @@
 package sfiomn.legendary_additions.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.registry.BlockRegistry;
 
 public class TribalTorchDownBlock extends Block {
@@ -24,31 +23,29 @@ public class TribalTorchDownBlock extends Block {
     public static Properties getProperties()
     {
         return Properties
-                .of(Material.DECORATION)
+                .of()
                 .strength(1f, 10f)
-                .harvestTool(ToolType.AXE)
                 .sound(SoundType.WOOD);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
     {
         return BASE_SHAPE;
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
     {
-        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-        if (world.isEmptyBlock(pos.above()))
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+        if (level.isEmptyBlock(pos.above()))
         {
-            world.setBlock(pos, BlockRegistry.TRIBAL_TORCH_BLOCK.get().defaultBlockState(), 2);
+            level.setBlock(pos, BlockRegistry.TRIBAL_TORCH_BLOCK.get().defaultBlockState(), 2);
         }
 
-        if (world.isEmptyBlock(pos.below()))
+        if (level.isEmptyBlock(pos.below()))
         {
-            world.destroyBlock(pos, true);
+            level.destroyBlock(pos, true);
         }
-
     }
 }

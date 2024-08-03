@@ -1,33 +1,33 @@
 package sfiomn.legendary_additions.entities;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ExperienceBottleEntity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class XpBottleEntity extends ProjectileItemEntity {
+public abstract class XpBottleEntity extends ThrowableItemProjectile {
     private int experienceAmount;
-    public XpBottleEntity(int experienceAmount, EntityType<? extends XpBottleEntity> entityType, World world) {
-        super(entityType, world);
+    public XpBottleEntity(int experienceAmount, EntityType<? extends XpBottleEntity> entityType, Level level) {
+        super(entityType, level);
         this.experienceAmount = experienceAmount;
     }
 
-    public XpBottleEntity(int experienceAmount, EntityType<? extends XpBottleEntity> entityType, World world, LivingEntity entity) {
-        super(entityType, entity, world);
+    public XpBottleEntity(int experienceAmount, EntityType<? extends XpBottleEntity> entityType, Level level, LivingEntity entity) {
+        super(entityType, entity, level);
         this.experienceAmount = experienceAmount;
     }
 
-    public XpBottleEntity(int experienceAmount, EntityType<? extends XpBottleEntity> entityType, World world, double p_i1787_2_, double p_i1787_4_, double p_i1787_6_) {
-        super(entityType, p_i1787_2_, p_i1787_4_, p_i1787_6_, world);
+    public XpBottleEntity(int experienceAmount, EntityType<? extends XpBottleEntity> entityType, Level level, double p_i1787_2_, double p_i1787_4_, double p_i1787_6_) {
+        super(entityType, p_i1787_2_, p_i1787_4_, p_i1787_6_, level);
         this.experienceAmount = experienceAmount;
     }
 
@@ -39,23 +39,26 @@ public abstract class XpBottleEntity extends ProjectileItemEntity {
         return PotionUtils.getColor(Potions.WATER);
     }
 
-    protected void onHit(RayTraceResult p_70227_1_) {
-        super.onHit(p_70227_1_);
-        if (!this.level.isClientSide) {
-            this.level.levelEvent(2002, this.blockPosition(), getSpritesColor());
+    protected void onHit(@NotNull HitResult hitResult) {
+        super.onHit(hitResult);
+        if (!this.level().isClientSide) {
+            this.level().levelEvent(2002, this.blockPosition(), getSpritesColor());
 
             while(this.experienceAmount > 0) {
-                int j = ExperienceOrbEntity.getExperienceValue(this.experienceAmount);
+                int j = ExperienceOrb.getExperienceValue(this.experienceAmount);
                 this.experienceAmount -= j;
-                this.level.addFreshEntity(new ExperienceOrbEntity(this.level, this.getX(), this.getY(), this.getZ(), j));
+                this.level().addFreshEntity(new ExperienceOrb(this.level(), this.getX(), this.getY(), this.getZ(), j));
             }
 
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    protected abstract @NotNull Item getDefaultItem();
+
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }
