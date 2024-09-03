@@ -20,7 +20,7 @@ import static sfiomn.legendary_additions.items.ObeliskItem.setXpInTag;
 public class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> ITEM_GROUPS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, LegendaryAdditions.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> LEGENDARY_ADDITIONS_TAB = ITEM_GROUPS.register("legendary_additions", () -> CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> LEGENDARY_ADDITIONS_TAB = ITEM_GROUPS.register(LegendaryAdditions.MOD_ID, () -> CreativeModeTab.builder()
             .icon(() -> ItemRegistry.LEGENDARY_XP_BOTTLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, list) ->
             {

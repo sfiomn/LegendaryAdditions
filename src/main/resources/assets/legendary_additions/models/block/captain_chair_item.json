@@ -4,7 +4,7 @@
   "texture_size": [64, 64],
   "textures": {
     "0": "legendary_additions:block/captain_chair",
-    "particle": "legendary_additions:block/captain_chair"
+    "particle": "minecraft:block/red_wool"
   },
   "render_type": "cutout",
   "elements": [

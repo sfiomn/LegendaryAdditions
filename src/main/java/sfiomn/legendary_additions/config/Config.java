@@ -50,8 +50,8 @@ public class Config
 		{
 			builder.comment(" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone").push("MeatRack");
 
-			meatRackLeatherTicks = builder.defineInRange("Tick Amount Before Leather, 20 ticks = 1s", 240, 1, 100000);
-			meatRackBoneTicks = builder.defineInRange("Tick Amount Before Bone, 20 ticks = 1s", 240, 1, 100000);
+			meatRackLeatherTicks = builder.defineInRange("Tick Amount Before Leather, 20 ticks = 1s", 2400, 1, 100000);
+			meatRackBoneTicks = builder.defineInRange("Tick Amount Before Bone, 20 ticks = 1s", 2400, 1, 100000);
 			builder.pop();
 
 			builder.comment(new String [] {

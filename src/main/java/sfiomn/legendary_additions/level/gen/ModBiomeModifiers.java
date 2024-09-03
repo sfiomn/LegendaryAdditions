@@ -1,4 +1,4 @@
-package sfiomn.legendary_additions.world.gen;
+package sfiomn.legendary_additions.level.gen;
 
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -25,7 +25,17 @@ public class ModBiomeModifiers {
         var biomes = context.lookup(Registries.BIOME);
 
         context.register(ADD_GLOWING_BULB, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD),
+                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GLOWING_BULB_PLACED_KEY)),
+                GenerationStep.Decoration.VEGETAL_DECORATION));
+
+        context.register(ADD_GLOWING_BULB, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(Tags.Biomes.IS_CONIFEROUS),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GLOWING_BULB_PLACED_KEY)),
+                GenerationStep.Decoration.VEGETAL_DECORATION));
+
+        context.register(ADD_GLOWING_BULB, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(Tags.Biomes.IS_DENSE_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GLOWING_BULB_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
     }

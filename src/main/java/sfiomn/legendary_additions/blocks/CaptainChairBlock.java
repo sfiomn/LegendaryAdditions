@@ -80,7 +80,7 @@ public class CaptainChairBlock extends HorizontalDirectionalBlock {
                 seat.remove(Entity.RemovalReason.DISCARDED);
             }
         }
-        if(!state.is(state.getBlock()) && level.getBlockState(pos.above()).getBlock() instanceof CaptainChairTopBlock) {
+        if(level.getBlockState(pos.above()).getBlock() instanceof CaptainChairTopBlock) {
             level.removeBlock(pos.above(), false);
         }
     }

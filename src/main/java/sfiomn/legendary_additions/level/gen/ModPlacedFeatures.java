@@ -1,4 +1,4 @@
-package sfiomn.legendary_additions.world.gen;
+package sfiomn.legendary_additions.level.gen;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;

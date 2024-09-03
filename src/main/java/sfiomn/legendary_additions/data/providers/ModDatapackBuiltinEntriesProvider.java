@@ -7,9 +7,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 import sfiomn.legendary_additions.LegendaryAdditions;
-import sfiomn.legendary_additions.world.gen.ModBiomeModifiers;
-import sfiomn.legendary_additions.world.gen.ModConfiguredFeatures;
-import sfiomn.legendary_additions.world.gen.ModPlacedFeatures;
+import sfiomn.legendary_additions.level.gen.ModBiomeModifiers;
+import sfiomn.legendary_additions.level.gen.ModConfiguredFeatures;
+import sfiomn.legendary_additions.level.gen.ModPlacedFeatures;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

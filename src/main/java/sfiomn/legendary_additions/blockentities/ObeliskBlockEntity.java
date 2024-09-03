@@ -34,6 +34,13 @@ public class ObeliskBlockEntity extends BlockEntity {
         return true;
     }
 
+    public void setDown() {
+        if (level != null && level.getBlockState(worldPosition).hasProperty(ObeliskBlock.OBELISK_DOWN))
+            level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(ObeliskBlock.OBELISK_DOWN, true));
+        if (level != null && level.getBlockState(worldPosition.above()).hasProperty(ObeliskBlock.OBELISK_DOWN))
+            level.setBlockAndUpdate(worldPosition.above(), level.getBlockState(worldPosition.above()).setValue(ObeliskBlock.OBELISK_DOWN, true));
+    }
+
     public void setXp(int xp) {
         this.xp = xp;
         this.setChanged();

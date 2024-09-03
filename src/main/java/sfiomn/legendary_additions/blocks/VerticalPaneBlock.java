@@ -80,4 +80,6 @@ public class VerticalPaneBlock extends CrossCollisionBlock {
         return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction),
                 blockStateIn.getBlock() == this);
     }
+
+
 }

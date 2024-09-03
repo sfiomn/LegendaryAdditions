@@ -3,17 +3,10 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "legendary_additions:block/obelisk",
-		"particle": "legendary_additions:block/obelisk"
+		"particle": "minecraft:block/stone"
 	},
 	"render_type": "cutout",
-	"display": {
-		"gui": {
-			"parent": "legendary_additions:item/obelisk_item"
-		},
-		"fixed": {
-			"parent": "legendary_additions:item/obelisk_item"
-		}
-	},
+	"ambientocclusion": "false",
 	"elements": [
 		{
 			"name": "support",
@@ -282,47 +275,76 @@
 			}
 		}
 	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [4, 0, 0],
+			"translation": [0.25, 1.75, 1],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [4, 0, 0],
+			"translation": [0, 1.75, 1],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [4, 0, 0],
+			"translation": [-0.5, 0.75, 1],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [4, 0, 0],
+			"translation": [-0.5, 0.75, 1],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.6, 0.6, 0.6]
+		},
+		"gui": {
+			"rotation": [30, 48, 0],
+			"translation": [0, -2.25, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"fixed": {
+			"translation": [-0.5, -3.25, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
 	"groups": [
 		{
 			"name": "bottom",
 			"origin": [2, 1, 2],
 			"color": 0,
-			"nbt": "{}",
 			"children": [0, 1, 2, 3, 4]
 		},
 		{
 			"name": "chains",
 			"origin": [8, 0, 8],
 			"color": 0,
-			"nbt": "{}",
 			"children": []
 		},
 		{
 			"name": "chains2",
 			"origin": [8, 0, 8],
 			"color": 0,
-			"nbt": "{}",
 			"children": [5, 6]
 		},
 		{
 			"name": "chains3",
 			"origin": [8, 0, 8],
 			"color": 0,
-			"nbt": "{}",
 			"children": []
 		},
 		{
 			"name": "chains4",
 			"origin": [8, 0, 8],
 			"color": 0,
-			"nbt": "{}",
 			"children": [7, 8]
 		},
 		{
 			"name": "top",
 			"origin": [8, 0, 8],
 			"color": 0,
-			"nbt": "{}",
 			"children": [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 		}
 	]

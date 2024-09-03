@@ -45,8 +45,5 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         singleTexture("glowing_bulb", new ResourceLocation("item/generated"),
                 "layer0", this.modLoc("block/glowing_bulb_top"));
-
-        singleTexture("obelisk", new ResourceLocation("item/generated"),
-                "layer0", this.modLoc("item/obelisk_item"));
     }
 }

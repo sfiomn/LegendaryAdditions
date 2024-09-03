@@ -51,7 +51,7 @@ public class CaptainChairTopBlock extends HorizontalDirectionalBlock {
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_196243_5_) {
         super.onRemove(state, level, pos, newState, p_196243_5_);
-        if(!state.is(newState.getBlock()) && level.getBlockState(pos.below()).getBlock() instanceof CaptainChairBlock)
+        if(level.getBlockState(pos.below()).getBlock() instanceof CaptainChairBlock)
         {
             level.removeBlock(pos.below(), false);
         }
