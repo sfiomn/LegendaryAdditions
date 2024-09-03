@@ -49,10 +49,6 @@ public class LegendaryAdditions
 
         // Register the setup method for modloading
         modBus.addListener(this::commonSetup);
-        // Register the enqueueIMC method for modloading
-        modBus.addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
-        modBus.addListener(this::processIMC);
         modBus.addListener(this::onModConfigLoadEvent);
 
         BlockRegistry.register(modBus);
@@ -86,12 +82,6 @@ public class LegendaryAdditions
     @Mod.EventBusSubscriber(modid = LegendaryAdditions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            DistExecutor.safeRunWhenOn(Dist.CLIENT, LegendaryAdditions::registerTileEntityRenderer);
-        }
-
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(EntityTypeRegistry.SEAT_ENTITY.get(), SeatRenderer::new);
