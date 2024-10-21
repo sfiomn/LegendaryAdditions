@@ -1,11 +1,9 @@
 package sfiomn.legendary_additions.data.providers;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraftforge.client.model.generators.*;
@@ -85,6 +83,23 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(BlockRegistry.CARVED_JUNGLE_LOG_BLOCK.get(), cubeAll(BlockRegistry.CARVED_JUNGLE_LOG_BLOCK.get()));
         simpleBlockWithItem(BlockRegistry.CARVED_OAK_LOG_BLOCK.get(), cubeAll(BlockRegistry.CARVED_OAK_LOG_BLOCK.get()));
         simpleBlockWithItem(BlockRegistry.CARVED_SPRUCE_LOG_BLOCK.get(), cubeAll(BlockRegistry.CARVED_SPRUCE_LOG_BLOCK.get()));
+
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_BLACK.get(), "quartz_lamp_black");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_BLUE.get(), "quartz_lamp_blue");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_BROWN.get(), "quartz_lamp_brown");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_CYAN.get(), "quartz_lamp_cyan");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_GRAY.get(), "quartz_lamp_gray");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_GREEN.get(), "quartz_lamp_green");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_LIGHT_BLUE.get(), "quartz_lamp_light_blue");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_LIGHT_GRAY.get(), "quartz_lamp_light_gray");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_LIME.get(), "quartz_lamp_lime");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_MAGENTA.get(), "quartz_lamp_magenta");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_ORANGE.get(), "quartz_lamp_orange");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_PINK.get(), "quartz_lamp_pink");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_PURPLE.get(), "quartz_lamp_purple");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_RED.get(), "quartz_lamp_red");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_WHITE.get(), "quartz_lamp_white");
+        createQuartzLamp(BlockRegistry.QUARTZ_LAMP_YELLOW.get(), "quartz_lamp_yellow");
 
         horizontalBlock(BlockRegistry.CAPTAIN_CHAIR_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/captain_chair")), 90);
         horizontalBlock(BlockRegistry.CAPTAIN_CHAIR_TOP_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/captain_chair_top")), 90);
@@ -207,7 +222,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
         basicPaneBlockWithModel(BlockRegistry.OAK_WINDOW_PANE.get(), "oak_window");
     }
 
+    public void createQuartzLamp(Block quartzLampBlock, String name) {
+        ResourceLocation modUnlit = this.modLoc("block/" + name);
+        ResourceLocation modelLit = this.modLoc("block/" + name + "_on");
+        ModelFile unlitQuartzBlock = this.models().cubeAll("block/quartz_lamp/" + name, modUnlit).texture("particle", modUnlit);
+        this.getVariantBuilder(quartzLampBlock)
+                .partialState()
+                .with(BlockStateProperties.LIT, Boolean.TRUE)
+                .modelForState()
+                .modelFile(models().cubeAll("block/quartz_lamp/" + name + "_on", modelLit).texture("particle", modelLit))
+                .addModel()
+                .partialState()
+                .with(BlockStateProperties.LIT, Boolean.FALSE)
+                .modelForState()
+                .modelFile(unlitQuartzBlock)
+                .addModel();
 
+        simpleBlockItem(quartzLampBlock, unlitQuartzBlock);
+    }
 
     public void cubeWithItem(Block block, String baseName, ResourceLocation topTexture, ResourceLocation sideTexture) {
         ModelFile blockModel = this.models().cube(baseName, topTexture, topTexture, sideTexture, sideTexture, sideTexture, sideTexture).texture("particle", topTexture).renderType("cutout_mipped");

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "legendary_additions:block/quartz_lamp/quartz_lamp_green"
+    },
+    "lit=true": {
+      "model": "legendary_additions:block/quartz_lamp/quartz_lamp_green_on"
+    }
+  }
+}

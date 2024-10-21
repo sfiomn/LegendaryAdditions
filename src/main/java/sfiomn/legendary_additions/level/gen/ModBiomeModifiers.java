@@ -6,11 +6,11 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.registries.ForgeRegistries;
 import sfiomn.legendary_additions.LegendaryAdditions;
+import sfiomn.legendary_additions.util.ModBiomeTags;
 
 
 public class ModBiomeModifiers {
@@ -25,17 +25,7 @@ public class ModBiomeModifiers {
         var biomes = context.lookup(Registries.BIOME);
 
         context.register(ADD_GLOWING_BULB, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GLOWING_BULB_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
-
-        context.register(ADD_GLOWING_BULB, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_CONIFEROUS),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GLOWING_BULB_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
-
-        context.register(ADD_GLOWING_BULB, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_DENSE_OVERWORLD),
+                biomes.getOrThrow(ModBiomeTags.HAS_GLOWING_BULB),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GLOWING_BULB_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
     }

@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "legendary_additions:block/hive_lantern_top",
+    "east": "legendary_additions:block/hive_lantern",
+    "north": "legendary_additions:block/hive_lantern",
+    "particle": "legendary_additions:block/hive_lantern_top",
+    "south": "legendary_additions:block/hive_lantern",
+    "up": "legendary_additions:block/hive_lantern_top",
+    "west": "legendary_additions:block/hive_lantern"
+  }
+}

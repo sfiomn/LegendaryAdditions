@@ -33,6 +33,24 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(BlockRegistry.CAPTAIN_CHAIR_TOP_BLOCK.get());
         this.dropSelf(BlockRegistry.GLOWING_BULB_BLOCK.get());
         this.dropSelf(BlockRegistry.HIVE_LANTERN_BLOCK.get());
+
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_BLACK.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_BLUE.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_BROWN.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_CYAN.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_GRAY.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_GREEN.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_LIGHT_BLUE.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_LIGHT_GRAY.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_LIME.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_MAGENTA.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_ORANGE.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_PINK.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_PURPLE.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_RED.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_WHITE.get());
+        this.dropSelf(BlockRegistry.QUARTZ_LAMP_YELLOW.get());
+
         this.dropSelf(BlockRegistry.HONEY_POND_BLOCK.get());
         this.dropSelf(BlockRegistry.MEAT_RACK_BLOCK.get());
         this.dropSelf(BlockRegistry.OBELISK_BLOCK.get());

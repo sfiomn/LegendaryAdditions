@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "quartz_lamp",
+  "key": {
+    "#": {
+      "item": "minecraft:quartz"
+    },
+    "c": {
+      "tag": "forge:dyes/lime"
+    },
+    "g": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "pattern": [
+    "#c#",
+    "cgc",
+    "#c#"
+  ],
+  "result": {
+    "item": "legendary_additions:quartz_lamp_lime"
+  },
+  "show_notification": true
+}

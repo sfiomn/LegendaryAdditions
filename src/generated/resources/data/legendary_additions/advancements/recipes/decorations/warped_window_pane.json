@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "legendary_additions:warped_window_pane"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_warped_window": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "legendary_additions:warped_window"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_warped_window",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "legendary_additions:warped_window_pane"
+    ]
+  },
+  "sends_telemetry_event": false
+}

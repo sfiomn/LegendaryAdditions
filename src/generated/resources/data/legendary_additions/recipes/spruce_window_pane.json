@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "legendary_additions:spruce_window"
+    }
+  },
+  "pattern": [
+    "   ",
+    "bbb",
+    "bbb"
+  ],
+  "result": {
+    "count": 8,
+    "item": "legendary_additions:spruce_window_pane"
+  },
+  "show_notification": true
+}

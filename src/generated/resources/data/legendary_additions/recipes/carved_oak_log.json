@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "carved_wood",
+  "key": {
+    "#": {
+      "item": "minecraft:stripped_oak_wood"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "###",
+    "#s#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "legendary_additions:carved_oak_log"
+  },
+  "show_notification": true
+}

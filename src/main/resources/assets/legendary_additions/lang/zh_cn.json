@@ -1,0 +1,73 @@
+{
+  "block.legendary_additions.carved_oak_log": "雕刻的橡木原木",
+  "block.legendary_additions.carved_birch_log": "雕刻的白桦木原木",
+  "block.legendary_additions.carved_jungle_log": "雕刻的丛林木原木",
+  "block.legendary_additions.carved_dark_oak_log": "雕刻的深色橡木原木",
+  "block.legendary_additions.carved_acacia_log": "雕刻的金合欢原木",
+  "block.legendary_additions.carved_spruce_log": "雕刻的云杉原木",
+
+  "block.legendary_additions.ancestral_wood": "先祖之木",
+
+  "block.legendary_additions.moss": "苔藓",
+
+  "block.legendary_additions.honey_pond": "蜂蜜池",
+  "block.legendary_additions.honey_pond.already_full": "这个蜂蜜池已经满了",
+  "block.legendary_additions.honey_pond.empty": "这个蜂蜜池是空的",
+  "block.legendary_additions.honey_pond.max_health": "血量状况已达到最高水平",
+
+  "block.legendary_additions.meat_rack": "晾肉架",
+  "block.legendary_additions.captain_chair": "船长椅",
+  "block.legendary_additions.captain_chair_top": "船长椅",
+  "block.legendary_additions.tribal_torch": "部落火炬",
+  "block.legendary_additions.tribal_torch_down": "部落火炬",
+  "block.legendary_additions.tribal_torch_wall": "部落火炬",
+  "block.legendary_additions.obelisk": "方尖碑",
+  "block.legendary_additions.xp_storage": "经验存储块",
+  "block.legendary_additions.hive_lantern": "蜂巢灯笼",
+  "block.legendary_additions.forest_dungeon_heart": "森林地牢之心",
+
+  "block.legendary_additions.glowing_bulb": "发光球茎",
+
+  "block.legendary_additions.acacia_window_pane": "金合欢木窗板",
+  "block.legendary_additions.acacia_window": "金合欢木窗户",
+  "block.legendary_additions.birch_window_pane": "白桦木窗板",
+  "block.legendary_additions.birch_window": "白桦木窗户",
+  "block.legendary_additions.dark_oak_window_pane": "深色橡木窗板",
+  "block.legendary_additions.dark_oak_window": "深色橡木窗户",
+  "block.legendary_additions.jungle_window_pane": "丛林木窗板",
+  "block.legendary_additions.jungle_window": "丛林木窗户",
+  "block.legendary_additions.oak_window_pane": "橡木窗板",
+  "block.legendary_additions.oak_window": "橡木窗户",
+  "block.legendary_additions.spruce_window_pane": "云杉木窗板",
+  "block.legendary_additions.spruce_window": "云杉木窗户",
+  "block.legendary_additions.crimson_window_pane": "绯红木窗板",
+  "block.legendary_additions.ornate_iron_window_pane": "华丽的铁窗板",
+  "block.legendary_additions.warped_window_pane": "诡异木窗板",
+  "block.legendary_additions.crimson_window": "绯红木窗户",
+  "block.legendary_additions.ornate_iron_window": "华丽的铁窗户",
+  "block.legendary_additions.warped_window": "诡异木窗户",
+
+  "block.legendary_additions.forest_dungeon_gate": "森林地牢之门",
+  "block.legendary_additions.gate.entityLocked": "你现在不能打开；附近有 %s",
+  "block.legendary_additions.gate.entityLockApplied": "根据附近 %s 实体应用锁定",
+
+  "itemGroup.legendary_additions": "传奇拓展",
+
+  "item.legendary_additions.tiny_xp_bottle": "迷你经验瓶",
+  "item.legendary_additions.common_xp_bottle": "普通经验瓶",
+  "item.legendary_additions.rare_xp_bottle": "稀有经验瓶",
+  "item.legendary_additions.epic_xp_bottle": "史诗经验瓶",
+  "item.legendary_additions.legendary_xp_bottle": "传奇经验瓶",
+
+  "item.legendary_additions.forest_key": "森林钥匙",
+  "item.legendary_additions.desert_key": "沙漠钥匙",
+
+  "sounds.legendary_additions.iron_on_coal": "铁划痕煤",
+  "sounds.legendary_additions.lock_unlocked": "锁已解锁",
+  "sounds.legendary_additions.open_gate_successful": "门已打开",
+  "sounds.legendary_additions.open_gate_failed": "堵塞的大门",
+
+  "screen.legendary_additions.dungeon_heart": "地下城之心",
+
+  "effect.legendary_additions.dungeon_heart": "受保护的地下城"
+}

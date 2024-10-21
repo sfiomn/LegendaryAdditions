@@ -1,0 +1,70 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "legendary_additions:block/ancestral_wood_1",
+        "weight": 40,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_2",
+        "weight": 40,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_3",
+        "weight": 10,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_4",
+        "weight": 10,
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "legendary_additions:block/ancestral_wood_1",
+        "weight": 40
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_2",
+        "weight": 40
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_3",
+        "weight": 10
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_4",
+        "weight": 10
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "legendary_additions:block/ancestral_wood_1",
+        "weight": 40,
+        "x": 90
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_2",
+        "weight": 40,
+        "x": 90
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_3",
+        "weight": 10,
+        "x": 90
+      },
+      {
+        "model": "legendary_additions:block/ancestral_wood_4",
+        "weight": 10,
+        "x": 90
+      }
+    ]
+  }
+}

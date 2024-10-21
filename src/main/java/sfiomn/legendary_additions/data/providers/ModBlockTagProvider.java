@@ -33,7 +33,23 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(BlockRegistry.HONEY_POND_BLOCK.get(),
                         BlockRegistry.XP_STORAGE_BLOCK.get(),
-                        BlockRegistry.OBELISK_BLOCK.get());
+                        BlockRegistry.OBELISK_BLOCK.get(),
+                        BlockRegistry.QUARTZ_LAMP_BLACK.get(),
+                        BlockRegistry.QUARTZ_LAMP_BLUE.get(),
+                        BlockRegistry.QUARTZ_LAMP_BROWN.get(),
+                        BlockRegistry.QUARTZ_LAMP_CYAN.get(),
+                        BlockRegistry.QUARTZ_LAMP_GRAY.get(),
+                        BlockRegistry.QUARTZ_LAMP_GREEN.get(),
+                        BlockRegistry.QUARTZ_LAMP_LIGHT_BLUE.get(),
+                        BlockRegistry.QUARTZ_LAMP_LIGHT_GRAY.get(),
+                        BlockRegistry.QUARTZ_LAMP_LIME.get(),
+                        BlockRegistry.QUARTZ_LAMP_MAGENTA.get(),
+                        BlockRegistry.QUARTZ_LAMP_ORANGE.get(),
+                        BlockRegistry.QUARTZ_LAMP_PINK.get(),
+                        BlockRegistry.QUARTZ_LAMP_PURPLE.get(),
+                        BlockRegistry.QUARTZ_LAMP_RED.get(),
+                        BlockRegistry.QUARTZ_LAMP_WHITE.get(),
+                        BlockRegistry.QUARTZ_LAMP_YELLOW.get());
 
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(BlockRegistry.MOSS_BLOCK.get());

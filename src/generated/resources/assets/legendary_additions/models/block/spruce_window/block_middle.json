@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "minecraft:block/spruce_planks",
+    "east": "legendary_additions:block/spruce_window_pane_middle",
+    "north": "legendary_additions:block/spruce_window_pane_middle",
+    "particle": "minecraft:block/spruce_planks",
+    "south": "legendary_additions:block/spruce_window_pane_middle",
+    "up": "minecraft:block/spruce_planks",
+    "west": "legendary_additions:block/spruce_window_pane_middle"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "legendary_additions:block/quartz_lamp_cyan",
+    "particle": "legendary_additions:block/quartz_lamp_cyan"
+  }
+}

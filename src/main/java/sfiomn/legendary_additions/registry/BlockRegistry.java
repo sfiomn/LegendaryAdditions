@@ -4,6 +4,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,7 +36,39 @@ public class BlockRegistry
 			.of().mapColor(MapColor.WOOD).sound(SoundType.WOOD).strength(1f, 10f).noOcclusion()));
 	public static final RegistryObject<Block> HIVE_LANTERN_BLOCK = registerBlock("hive_lantern", () -> new Block(BlockBehaviour.Properties
 			.of().mapColor(MapColor.WOOD).sound(SoundType.WOOD).strength(1f, 10f)
-			.lightLevel((p_235470_0_) -> {return 15;}).noOcclusion().requiresCorrectToolForDrops()));
+			.lightLevel((blockState) -> 15).noOcclusion().requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> QUARTZ_LAMP_BLACK = registerBlock("quartz_lamp_black", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_BLACK).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_BLUE = registerBlock("quartz_lamp_blue", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_BLUE).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_BROWN = registerBlock("quartz_lamp_brown", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_BROWN).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_CYAN = registerBlock("quartz_lamp_cyan", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_CYAN).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_GRAY = registerBlock("quartz_lamp_gray", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_GRAY).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_GREEN = registerBlock("quartz_lamp_green", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_GREEN).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_LIGHT_BLUE = registerBlock("quartz_lamp_light_blue", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_LIGHT_BLUE).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_LIGHT_GRAY = registerBlock("quartz_lamp_light_gray", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_LIGHT_GRAY).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_LIME = registerBlock("quartz_lamp_lime", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_LIGHT_GREEN).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_MAGENTA = registerBlock("quartz_lamp_magenta", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_CYAN).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_ORANGE = registerBlock("quartz_lamp_orange", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_CYAN).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_PINK = registerBlock("quartz_lamp_pink", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_PINK).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_PURPLE = registerBlock("quartz_lamp_purple", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_PURPLE).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_RED = registerBlock("quartz_lamp_red", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_RED).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_WHITE = registerBlock("quartz_lamp_white", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.TERRACOTTA_WHITE).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> QUARTZ_LAMP_YELLOW = registerBlock("quartz_lamp_yellow", () -> new RedstoneLampBlock(BlockBehaviour.Properties
+			.of().mapColor(MapColor.COLOR_YELLOW).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
 
 	public static final RegistryObject<Block> MOSS_BLOCK = registerBlock("moss", MossBlock::new);
 	public static final RegistryObject<Block> GLOWING_BULB_BLOCK = registerBlock("glowing_bulb", () -> new DoublePlantBlock(BlockBehaviour.Properties
@@ -98,8 +131,8 @@ public class BlockRegistry
 		return newBlock;
 	}
 
-	private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-		return ItemRegistry.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+	private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> block) {
+		ItemRegistry.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
 	}
 
 	public static void register(IEventBus eventBus){

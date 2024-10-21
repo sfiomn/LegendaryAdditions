@@ -3,7 +3,10 @@ package sfiomn.legendary_additions.data.providers;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import org.jetbrains.annotations.NotNull;
@@ -78,6 +81,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .group("carved_wood")
                 .unlockedBy(getHasName(Items.STRIPPED_SPRUCE_WOOD), has(Items.STRIPPED_SPRUCE_WOOD))
                 .save(consumer);
+
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_BLACK.get(), Tags.Items.DYES_BLACK, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_BLUE.get(), Tags.Items.DYES_BLUE, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_BROWN.get(), Tags.Items.DYES_BROWN, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_CYAN.get(), Tags.Items.DYES_CYAN, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_GRAY.get(), Tags.Items.DYES_GRAY, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_GREEN.get(), Tags.Items.DYES_GREEN, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_LIGHT_BLUE.get(), Tags.Items.DYES_LIGHT_BLUE, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_LIGHT_GRAY.get(), Tags.Items.DYES_LIGHT_GRAY, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_LIME.get(), Tags.Items.DYES_LIME, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_MAGENTA.get(), Tags.Items.DYES_MAGENTA, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_ORANGE.get(), Tags.Items.DYES_ORANGE, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_PINK.get(), Tags.Items.DYES_PINK, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_PURPLE.get(), Tags.Items.DYES_PURPLE, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_RED.get(), Tags.Items.DYES_RED, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_WHITE.get(), Tags.Items.DYES_WHITE, consumer);
+        addQuartzLampRecipe(BlockRegistry.QUARTZ_LAMP_YELLOW.get(), Tags.Items.DYES_YELLOW, consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BlockRegistry.ACACIA_WINDOW_BLOCK.get())
                 .pattern("   ")
@@ -262,6 +282,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('p', ItemTags.PLANKS)
                 .define('t', Items.TORCH)
                 .unlockedBy(getHasName(Items.TORCH), has(Items.TORCH))
+                .save(consumer);
+    }
+
+    private void addQuartzLampRecipe(Block quartzLamp, TagKey<Item> dyeItem, Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, quartzLamp, 1)
+                .pattern("#c#")
+                .pattern("cgc")
+                .pattern("#c#")
+                .define('#', Items.QUARTZ)
+                .define('g', Items.GLOWSTONE)
+                .define('c', dyeItem)
+                .group("quartz_lamp")
+                .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
                 .save(consumer);
     }
 }

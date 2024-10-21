@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "down=false,up=false": {
+      "model": "legendary_additions:block/crimson_window/block"
+    },
+    "down=false,up=true": {
+      "model": "legendary_additions:block/crimson_window/block_bottom"
+    },
+    "down=true,up=false": {
+      "model": "legendary_additions:block/crimson_window/block_top"
+    },
+    "down=true,up=true": {
+      "model": "legendary_additions:block/crimson_window/block_middle"
+    }
+  }
+}

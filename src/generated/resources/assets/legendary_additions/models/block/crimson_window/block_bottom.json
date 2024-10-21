@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "minecraft:block/crimson_planks",
+    "east": "legendary_additions:block/crimson_window_pane_bottom",
+    "north": "legendary_additions:block/crimson_window_pane_bottom",
+    "particle": "minecraft:block/crimson_planks",
+    "south": "legendary_additions:block/crimson_window_pane_bottom",
+    "up": "minecraft:block/crimson_planks",
+    "west": "legendary_additions:block/crimson_window_pane_bottom"
+  }
+}

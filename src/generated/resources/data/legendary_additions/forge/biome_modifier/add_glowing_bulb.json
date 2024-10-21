@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#legendary_additions:has_glowing_bulb",
+  "features": "legendary_additions:glowing_bulb_placed",
+  "step": "vegetal_decoration"
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "xp_storage_state=0": {
+      "model": "legendary_additions:block/xp_storage_0"
+    },
+    "xp_storage_state=1": {
+      "model": "legendary_additions:block/xp_storage_1"
+    },
+    "xp_storage_state=2": {
+      "model": "legendary_additions:block/xp_storage_2"
+    },
+    "xp_storage_state=3": {
+      "model": "legendary_additions:block/xp_storage_3"
+    }
+  }
+}

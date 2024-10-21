@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:brewing_stand"
+    },
+    "h": {
+      "item": "minecraft:honey_bottle"
+    },
+    "p": {
+      "tag": "minecraft:planks"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "shs",
+    " b ",
+    "ppp"
+  ],
+  "result": {
+    "item": "legendary_additions:honey_pond"
+  },
+  "show_notification": true
+}

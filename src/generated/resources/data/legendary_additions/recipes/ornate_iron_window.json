@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "tag": "forge:glass"
+    },
+    "i": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "   ",
+    " i ",
+    "igi"
+  ],
+  "result": {
+    "item": "legendary_additions:ornate_iron_window"
+  },
+  "show_notification": true
+}

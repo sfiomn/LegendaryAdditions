@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "legendary_additions:block/ornate_iron_window_top",
+    "east": "legendary_additions:block/ornate_iron_window_pane_top",
+    "north": "legendary_additions:block/ornate_iron_window_pane_top",
+    "particle": "legendary_additions:block/ornate_iron_window_top",
+    "south": "legendary_additions:block/ornate_iron_window_pane_top",
+    "up": "legendary_additions:block/ornate_iron_window_top",
+    "west": "legendary_additions:block/ornate_iron_window_pane_top"
+  }
+}

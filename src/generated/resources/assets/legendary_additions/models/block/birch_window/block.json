@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "minecraft:block/birch_planks",
+    "east": "legendary_additions:block/birch_window",
+    "north": "legendary_additions:block/birch_window",
+    "particle": "minecraft:block/birch_planks",
+    "south": "legendary_additions:block/birch_window",
+    "up": "minecraft:block/birch_planks",
+    "west": "legendary_additions:block/birch_window"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "minecraft:block/jungle_planks",
+    "east": "legendary_additions:block/jungle_window",
+    "north": "legendary_additions:block/jungle_window",
+    "particle": "minecraft:block/jungle_planks",
+    "south": "legendary_additions:block/jungle_window",
+    "up": "minecraft:block/jungle_planks",
+    "west": "legendary_additions:block/jungle_window"
+  }
+}

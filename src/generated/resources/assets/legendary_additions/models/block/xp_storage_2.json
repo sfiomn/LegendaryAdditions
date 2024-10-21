@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "minecraft:block/mossy_stone_bricks",
+    "east": "legendary_additions:block/xp_storage_2",
+    "north": "legendary_additions:block/xp_storage_2",
+    "particle": "minecraft:block/mossy_stone_bricks",
+    "south": "legendary_additions:block/xp_storage_2",
+    "up": "minecraft:block/mossy_stone_bricks",
+    "west": "legendary_additions:block/xp_storage_2"
+  }
+}

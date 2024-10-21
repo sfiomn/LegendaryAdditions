@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "down": "minecraft:block/dark_oak_planks",
+    "east": "legendary_additions:block/dark_oak_window_pane_middle",
+    "north": "legendary_additions:block/dark_oak_window_pane_middle",
+    "particle": "minecraft:block/dark_oak_planks",
+    "south": "legendary_additions:block/dark_oak_window_pane_middle",
+    "up": "minecraft:block/dark_oak_planks",
+    "west": "legendary_additions:block/dark_oak_window_pane_middle"
+  }
+}

@@ -24,13 +24,14 @@ public final class DataGenerators
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-		gen.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
-		gen.addProvider(event.includeServer(), ModLootTableProvider.createLootTables(packOutput));
-
 		gen.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
 		gen.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
 
+		gen.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
+		gen.addProvider(event.includeServer(), ModLootTableProvider.createLootTables(packOutput));
+
 		gen.addProvider(event.includeServer(), new ModDatapackBuiltinEntriesProvider(packOutput, lookupProvider));
+		gen.addProvider(event.includeServer(), new ModBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
 
 		ModBlockTagProvider blockTagProvider = gen.addProvider(event.includeServer(),
 				new ModBlockTagProvider(packOutput, lookupProvider, existingFileHelper));

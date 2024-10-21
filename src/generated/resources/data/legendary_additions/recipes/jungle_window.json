@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "tag": "forge:glass"
+    },
+    "p": {
+      "item": "minecraft:jungle_planks"
+    }
+  },
+  "pattern": [
+    "   ",
+    " p ",
+    "pgp"
+  ],
+  "result": {
+    "item": "legendary_additions:jungle_window"
+  },
+  "show_notification": true
+}

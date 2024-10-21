@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "legendary_additions:block/tribal_torch_wall",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "legendary_additions:block/tribal_torch_wall"
+    },
+    "facing=south": {
+      "model": "legendary_additions:block/tribal_torch_wall",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "legendary_additions:block/tribal_torch_wall",
+      "y": 270
+    }
+  }
+}

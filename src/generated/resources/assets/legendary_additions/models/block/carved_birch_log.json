@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "legendary_additions:block/carved_birch_log"
+  }
+}
