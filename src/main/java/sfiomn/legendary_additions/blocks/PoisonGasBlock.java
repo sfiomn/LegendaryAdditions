@@ -38,7 +38,7 @@ public class PoisonGasBlock extends AirBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof Player player) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 60));
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 2));
         }
     }
 
