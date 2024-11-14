@@ -45,7 +45,7 @@ public class PoisonGasBlock extends AirBlock {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-        float chance_poison_smoke = 0.6f;
+        float chance_poison_smoke = 0.5f;
 
         //  Middle of the block
         double posX = pos.getX();
@@ -54,27 +54,27 @@ public class PoisonGasBlock extends AirBlock {
 
         if (rand.nextFloat() < chance_poison_smoke) {
             //  Particle spawns around the center of the block : [0.33 - 0.66]
-            float zr = rand.nextFloat();
-            float yr = rand.nextFloat();
-            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + 0.05, posY + yr, posZ + zr, 0, 0, 0);
+            float zr = rand.nextFloat() * 0.7f + 0.15f;
+            float yr = rand.nextFloat() * 0.7f + 0.15f;
+            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + 0.15, posY + yr, posZ + zr, 0, 0, 0);
         }
         if (rand.nextFloat() < chance_poison_smoke) {
             //  Particle spawns around the center of the block : [0.33 - 0.66]
-            float zr = rand.nextFloat();
-            float yr = rand.nextFloat();
-            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + 0.95, posY + yr, posZ + zr, 0, 0, 0);
+            float zr = rand.nextFloat() * 0.7f + 0.15f;
+            float yr = rand.nextFloat() * 0.7f + 0.15f;
+            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + 0.85, posY + yr, posZ + zr, 0, 0, 0);
         }
         if (rand.nextFloat() < chance_poison_smoke) {
             //  Particle spawns around the center of the block : [0.33 - 0.66]
-            float xr = rand.nextFloat();
-            float yr = rand.nextFloat();
-            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + xr, posY + yr, posZ + 0.05, 0, 0, 0);
+            float xr = rand.nextFloat() * 0.7f + 0.15f;
+            float yr = rand.nextFloat() * 0.7f + 0.15f;
+            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + xr, posY + yr, posZ + 0.15, 0, 0, 0);
         }
         if (rand.nextFloat() < chance_poison_smoke) {
             //  Particle spawns around the center of the block : [0.33 - 0.66]
-            float xr = rand.nextFloat();
-            float yr = rand.nextFloat();
-            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + xr, posY + yr, posZ + 0.95, 0, 0, 0);
+            float xr = rand.nextFloat() * 0.7f + 0.15f;
+            float yr = rand.nextFloat() * 0.7f + 0.15f;
+            level.addParticle(ParticleTypeRegistry.POISON_SMOKE.get(), false, posX + xr, posY + yr, posZ + 0.85, 0, 0, 0);
         }
 
         super.animateTick(state, level, pos, rand);
