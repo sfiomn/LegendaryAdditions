@@ -56,6 +56,7 @@ public class LegendaryAdditions
         ItemRegistry.register(modBus);
         SoundRegistry.register(modBus);
         BlockEntityRegistry.register(modBus);
+        ParticleTypeRegistry.register(modBus);
         CreativeTabRegistry.register(modBus);
 
         Config.register();

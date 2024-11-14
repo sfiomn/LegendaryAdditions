@@ -8,5 +8,15 @@
         "stream": false
       }
     ]
+  },
+  "mud_trap_powered": {
+    "category": "neutral",
+    "subtitle": "sounds.legendary_additions.mud_trap_powered",
+    "sounds": [
+      {
+        "name": "legendary_additions:mud_trap_powered",
+        "stream": false
+      }
+    ]
   }
 }

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "legendary_additions:block/mud_trap_side",
+    "east": "legendary_additions:block/mud_trap_side",
+    "north": "legendary_additions:block/mud_trap_side",
+    "particle": "legendary_additions:block/mud_trap_side",
+    "south": "legendary_additions:block/mud_trap_side",
+    "up": "legendary_additions:block/mud_trap_top",
+    "west": "legendary_additions:block/mud_trap_side"
+  }
+}

@@ -53,6 +53,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.dropSelf(BlockRegistry.HONEY_POND_BLOCK.get());
         this.dropSelf(BlockRegistry.MEAT_RACK_BLOCK.get());
+        this.dropSelf(BlockRegistry.MUD_TRAP_BLOCK.get());
         this.dropSelf(BlockRegistry.OBELISK_BLOCK.get());
 
         this.dropSelf(BlockRegistry.TRIBAL_TORCH_BLOCK.get());

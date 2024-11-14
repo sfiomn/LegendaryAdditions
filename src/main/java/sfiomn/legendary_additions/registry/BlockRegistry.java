@@ -71,6 +71,8 @@ public class BlockRegistry
 			.of().mapColor(MapColor.COLOR_YELLOW).lightLevel((blockState) -> blockState.getValue(BlockStateProperties.LIT) ? 15 : 0).strength(0.3F).sound(SoundType.GLASS)));
 
 	public static final RegistryObject<Block> MOSS_BLOCK = registerBlock("moss", MossBlock::new);
+	public static final RegistryObject<Block> MUD_TRAP_BLOCK = registerBlock("mud_trap", MudTrapBlock::new);
+	public static final RegistryObject<Block> POISON_GAS_BLOCK = registerBlock("poison_gas", () -> new PoisonGasBlock(BlockBehaviour.Properties.of().replaceable().noCollission().noLootTable()));
 	public static final RegistryObject<Block> GLOWING_BULB_BLOCK = registerBlock("glowing_bulb", () -> new DoublePlantBlock(BlockBehaviour.Properties
 			.of().noCollission().sound(SoundType.GRASS).instabreak().lightLevel((p_235470_0_) -> 14).emissiveRendering((bs, br, bp) -> true)));
 

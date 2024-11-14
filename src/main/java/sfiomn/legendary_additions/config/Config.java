@@ -46,6 +46,9 @@ public class Config
 		public final ForgeConfigSpec.IntValue spiderEggsYDetectionRangeInBlocks;
 		public final ForgeConfigSpec.ConfigValue<List<String>> spiderEggsMobsSpawned;
 
+		public final ForgeConfigSpec.IntValue mudTrapHeightPoisonGas;
+		public final ForgeConfigSpec.IntValue mudTrapDiameterPoisonGas;
+
 		Common(ForgeConfigSpec.Builder builder)
 		{
 			builder.comment(" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone").push("MeatRack");
@@ -81,6 +84,11 @@ public class Config
 			obeliskBreakable = builder.define(" Can Obelisk Be Destroyed", false);
 			builder.pop();
 
+			builder.push("MudTrap");
+			mudTrapHeightPoisonGas = builder.defineInRange(" Default Height Of The Mud Trap Poison Gas", 3, 0, 100);
+			mudTrapDiameterPoisonGas = builder.defineInRange(" Default Diameter Of The Mud Trap Poison Gas", 1, 0 , 100);
+			builder.pop();
+
 			builder.push("Spawners");
 			builder.push("SpiderEggs");
 			spiderEggsHorizontalDetectionRangeInBlocks = builder.defineInRange(" Horizontal Detection Range Of Spider Eggs In Blocks", 10, 1, 1000);
@@ -112,6 +120,9 @@ public class Config
 		public static float spiderEggsYDetectionRangeInBlocks;
 		public static List<String> spiderEggsMobsSpawned;
 
+		public static int mudTrapHeightPoisonGas;
+		public static int mudTrapDiameterPoisonGas;
+
 		public static void bakeCommon()
 		{
 			try
@@ -134,6 +145,9 @@ public class Config
 				spiderEggsHorizontalDetectionRangeInBlocks = COMMON.spiderEggsHorizontalDetectionRangeInBlocks.get();
 				spiderEggsYDetectionRangeInBlocks = COMMON.spiderEggsYDetectionRangeInBlocks.get();
 				spiderEggsMobsSpawned = COMMON.spiderEggsMobsSpawned.get();
+
+				mudTrapHeightPoisonGas = COMMON.mudTrapHeightPoisonGas.get();
+				mudTrapDiameterPoisonGas = COMMON.mudTrapDiameterPoisonGas.get();
 			}
 			catch (Exception e)
 			{

@@ -15,9 +15,6 @@ import sfiomn.legendary_additions.registry.BlockEntityRegistry;
 
 public class MeatRackBlockEntity extends BlockEntity {
 
-    public static final int ROTTING_TICKS_BEFORE_LEATHER = Config.Baked.meatRackLeatherTicks;
-    public static final int ROTTING_TICKS_BEFORE_BONE = Config.Baked.meatRackBoneTicks;
-
     private int rottingProgress;
 
     public MeatRackBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -34,12 +31,12 @@ public class MeatRackBlockEntity extends BlockEntity {
             entity.rottingProgress = 0;
         }
 
-        if (meatRackState == 1 && entity.rottingProgress >= ROTTING_TICKS_BEFORE_LEATHER) {
+        if (meatRackState == 1 && entity.rottingProgress >= Config.Baked.meatRackLeatherTicks) {
             entity.setStateTo(2);
             entity.rottingProgress = 0;
         }
 
-        if (meatRackState == 2 && entity.rottingProgress >= ROTTING_TICKS_BEFORE_BONE) {
+        if (meatRackState == 2 && entity.rottingProgress >= Config.Baked.meatRackBoneTicks) {
             entity.setStateTo(3);
             entity.rottingProgress = 0;
         }

@@ -164,6 +164,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         this.simpleBlockItem(BlockRegistry.MEAT_RACK_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/meat_rack_empty")));
 
         this.simpleBlock(BlockRegistry.MOSS_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/moss")));
+        this.simpleBlockWithItem(BlockRegistry.MUD_TRAP_BLOCK.get(), this.models().cube("mud_trap",
+                this.modLoc("block/mud_trap_side"),
+                this.modLoc("block/mud_trap_top"),
+                this.modLoc("block/mud_trap_side"),
+                this.modLoc("block/mud_trap_side"),
+                this.modLoc("block/mud_trap_side"),
+                this.modLoc("block/mud_trap_side"))
+                .texture("particle", this.modLoc("block/mud_trap_side")));
         this.simpleBlockWithItem(BlockRegistry.OBELISK_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/obelisk")));
 
         VariantBlockStateBuilder xpStorageBuilder = this.getVariantBuilder(BlockRegistry.XP_STORAGE_BLOCK.get());

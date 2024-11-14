@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.registry.BlockRegistry;
 import sfiomn.legendary_additions.registry.ItemRegistry;
 

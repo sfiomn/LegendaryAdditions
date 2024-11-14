@@ -13,6 +13,7 @@ public class SoundRegistry {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, LegendaryAdditions.MOD_ID);
 
     public static final RegistryObject<SoundEvent> IRON_ON_COAL = registerSoundEvent("iron_on_coal");
+    public static final RegistryObject<SoundEvent> MUD_TRAP_POWERED = registerSoundEvent("mud_trap_powered");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(

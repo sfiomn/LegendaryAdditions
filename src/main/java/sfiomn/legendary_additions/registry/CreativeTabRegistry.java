@@ -69,6 +69,7 @@ public class CreativeTabRegistry {
 
                                 BlockRegistry.GLOWING_BULB_BLOCK.get().asItem().getDefaultInstance(),
                                 BlockRegistry.MOSS_BLOCK.get().asItem().getDefaultInstance(),
+                                BlockRegistry.MUD_TRAP_BLOCK.get().asItem().getDefaultInstance(),
                                 BlockRegistry.MEAT_RACK_BLOCK.get().asItem().getDefaultInstance(),
                                 BlockRegistry.HONEY_POND_BLOCK.get().asItem().getDefaultInstance(),
                                 BlockRegistry.CAPTAIN_CHAIR_BLOCK.get().asItem().getDefaultInstance(),
