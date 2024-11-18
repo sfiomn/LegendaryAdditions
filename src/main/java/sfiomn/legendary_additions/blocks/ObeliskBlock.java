@@ -122,9 +122,7 @@ public class ObeliskBlock extends Block {
             if (world instanceof ServerWorld)
                 popExperience((ServerWorld) world, pos.offset(hit.getDirection().getNormal()), xpGiven);
 
-            if (world instanceof ClientWorld) {
-                world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
-            }
+            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.NEUTRAL, 1.0f, 1.0f);
         }
 
         if (xpGiven > 0) {

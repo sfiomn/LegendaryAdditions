@@ -53,7 +53,7 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
-            args '--username', 'Armkath', '--userType', 'microsoft', '--accessToken', 'eyJraWQiOiJhYzg0YSIsImFsZyI6IkhTMjU2In0.eyJ4dWlkIjoiMjUzNTQxMjExMTgwMTc2NiIsImFnZyI6IkFkdWx0Iiwic3ViIjoiNTkzZmNlNDctN2IxOS00MjI3LWFjM2ItMThjZmQzODNjNWFjIiwiYXV0aCI6IlhCT1giLCJucyI6ImRlZmF1bHQiLCJyb2xlcyI6W10sImlzcyI6ImF1dGhlbnRpY2F0aW9uIiwiZmxhZ3MiOlsidHdvZmFjdG9yYXV0aCIsIm1pbmVjcmFmdF9uZXQiLCJtc2FtaWdyYXRpb25fc3RhZ2U0Iiwib3JkZXJzXzIwMjIiLCJtdWx0aXBsYXllciJdLCJwcm9maWxlcyI6eyJtYyI6IjVmNTU4NWFhLTUzNGEtNDU4OS05ZThlLWQ2YWUyMGUzNWEzOSJ9LCJwbGF0Zm9ybSI6IlVOS05PV04iLCJ5dWlkIjoiZWU5MmU4NTY2M2VkNTZlNTQ2NjRmMGRlYmI1YTYzYTYiLCJuYmYiOjE3MTQzMjU4MzEsImV4cCI6MTcxNDQxMjIzMSwiaWF0IjoxNzE0MzI1ODMxfQ.L99H_DsCM524N-NfIj23B0x4gsRv3dzYtpzI_rq59eE'
+            args '--username', 'Armkath', '--userType', 'microsoft', '--accessToken', 'eyJraWQiOiJhYzg0YSIsImFsZyI6IkhTMjU2In0.eyJ4dWlkIjoiMjUzNTQxMjExMTgwMTc2NiIsImFnZyI6IkFkdWx0Iiwic3ViIjoiNTkzZmNlNDctN2IxOS00MjI3LWFjM2ItMThjZmQzODNjNWFjIiwiYXV0aCI6IlhCT1giLCJucyI6ImRlZmF1bHQiLCJyb2xlcyI6W10sImlzcyI6ImF1dGhlbnRpY2F0aW9uIiwiZmxhZ3MiOlsidHdvZmFjdG9yYXV0aCIsIm1pbmVjcmFmdF9uZXQiLCJtc2FtaWdyYXRpb25fc3RhZ2U0Iiwib3JkZXJzXzIwMjIiLCJtdWx0aXBsYXllciJdLCJwcm9maWxlcyI6eyJtYyI6IjVmNTU4NWFhLTUzNGEtNDU4OS05ZThlLWQ2YWUyMGUzNWEzOSJ9LCJwbGF0Zm9ybSI6IlVOS05PV04iLCJ5dWlkIjoiZWU5MmU4NTY2M2VkNTZlNTQ2NjRmMGRlYmI1YTYzYTYiLCJuYmYiOjE3MzE4OTMwMTgsImV4cCI6MTczMTk3OTQxOCwiaWF0IjoxNzMxODkzMDE4fQ.RgSbpOYN3-77IOxOzozmiTe6Dzd1oalTQT0JupUxP9M'
 
             mods {
                 examplemod {
@@ -126,16 +126,19 @@ repositories{
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+    minecraft "net.minecraftforge:forge:" + minecraft_version + "-36.2.39"
 
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.106')
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-" + minecraft_version + ":3.0.106")
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api") // JEI API
 
