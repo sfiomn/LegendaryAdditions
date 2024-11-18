@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import sfiomn.legendary_additions.blocks.ObeliskBlock;
-import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.registry.BlockEntityRegistry;
 
 

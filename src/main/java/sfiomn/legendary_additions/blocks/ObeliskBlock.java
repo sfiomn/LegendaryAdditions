@@ -137,9 +137,7 @@ public class ObeliskBlock extends BaseEntityBlock {
                     }
                 }
 
-                if (level instanceof ClientLevel) {
-                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
-                }
+                level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 1.0f, 1.0f);
             }
 
             if (xpGiven > 0) {
