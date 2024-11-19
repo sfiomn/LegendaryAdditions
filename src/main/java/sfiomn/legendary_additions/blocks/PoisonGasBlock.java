@@ -45,7 +45,7 @@ public class PoisonGasBlock extends AirBlock {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-        float chance_poison_smoke = 0.5f;
+        float chance_poison_smoke = 0.15f;
 
         //  Middle of the block
         double posX = pos.getX();
