@@ -100,7 +100,7 @@ public class HoneyPondBlock extends Block {
                     player.displayClientMessage(new TranslationTextComponent("block." + LegendaryAdditions.MOD_ID + ".honey_pond.max_health"), true);
                 } else {
                     player.heal(HEALTH_RESTORED);
-                    if (world instanceof ClientWorld) {
+                    if (world.isClientSide) {
                         for (int i = 0; i < Math.round((float) HEALTH_RESTORED / 2.0f); i++) {
                             float xr = rand.nextFloat() / 2 + 0.25f;
                             float yr = rand.nextFloat() / 2 + 0.75f;

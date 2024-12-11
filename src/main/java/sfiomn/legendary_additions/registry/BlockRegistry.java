@@ -55,41 +55,41 @@ public class BlockRegistry
 	public static final RegistryObject<Block> CAPTAIN_CHAIR_TOP_BLOCK = BLOCKS.register("captain_chair_top", CaptainChairTopBlock::new);
 
 	public static final RegistryObject<Block> ACACIA_WINDOW_PANE = registerBlock("acacia_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> ACACIA_WINDOW_BLOCK = registerBlock("acacia_window", () -> new VerticalBlock(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE)));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE).noDrops()));
 	public static final RegistryObject<Block> BIRCH_WINDOW_PANE = registerBlock("birch_window_pane", () -> new PaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> BIRCH_WINDOW_BLOCK = registerBlock("birch_window", () -> new Block(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE)));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE).noDrops()));
 	public static final RegistryObject<Block> DARK_OAK_WINDOW_PANE = registerBlock("dark_oak_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> DARK_OAK_WINDOW_BLOCK = registerBlock("dark_oak_window", () -> new VerticalBlock(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE)));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE).noDrops()));
 	public static final RegistryObject<Block> JUNGLE_WINDOW_PANE = registerBlock("jungle_window_pane", () -> new PaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> JUNGLE_WINDOW_BLOCK = registerBlock("jungle_window", () -> new Block(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE)));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE).noDrops()));
 	public static final RegistryObject<Block> OAK_WINDOW_PANE = registerBlock("oak_window_pane", () -> new PaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> OAK_WINDOW_BLOCK = registerBlock("oak_window", () -> new Block(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE)));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE).noDrops()));
 	public static final RegistryObject<Block> SPRUCE_WINDOW_PANE = registerBlock("spruce_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> SPRUCE_WINDOW_BLOCK = registerBlock("spruce_window", () -> new VerticalBlock(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE)));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().harvestTool(ToolType.AXE).noDrops()));
 	public static final RegistryObject<Block> CRIMSON_WINDOW_PANE = registerBlock("crimson_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> CRIMSON_WINDOW_BLOCK = registerBlock("crimson_window", () -> new VerticalBlock(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.AXE).harvestLevel(4).noOcclusion()));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.AXE).harvestLevel(4).noOcclusion().noDrops()));
 	public static final RegistryObject<Block> ORNATE_IRON_WINDOW_PANE = registerBlock("ornate_iron_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(2f, 50f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(2f, 50f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> ORNATE_IRON_WINDOW_BLOCK = registerBlock("ornate_iron_window", () -> new VerticalBlock(AbstractBlock.Properties
-			.of(Material.METAL).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.PICKAXE).harvestLevel(4).noOcclusion()));
+			.of(Material.METAL).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.PICKAXE).harvestLevel(4).noOcclusion().noDrops()));
 	public static final RegistryObject<Block> WARPED_WINDOW_PANE = registerBlock("warped_window_pane", () -> new VerticalPaneBlock(AbstractBlock.Properties
-			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false)));
+			.of(Material.GLASS).sound(SoundType.GLASS).strength(1f, 10f).noOcclusion().isViewBlocking((blockState, blockReader, blockPos) -> false).noDrops()));
 	public static final RegistryObject<Block> WARPED_WINDOW_BLOCK = registerBlock("warped_window", () -> new VerticalBlock(AbstractBlock.Properties
-			.of(Material.WOOD).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.AXE).harvestLevel(4).noOcclusion()));
+			.of(Material.WOOD).sound(SoundType.GLASS).strength(2f, 50f).harvestTool(ToolType.AXE).harvestLevel(4).noOcclusion().noDrops()));
 
 	public static final RegistryObject<Block> FOREST_DUNGEON_GATE_BLOCK = registerBlock("forest_dungeon_gate", ForestDungeonGateBlock::new);
 
