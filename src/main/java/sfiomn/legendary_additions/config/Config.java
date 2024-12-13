@@ -27,51 +27,51 @@ public class Config
 	
 	public static class Common
 	{
-		public final ForgeConfigSpec.ConfigValue<Integer> meatRackLeatherTicks;
-		public final ForgeConfigSpec.ConfigValue<Integer> meatRackBoneTicks;
+		public final ForgeConfigSpec.IntValue meatRackLeatherTicks;
+		public final ForgeConfigSpec.IntValue meatRackBoneTicks;
 
-		public final ForgeConfigSpec.ConfigValue<Integer> honeyPondMaxCapacity;
-		public final ForgeConfigSpec.ConfigValue<Integer> honeyPondHealthRestored;
-		public final ForgeConfigSpec.ConfigValue<Integer> honeyPondHoneyCapacityRestored;
+		public final ForgeConfigSpec.IntValue honeyPondMaxCapacity;
+		public final ForgeConfigSpec.IntValue honeyPondHealthRestored;
+		public final ForgeConfigSpec.IntValue honeyPondHoneyCapacityRestored;
 
-		public final ForgeConfigSpec.ConfigValue<Integer> xpStorageMaxXpCapacity;
+		public final ForgeConfigSpec.IntValue xpStorageMaxXpCapacity;
 
-		public final ForgeConfigSpec.ConfigValue<Boolean> ironOnCoalExplosionEnabled;
-		public final ForgeConfigSpec.ConfigValue<Float> ironOnCoalExplosionChance;
+		public final ForgeConfigSpec.BooleanValue ironOnCoalExplosionEnabled;
+		public final ForgeConfigSpec.DoubleValue ironOnCoalExplosionChance;
 
-		public final ForgeConfigSpec.ConfigValue<List<Integer>> obeliskXpValues;
-		public final ForgeConfigSpec.ConfigValue<Boolean> obeliskBreakable;
+		public final ForgeConfigSpec.ConfigValue<List<? extends Integer>> obeliskXpValues;
+		public final ForgeConfigSpec.BooleanValue obeliskBreakable;
 
-		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeNames;
-		public final ForgeConfigSpec.ConfigValue<List<String>> cloverPatchBiomeCategories;
-		public final ForgeConfigSpec.ConfigValue<Integer> cloverPatchCount;
-		public final ForgeConfigSpec.ConfigValue<Integer> cloverPatchTries;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> cloverPatchBiomeNames;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> cloverPatchBiomeCategories;
+		public final ForgeConfigSpec.IntValue cloverPatchCount;
+		public final ForgeConfigSpec.IntValue cloverPatchTries;
 
-		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeNames;
-		public final ForgeConfigSpec.ConfigValue<List<String>> glowingBulbBiomeCategories;
-		public final ForgeConfigSpec.ConfigValue<Integer> glowingBulbSpawnChance;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> glowingBulbBiomeNames;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> glowingBulbBiomeCategories;
+		public final ForgeConfigSpec.IntValue glowingBulbSpawnChance;
 
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateCanClose;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateOpenWhenUnlocked;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateBreakable;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDrop;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonGateDropKeys;
-		public final ForgeConfigSpec.ConfigValue<List<String>> forestDungeonGateLock1Unlocks;
-		public final ForgeConfigSpec.ConfigValue<Integer> forestDungeonGateMobCheckRange;
-		public final ForgeConfigSpec.ConfigValue<Integer> forestDungeonGateMobCheckFrequency;
+		public final ForgeConfigSpec.BooleanValue forestDungeonGateCanClose;
+		public final ForgeConfigSpec.BooleanValue forestDungeonGateOpenWhenUnlocked;
+		public final ForgeConfigSpec.BooleanValue forestDungeonGateBreakable;
+		public final ForgeConfigSpec.BooleanValue forestDungeonGateDrop;
+		public final ForgeConfigSpec.BooleanValue forestDungeonGateDropKeys;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestDungeonGateLock1Unlocks;
+		public final ForgeConfigSpec.IntValue forestDungeonGateMobCheckRange;
+		public final ForgeConfigSpec.IntValue forestDungeonGateMobCheckFrequency;
 
-		public final ForgeConfigSpec.ConfigValue<List<String>> dungeonHeartItemsBlocked;
-		public final ForgeConfigSpec.ConfigValue<Boolean> dungeonHeartBlockPlaceBlocked;
-		public final ForgeConfigSpec.ConfigValue<Boolean> dungeonHeartBlockBreakBlocked;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartActiveBreakable;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartBreakable;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartDrop;
-		public final ForgeConfigSpec.ConfigValue<String> forestDungeonHeartDeactivationByItem;
-		public final ForgeConfigSpec.ConfigValue<Boolean> forestDungeonHeartDeactivationByRedStone;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> dungeonHeartItemsBlocked;
+		public final ForgeConfigSpec.BooleanValue dungeonHeartBlockPlaceBlocked;
+		public final ForgeConfigSpec.BooleanValue dungeonHeartBlockBreakBlocked;
+		public final ForgeConfigSpec.BooleanValue forestDungeonHeartActiveBreakable;
+		public final ForgeConfigSpec.BooleanValue forestDungeonHeartBreakable;
+		public final ForgeConfigSpec.BooleanValue forestDungeonHeartDrop;
+		public final ForgeConfigSpec.ConfigValue<? extends String> forestDungeonHeartDeactivationByItem;
+		public final ForgeConfigSpec.BooleanValue forestDungeonHeartDeactivationByRedStone;
 
-		public final ForgeConfigSpec.ConfigValue<Integer> spiderEggsHorizontalDetectionRangeInBlocks;
-		public final ForgeConfigSpec.ConfigValue<Integer> spiderEggsYDetectionRangeInBlocks;
-		public final ForgeConfigSpec.ConfigValue<List<String>> spiderEggsMobsSpawned;
+		public final ForgeConfigSpec.IntValue spiderEggsHorizontalDetectionRangeInBlocks;
+		public final ForgeConfigSpec.IntValue spiderEggsYDetectionRangeInBlocks;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> spiderEggsMobsSpawned;
 
 		Common(ForgeConfigSpec.Builder builder)
 		{
@@ -79,30 +79,30 @@ public class Config
 						" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone"
 					}).push("MeatRack");
 
-			meatRackLeatherTicks = builder.define("Tick Amount Before Leather", 240);
-			meatRackBoneTicks = builder.define("Tick Amount Before Bone", 240);
+			meatRackLeatherTicks = builder.defineInRange("Tick Amount Before Leather", 240, 20, 100000);
+			meatRackBoneTicks = builder.defineInRange("Tick Amount Before Bone", 240, 20, 100000);
 			builder.pop();
 
 			builder.comment(new String [] {
 					" Options related to the Honey Pond. It is used to heal the player and can be recharger with honey bottle"
 			}).push("HoneyPond");
 
-			honeyPondMaxCapacity = builder.define("Max Healing Charges", 10);
-			honeyPondHealthRestored = builder.define("Health Restored Per Use", 6);
-			honeyPondHoneyCapacityRestored = builder.define("Healing Charges Restored By Honey Bottle", 5);
+			honeyPondMaxCapacity = builder.defineInRange("Max Healing Charges", 10, 1, 100000);
+			honeyPondHealthRestored = builder.defineInRange("Health Restored Per Use", 6, 1, 100000);
+			honeyPondHoneyCapacityRestored = builder.defineInRange("Healing Charges Restored By Honey Bottle", 5, 0, 100000);
 			builder.pop();
 
 			builder.comment(new String [] {
 					" Options related to the Xp Storage. It stores and gives back player experience"
 			}).push("XpStorage");
-			xpStorageMaxXpCapacity = builder.define("Maximum Stored Experience", 2000);
+			xpStorageMaxXpCapacity = builder.defineInRange("Maximum Stored Experience", 2000, 0, 10000000);
 			builder.pop();
 
 			builder.comment(new String [] {
 					" Options related to explosion when breaking Coal Ore blocks with Iron Pickaxe."
 			}).push("IronOnCoalExplosion");
 			ironOnCoalExplosionEnabled = builder.define("Enable Iron Pickaxe On Coal Block Explosion", true);
-			ironOnCoalExplosionChance = builder.define("Chance Of Explosion", 0.03f);
+			ironOnCoalExplosionChance = builder.defineInRange("Chance Of Explosion", 0.03, 0.0, 1.0);
 			builder.pop();
 
 			builder.push("Obelisk");
@@ -133,8 +133,8 @@ public class Config
 			forestDungeonGateDropKeys = builder.define(" Can Forest Dungeon Gate Drop Keys On Break", true);
 			forestDungeonGateLock1Unlocks = builder.define(" Items To Unlock Lock1", Collections.singletonList(LegendaryAdditions.MOD_ID + ":forest_key"));
 			forestDungeonGateMobCheckRange = builder.comment(" To choose a mob for which its presence forces the gate to stay locked, " +
-					"use an entity spawn egg and use it on the gate in creative mode.").define(" Mob Check Range In Blocks", 20);
-			forestDungeonGateMobCheckFrequency = builder.define(" Mob Check Frequency In Ticks", 20);
+					"use an entity spawn egg and use it on the gate in creative mode.").defineInRange(" Mob Check Range In Blocks", 20, 0, 1000);
+			forestDungeonGateMobCheckFrequency = builder.defineInRange(" Mob Check Frequency In Ticks", 20, 1, 10000);
 			builder.pop();
 			builder.push("DesertDungeonGate");
 			builder.pop();
@@ -166,8 +166,8 @@ public class Config
 
 			builder.push("Spawners");
 			builder.push("SpiderEggs");
-			spiderEggsHorizontalDetectionRangeInBlocks = builder.define(" Horizontal Detection Range Of Spider Eggs In Blocks", 10);
-			spiderEggsYDetectionRangeInBlocks = builder.define(" Y Ratio Detection Range Of Spider Eggs", 4);
+			spiderEggsHorizontalDetectionRangeInBlocks = builder.defineInRange(" Horizontal Detection Range Of Spider Eggs In Blocks", 10, 1, 1000);
+			spiderEggsYDetectionRangeInBlocks = builder.defineInRange(" Y Ratio Detection Range Of Spider Eggs", 4, 1, 1000);
 			spiderEggsMobsSpawned = builder.define(" Detection Range Of Spider Eggs In Blocks", Collections.singletonList("minecraft:spider;20"));
 			builder.pop();
 			builder.pop();
@@ -186,18 +186,18 @@ public class Config
 		public static int xpStorageMaxXpCapacity;
 
 		public static boolean ironOnCoalExplosionEnabled;
-		public static float ironOnCoalExplosionChance;
+		public static double ironOnCoalExplosionChance;
 
-		public static List<Integer> obeliskXpValues;
+		public static List<? extends Integer> obeliskXpValues;
 		public static boolean obeliskBreakable;
 
-		public static List<String> cloverPatchBiomeNames;
-		public static List<String> cloverPatchBiomeCategories;
+		public static List<? extends String> cloverPatchBiomeNames;
+		public static List<? extends String> cloverPatchBiomeCategories;
 		public static int cloverPatchCount;
 		public static int cloverPatchTries;
 
-		public static List<String> glowingBulbBiomeNames;
-		public static List<String> glowingBulbBiomeCategories;
+		public static List<? extends String> glowingBulbBiomeNames;
+		public static List<? extends String> glowingBulbBiomeCategories;
 		public static int glowingBulbSpawnChance;
 
 		public static boolean forestDungeonGateCanClose;
@@ -205,11 +205,11 @@ public class Config
 		public static boolean forestDungeonGateBreakable;
 		public static boolean forestDungeonGateDrop;
 		public static boolean forestDungeonGateDropKeys;
-		public static List<String> forestDungeonGateLock1Unlocks;
+		public static List<? extends String> forestDungeonGateLock1Unlocks;
 		public static int forestDungeonGateMobCheckRange;
 		public static int forestDungeonGateMobCheckFrequency;
 
-		public static List<String> dungeonHeartItemsBlocked;
+		public static List<? extends String> dungeonHeartItemsBlocked;
 		public static boolean dungeonHeartBlockPlaceBlocked;
 		public static boolean dungeonHeartBlockBreakBlocked;
 		public static boolean forestDungeonHeartActiveBreakable;
@@ -220,7 +220,7 @@ public class Config
 
 		public static int spiderEggsHorizontalDetectionRangeInBlocks;
 		public static float spiderEggsYDetectionRangeInBlocks;
-		public static List<String> spiderEggsMobsSpawned;
+		public static List<? extends String> spiderEggsMobsSpawned;
 
 		public static void bakeCommon()
 		{

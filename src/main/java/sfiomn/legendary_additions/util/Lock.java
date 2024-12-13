@@ -19,9 +19,9 @@ public class Lock {
     private boolean unlocked;
     private Vector3i insertedKeyPosition;
     private int insertTimerTick;
-    private final List<String> keyNames;
+    private final List<? extends String> keyNames;
 
-    public Lock(int lockId, Vector3i offsetOnBase, Vector3d positionInBlock, double size, List<String> keyNames) {
+    public Lock(int lockId, Vector3i offsetOnBase, Vector3d positionInBlock, double size, List<? extends String> keyNames) {
         this.id = lockId;
         this.offsetOnBase = offsetOnBase;
         this.positionInBlock = positionInBlock;
@@ -95,7 +95,7 @@ public class Lock {
         return false;
     }
 
-    public List<String> getKeyNames() {
+    public List<? extends String> getKeyNames() {
         return keyNames;
     }
 

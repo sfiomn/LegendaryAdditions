@@ -10,7 +10,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
-import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.blocks.AbstractGateBlock;
 import sfiomn.legendary_additions.blocks.ForestDungeonGateBlock;
 import sfiomn.legendary_additions.config.Config;
