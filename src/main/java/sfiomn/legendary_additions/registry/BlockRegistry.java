@@ -1,19 +1,35 @@
 package sfiomn.legendary_additions.registry;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.blocks.*;
 import sfiomn.legendary_additions.blocks.MossBlock;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class BlockRegistry
@@ -73,8 +89,20 @@ public class BlockRegistry
 	public static final RegistryObject<Block> MOSS_BLOCK = registerBlock("moss", MossBlock::new);
 	public static final RegistryObject<Block> MUD_TRAP_BLOCK = registerBlock("mud_trap", MudTrapBlock::new);
 	public static final RegistryObject<Block> POISON_GAS_BLOCK = registerBlock("poison_gas", () -> new PoisonGasBlock(BlockBehaviour.Properties.of().replaceable().noCollission().noLootTable()));
-	public static final RegistryObject<Block> GLOWING_BULB_BLOCK = registerBlock("glowing_bulb", () -> new DoublePlantBlock(BlockBehaviour.Properties
-			.of().noCollission().sound(SoundType.GRASS).instabreak().lightLevel((p_235470_0_) -> 14).emissiveRendering((bs, br, bp) -> true)));
+	public static final RegistryObject<Block> GLOWING_BULB_BLOCK = registerBlock("glowing_bulb", () ->
+			new DoublePlantBlock(BlockBehaviour.Properties.of()
+					.noCollission().sound(SoundType.GRASS).instabreak()
+					.lightLevel((p_235470_0_) -> 14).emissiveRendering((bs, br, bp) -> true)) {
+
+				@Override
+				public List<ItemStack> getDrops(BlockState pState, LootParams.Builder pParams) {
+					if (pState.getValue(HALF) == DoubleBlockHalf.UPPER)
+						return super.getDrops(pState, pParams);
+					else {
+						return Collections.emptyList();
+					}
+				}
+			});
 
 	public static final RegistryObject<Block> HONEY_POND_BLOCK = BLOCKS.register("honey_pond", HoneyPondBlock::new);
 	public static final RegistryObject<Block> MEAT_RACK_BLOCK = registerBlock("meat_rack", MeatRackBlock::new);

@@ -9,6 +9,7 @@
   "block.legendary_additions.ancestral_wood": "先祖之木",
 
   "block.legendary_additions.moss": "苔藓",
+  "block.legendary_additions.mud_trap": "陷阱泥",
 
   "block.legendary_additions.honey_pond": "蜂蜜池",
   "block.legendary_additions.honey_pond.already_full": "这个蜂蜜池已经满了",
@@ -24,7 +25,23 @@
   "block.legendary_additions.obelisk": "方尖碑",
   "block.legendary_additions.xp_storage": "经验存储块",
   "block.legendary_additions.hive_lantern": "蜂巢灯笼",
-  "block.legendary_additions.forest_dungeon_heart": "森林地牢之心",
+
+  "block.legendary_additions.quartz_lamp_black": "黑色石英灯",
+  "block.legendary_additions.quartz_lamp_blue": "蓝色石英灯",
+  "block.legendary_additions.quartz_lamp_brown": "棕色石英灯",
+  "block.legendary_additions.quartz_lamp_cyan": "青色石英灯",
+  "block.legendary_additions.quartz_lamp_gray": "灰色石英灯",
+  "block.legendary_additions.quartz_lamp_green": "绿色石英灯",
+  "block.legendary_additions.quartz_lamp_light_blue": "淡蓝色石英灯",
+  "block.legendary_additions.quartz_lamp_light_gray": "淡灰色石英灯",
+  "block.legendary_additions.quartz_lamp_lime": "黄绿色石英灯",
+  "block.legendary_additions.quartz_lamp_magenta": "品红色石英灯",
+  "block.legendary_additions.quartz_lamp_orange": "橙色石英灯",
+  "block.legendary_additions.quartz_lamp_pink": "粉色石英灯",
+  "block.legendary_additions.quartz_lamp_purple": "紫色石英灯",
+  "block.legendary_additions.quartz_lamp_red": "红色石英灯",
+  "block.legendary_additions.quartz_lamp_white": "白色石英灯",
+  "block.legendary_additions.quartz_lamp_yellow": "黄色石英灯",
 
   "block.legendary_additions.glowing_bulb": "发光球茎",
 
@@ -51,7 +68,7 @@
   "block.legendary_additions.gate.entityLocked": "你现在不能打开；附近有 %s",
   "block.legendary_additions.gate.entityLockApplied": "根据附近 %s 实体应用锁定",
 
-  "itemGroup.legendary_additions": "传奇拓展",
+  "itemGroup.legendary_additions": "传说附加",
 
   "item.legendary_additions.tiny_xp_bottle": "迷你经验瓶",
   "item.legendary_additions.common_xp_bottle": "普通经验瓶",
@@ -63,11 +80,5 @@
   "item.legendary_additions.desert_key": "沙漠钥匙",
 
   "sounds.legendary_additions.iron_on_coal": "铁划痕煤",
-  "sounds.legendary_additions.lock_unlocked": "锁已解锁",
-  "sounds.legendary_additions.open_gate_successful": "门已打开",
-  "sounds.legendary_additions.open_gate_failed": "堵塞的大门",
-
-  "screen.legendary_additions.dungeon_heart": "地下城之心",
-
-  "effect.legendary_additions.dungeon_heart": "受保护的地下城"
+  "sounds.legendary_additions.mud_trap_powered": "陷阱毒雾"
 }
