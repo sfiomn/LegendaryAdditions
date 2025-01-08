@@ -1,64 +1,64 @@
 {
   "variants": {
     "facing=east,meat_rack_state=0": {
-      "model": "legendary_additions:block/meat_rack_empty"
+      "model": "legendary_additions:block/meat_rack_empty",
+      "y": 270
     },
     "facing=east,meat_rack_state=1": {
-      "model": "legendary_additions:block/meat_rack"
+      "model": "legendary_additions:block/meat_rack",
+      "y": 270
     },
     "facing=east,meat_rack_state=2": {
-      "model": "legendary_additions:block/meat_rack_leather"
+      "model": "legendary_additions:block/meat_rack_leather",
+      "y": 270
     },
     "facing=east,meat_rack_state=3": {
-      "model": "legendary_additions:block/meat_rack_bone"
+      "model": "legendary_additions:block/meat_rack_bone",
+      "y": 270
     },
     "facing=north,meat_rack_state=0": {
       "model": "legendary_additions:block/meat_rack_empty",
-      "y": 270
+      "y": 180
     },
     "facing=north,meat_rack_state=1": {
       "model": "legendary_additions:block/meat_rack",
-      "y": 270
+      "y": 180
     },
     "facing=north,meat_rack_state=2": {
       "model": "legendary_additions:block/meat_rack_leather",
-      "y": 270
+      "y": 180
     },
     "facing=north,meat_rack_state=3": {
       "model": "legendary_additions:block/meat_rack_bone",
-      "y": 270
+      "y": 180
     },
     "facing=south,meat_rack_state=0": {
-      "model": "legendary_additions:block/meat_rack_empty",
-      "y": 90
+      "model": "legendary_additions:block/meat_rack_empty"
     },
     "facing=south,meat_rack_state=1": {
-      "model": "legendary_additions:block/meat_rack",
-      "y": 90
+      "model": "legendary_additions:block/meat_rack"
     },
     "facing=south,meat_rack_state=2": {
-      "model": "legendary_additions:block/meat_rack_leather",
-      "y": 90
+      "model": "legendary_additions:block/meat_rack_leather"
     },
     "facing=south,meat_rack_state=3": {
-      "model": "legendary_additions:block/meat_rack_bone",
-      "y": 90
+      "model": "legendary_additions:block/meat_rack_bone"
     },
     "facing=west,meat_rack_state=0": {
       "model": "legendary_additions:block/meat_rack_empty",
-      "y": 180
+      "y": 90
     },
     "facing=west,meat_rack_state=1": {
       "model": "legendary_additions:block/meat_rack",
-      "y": 180
+      "y": 90
     },
     "facing=west,meat_rack_state=2": {
       "model": "legendary_additions:block/meat_rack_leather",
-      "y": 180
+      "y": 90
     },
     "facing=west,meat_rack_state=3": {
       "model": "legendary_additions:block/meat_rack_bone",
-      "y": 180
+      "y": 90
     }
   }
 }

@@ -3,6 +3,7 @@ package sfiomn.legendary_additions.blocks;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -24,12 +25,15 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import sfiomn.legendary_additions.blockentities.MeatRackBlockEntity;
 import sfiomn.legendary_additions.registry.BlockEntityRegistry;
+import sfiomn.legendary_additions.util.ModTags;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -92,43 +96,47 @@ public class MeatRackBlock extends BaseEntityBlock {
         super.use(blockState, level, pos, player, hand, hit);
 
         int meatRackState = level.getBlockState(pos).getValue(MEAT_RACK_STATE);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof MeatRackBlockEntity meatRackBlockEntity) {
+            switch (meatRackState) {
+                case 0:
+                    if (player.getMainHandItem().is(ModTags.CAN_DRY)) {
+                        meatRackState = 1;
+                        player.getMainHandItem().shrink(1);
+                        meatRackBlockEntity.storeMeat(player.getMainHandItem().getItem());
 
-        switch (meatRackState) {
-            case 0:
-                if (player.getMainHandItem().getItem() == Items.ROTTEN_FLESH) {
-                    meatRackState = 1;
-                    player.getMainHandItem().shrink(1);
+                        if (level instanceof ClientLevel) {
+                            level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
+                        }
+                    }
+                    break;
+                case 1:
+                    popResource(level, pos, meatRackBlockEntity.removeMeat());
+                    if (level instanceof ClientLevel) {
+                        level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
+                    }
+                    meatRackState = 0;
+                    break;
+                case 2:
+                    popResource(level, pos, new ItemStack(Items.LEATHER));
+                    if (level instanceof ClientLevel) {
+                        level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
+                    }
+                    meatRackState = 0;
+                    break;
+                case 3:
+                    popResource(level, pos, new ItemStack(Items.BONE));
                     if (level instanceof ClientLevel) {
                         level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                     }
-                }
-                break;
-            case 1:
-                popResource(level, pos, new ItemStack(Items.ROTTEN_FLESH));
-                if (level instanceof ClientLevel) {
-                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
-                }
-                meatRackState = 0;
-                break;
-            case 2:
-                popResource(level, pos, new ItemStack(Items.LEATHER));
-                if (level instanceof ClientLevel) {
-                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
-                }
-                meatRackState = 0;
-                break;
-            case 3:
-                popResource(level, pos, new ItemStack(Items.BONE));
-                if (level instanceof ClientLevel) {
-                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
-                }
-                meatRackState = 0;
-                break;
-            default:
-                break;
-        }
+                    meatRackState = 0;
+                    break;
+                default:
+                    break;
+            }
 
-        updateBlockProperties(level, pos, meatRackState);
+            updateBlockProperties(level, pos, meatRackState);
+        }
         return InteractionResult.SUCCESS;
     }
 
@@ -137,26 +145,26 @@ public class MeatRackBlock extends BaseEntityBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-
-        switch (state.getValue(MEAT_RACK_STATE)) {
-            case 1:
-                dropsOriginal.add(new ItemStack(Items.ROTTEN_FLESH));
-                break;
-            case 2:
-                dropsOriginal.add(new ItemStack(Items.LEATHER));
-                break;
-            case 3:
-                dropsOriginal.add(new ItemStack(Items.BONE));
-                break;
-            default:
-                break;
+    public void onRemove(BlockState blockState, Level level, BlockPos pos, BlockState newBlockState, boolean pMovedByPiston) {
+        if (!blockState.is(newBlockState.getBlock())) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof MeatRackBlockEntity meatRackBlockEntity) {
+                switch (blockState.getValue(MEAT_RACK_STATE)) {
+                    case 1:
+                        popResource(level, pos, meatRackBlockEntity.removeMeat());
+                        break;
+                    case 2:
+                        popResource(level, pos, new ItemStack(Items.LEATHER));
+                        break;
+                    case 3:
+                        popResource(level, pos, new ItemStack(Items.BONE));
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
-
-        if (!dropsOriginal.isEmpty())
-            return dropsOriginal;
-        return Collections.singletonList(new ItemStack(this, 1));
+        super.onRemove(blockState, level, pos, newBlockState, pMovedByPiston);
     }
 
     @Nullable

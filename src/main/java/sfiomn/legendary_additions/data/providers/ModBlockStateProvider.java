@@ -156,7 +156,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                                     .with(MeatRackBlock.FACING, dir)
                                     .modelForState()
                                     .modelFile(new ModelFile.UncheckedModelFile(blockModel))
-                                    .rotationY(((int )(dir.toYRot() + 90)) % 360)
+                                    .rotationY(((int )(dir.toYRot())) % 360)
                                     .addModel();
                         }
                     });
