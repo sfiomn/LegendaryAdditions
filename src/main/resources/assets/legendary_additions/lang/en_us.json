@@ -16,7 +16,7 @@
   "block.legendary_additions.honey_pond.empty": "This Honey Pond is empty",
   "block.legendary_additions.honey_pond.max_health": "Health already at the maximum",
 
-  "block.legendary_additions.meat_rack": "Meat Rack",
+  "block.legendary_additions.meat_rack": "Leather Rack",
   "block.legendary_additions.captain_chair": "Captain Chair",
   "block.legendary_additions.captain_chair_top": "Captain Chair",
   "block.legendary_additions.tribal_torch": "Tribal Torch",
@@ -64,10 +64,6 @@
   "block.legendary_additions.ornate_iron_window": "Ornate Iron Window",
   "block.legendary_additions.warped_window": "Warped Window",
 
-  "block.legendary_additions.forest_dungeon_gate": "Forest Dungeon Gate",
-  "block.legendary_additions.gate.entityLocked": "You may not open now; there is %s nearby",
-  "block.legendary_additions.gate.entityLockApplied": "Lock based on nearby %s entity applied",
-
   "itemGroup.legendary_additions": "Legendary Additions",
 
   "item.legendary_additions.tiny_xp_bottle": "Tiny Experience Bottle",
@@ -75,9 +71,6 @@
   "item.legendary_additions.rare_xp_bottle": "Rare Experience Bottle",
   "item.legendary_additions.epic_xp_bottle": "Epic Experience Bottle",
   "item.legendary_additions.legendary_xp_bottle": "Legendary Experience Bottle",
-
-  "item.legendary_additions.forest_key": "Forest Key",
-  "item.legendary_additions.desert_key": "Desert Key",
 
   "sounds.legendary_additions.iron_on_coal": "Iron Scratches Coal",
   "sounds.legendary_additions.mud_trap_powered": "Gaz Leaking"
