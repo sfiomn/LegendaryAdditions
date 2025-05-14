@@ -105,28 +105,28 @@ public class MeatRackBlock extends BaseEntityBlock {
                         player.getMainHandItem().shrink(1);
                         meatRackBlockEntity.storeMeat(player.getMainHandItem().getItem());
 
-                        if (level instanceof ClientLevel) {
+                        if (level.isClientSide()) {
                             level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                         }
                     }
                     break;
                 case 1:
                     popResource(level, pos, meatRackBlockEntity.removeMeat());
-                    if (level instanceof ClientLevel) {
+                    if (level.isClientSide()) {
                         level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                     }
                     meatRackState = 0;
                     break;
                 case 2:
                     popResource(level, pos, new ItemStack(Items.LEATHER));
-                    if (level instanceof ClientLevel) {
+                    if (level.isClientSide()) {
                         level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                     }
                     meatRackState = 0;
                     break;
                 case 3:
                     popResource(level, pos, new ItemStack(Items.BONE));
-                    if (level instanceof ClientLevel) {
+                    if (level.isClientSide()) {
                         level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundSource.NEUTRAL, 1.0f, 1.0f, false);
                     }
                     meatRackState = 0;
