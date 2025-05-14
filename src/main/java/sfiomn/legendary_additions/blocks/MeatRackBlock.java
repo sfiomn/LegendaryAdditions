@@ -78,28 +78,28 @@ public class MeatRackBlock extends HorizontalBlock {
                 if (player.getMainHandItem().getItem() == Items.ROTTEN_FLESH) {
                     meatRackState = 1;
                     player.getMainHandItem().shrink(1);
-                    if (world instanceof ClientWorld) {
+                    if (world.isClientSide()) {
                         world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
                     }
                 }
                 break;
             case 1:
                 popResource(world, pos, new ItemStack(Items.ROTTEN_FLESH));
-                if (world instanceof ClientWorld) {
+                if (world.isClientSide()) {
                     world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
                 }
                 meatRackState = 0;
                 break;
             case 2:
                 popResource(world, pos, new ItemStack(Items.LEATHER));
-                if (world instanceof ClientWorld) {
+                if (world.isClientSide()) {
                     world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_BREAK, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
                 }
                 meatRackState = 0;
                 break;
             case 3:
                 popResource(world, pos, new ItemStack(Items.BONE));
-                if (world instanceof ClientWorld) {
+                if (world.isClientSide()) {
                     world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.WOOD_PLACE, SoundCategory.NEUTRAL, 1.0f, 1.0f, false);
                 }
                 meatRackState = 0;
