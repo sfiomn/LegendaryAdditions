@@ -5,6 +5,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.network.packets.MessageObeliskDown;
+import sfiomn.legendary_additions.network.packets.ResetTradeMessage;
 
 public class NetworkHandler
 {
@@ -21,5 +22,6 @@ public class NetworkHandler
 		int id = -1;
 
 		INSTANCE.registerMessage(id++, MessageObeliskDown.class, MessageObeliskDown::encode, MessageObeliskDown::decode, MessageObeliskDown::handle);
+		INSTANCE.registerMessage(id++, ResetTradeMessage.class, ResetTradeMessage::encode, ResetTradeMessage::decode, ResetTradeMessage::handle);
 	}
 }

@@ -44,10 +44,16 @@ public class Config
 
 		public final ForgeConfigSpec.IntValue spiderEggsHorizontalDetectionRangeInBlocks;
 		public final ForgeConfigSpec.IntValue spiderEggsYDetectionRangeInBlocks;
-		public final ForgeConfigSpec.ConfigValue<List<String>> spiderEggsMobsSpawned;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> spiderEggsMobsSpawned;
 
 		public final ForgeConfigSpec.IntValue mudTrapHeightPoisonGas;
 		public final ForgeConfigSpec.IntValue mudTrapDiameterPoisonGas;
+
+		public final ForgeConfigSpec.BooleanValue resetTradeEnabled;
+		public final ForgeConfigSpec.IntValue resetTradeCostAmount;
+		public final ForgeConfigSpec.ConfigValue<String> resetTradeCostItem;
+		public final ForgeConfigSpec.IntValue resetTradeButtonOffsetX;
+		public final ForgeConfigSpec.IntValue resetTradeButtonOffsetY;
 
 		Common(ForgeConfigSpec.Builder builder)
 		{
@@ -80,13 +86,13 @@ public class Config
 			builder.pop();
 
 			builder.push("Obelisk");
-			obeliskXpValues = builder.define(" Default Obelisk Xp Values In Creative Tab", Arrays.asList(250, 500, 1000, 1500));
-			obeliskBreakable = builder.define(" Can Obelisk Be Destroyed", false);
+			obeliskXpValues = builder.define("Default Obelisk Xp Values In Creative Tab", Arrays.asList(250, 500, 1000, 1500));
+			obeliskBreakable = builder.define("Can Obelisk Be Destroyed", false);
 			builder.pop();
 
 			builder.push("MudTrap");
-			mudTrapHeightPoisonGas = builder.defineInRange(" Default Height Of The Mud Trap Poison Gas", 3, 0, 100);
-			mudTrapDiameterPoisonGas = builder.defineInRange(" Default Diameter Of The Mud Trap Poison Gas", 1, 0 , 100);
+			mudTrapHeightPoisonGas = builder.defineInRange("Default Height Of The Mud Trap Poison Gas", 3, 0, 100);
+			mudTrapDiameterPoisonGas = builder.defineInRange("Default Diameter Of The Mud Trap Poison Gas", 1, 0 , 100);
 			builder.pop();
 
 			builder.push("Spawners");
@@ -96,6 +102,15 @@ public class Config
 			spiderEggsMobsSpawned = builder.define(" Mobs spawning when activated. Formatted like 'mob namespace; weight'", Collections.singletonList("minecraft:spider;20"));
 			builder.pop();
 			builder.pop();
+
+			builder.push("ResetTrades");
+			resetTradeEnabled = builder.comment(" Whether the reset trade button is enabled or not").define(" Reset Trade Enabled", true);
+			resetTradeCostAmount = builder.comment(" Amount of item removed at each reset merchant trade").defineInRange(" Reset Trade Item Amount Cost", 2, 0, 100000);
+			resetTradeCostItem = builder.comment(" Item removed at each reset merchant trade").define("Reset Trade Item Cost", "minecraft:emerald");
+			resetTradeButtonOffsetX = builder.comment(" Horizontal position offset of Reset Trade Button in Merchant Trade Screen").defineInRange("Reset Trade Button Offset X", 0, -10000, 10000);
+			resetTradeButtonOffsetY = builder.comment(" Vertical position offset of Reset Trade Button in Merchant Trade Screen").defineInRange("Reset Trade Button Offset Y", 0, -10000, 10000);
+			builder.pop();
+
 		}
 	}
 	
@@ -118,10 +133,16 @@ public class Config
 
 		public static int spiderEggsHorizontalDetectionRangeInBlocks;
 		public static float spiderEggsYDetectionRangeInBlocks;
-		public static List<String> spiderEggsMobsSpawned;
+		public static List<? extends String> spiderEggsMobsSpawned;
 
 		public static int mudTrapHeightPoisonGas;
 		public static int mudTrapDiameterPoisonGas;
+
+		public static boolean resetTradeEnabled;
+		public static int resetTradeCostAmount;
+		public static String resetTradeCostItem;
+		public static int resetTradeButtonOffsetX;
+		public static int resetTradeButtonOffsetY;
 
 		public static void bakeCommon()
 		{
@@ -148,6 +169,12 @@ public class Config
 
 				mudTrapHeightPoisonGas = COMMON.mudTrapHeightPoisonGas.get();
 				mudTrapDiameterPoisonGas = COMMON.mudTrapDiameterPoisonGas.get();
+
+				resetTradeEnabled = COMMON.resetTradeEnabled.get();
+				resetTradeCostAmount = COMMON.resetTradeCostAmount.get();
+				resetTradeCostItem = COMMON.resetTradeCostItem.get();
+				resetTradeButtonOffsetX = COMMON.resetTradeButtonOffsetX.get();
+				resetTradeButtonOffsetY = COMMON.resetTradeButtonOffsetY.get();
 			}
 			catch (Exception e)
 			{
