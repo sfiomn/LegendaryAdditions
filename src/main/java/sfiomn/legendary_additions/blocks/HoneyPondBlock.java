@@ -27,6 +27,7 @@ import net.minecraftforge.common.ForgeMod;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.config.Config;
 import sfiomn.legendary_additions.blockentities.HoneyPondBlockEntity;
+import sfiomn.legendary_additions.integration.legendarysurvivaloverhaul.LegendarySurvivalOverhaulUtil;
 import sfiomn.legendary_additions.registry.BlockEntityRegistry;
 
 import javax.annotation.Nullable;
@@ -97,10 +98,11 @@ public class HoneyPondBlock extends BaseEntityBlock {
             }
         } else {
             if (healingCapacity > 0) {
-                if (player.getHealth() == player.getMaxHealth()) {
+                if (player.getHealth() == player.getMaxHealth() && !LegendarySurvivalOverhaulUtil.isALimbDamaged(player)) {
                     player.displayClientMessage(Component.translatable("block." + LegendaryAdditions.MOD_ID + ".honey_pond.max_health"), true);
                 } else {
                     player.heal(Config.Baked.honeyPondHealthRestored);
+                    LegendarySurvivalOverhaulUtil.healMostDamagedLimb(player, Config.Baked.honeyPondLimbHealthRestored);
                     if (level.isClientSide) {
                         for (int i = 0; i < Math.round((float) Config.Baked.honeyPondHealthRestored / 2.0f); i++) {
                             float xr = rand.nextFloat() / 2 + 0.25f;

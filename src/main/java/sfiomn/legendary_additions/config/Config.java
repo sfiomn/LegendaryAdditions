@@ -33,6 +33,7 @@ public class Config
 		public final ForgeConfigSpec.IntValue honeyPondMaxCapacity;
 		public final ForgeConfigSpec.IntValue honeyPondHealthRestored;
 		public final ForgeConfigSpec.IntValue honeyPondHoneyCapacityRestored;
+		public final ForgeConfigSpec.IntValue honeyPondLimbHealthRestored;
 
 		public final ForgeConfigSpec.IntValue xpStorageMaxXpCapacity;
 
@@ -57,15 +58,15 @@ public class Config
 
 		Common(ForgeConfigSpec.Builder builder)
 		{
-			builder.comment(" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone").push("MeatRack");
+			builder.comment(" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone").push("meat-rack");
 
 			meatRackLeatherTicks = builder.defineInRange("Tick Amount Before Leather, 20 ticks = 1s", 2400, 1, 100000);
 			meatRackBoneTicks = builder.defineInRange("Tick Amount Before Bone, 20 ticks = 1s", 2400, 1, 100000);
 			builder.pop();
 
 			builder.comment(new String [] {
-					" Options related to the Honey Pond. It is used to heal the player and can be recharger with honey bottle"
-			}).push("HoneyPond");
+					" Options related to the Honey Pond. It is used to heal the player and can be refilled with honey bottle"
+			}).push("honey-pond");
 
 			honeyPondMaxCapacity = builder.defineInRange("Max Healing Charges", 10, 0, 100000);
 			honeyPondHealthRestored = builder.defineInRange("Health Restored Per Use", 6, 0, 100000);
@@ -74,36 +75,36 @@ public class Config
 
 			builder.comment(new String [] {
 					" Options related to the Xp Storage. It stores and gives back player experience"
-			}).push("XpStorage");
+			}).push("xp-storage");
 			xpStorageMaxXpCapacity = builder.defineInRange("Maximum Stored Experience", 2000, 0, 1000000);
 			builder.pop();
 
 			builder.comment(new String [] {
 					" Options related to explosion when breaking Coal Ore blocks with Iron Pickaxe."
-			}).push("IronOnCoalExplosion");
+			}).push("iron_on-coal-explosion");
 			ironOnCoalExplosionEnabled = builder.define("Enable Iron Pickaxe On Coal Block Explosion", true);
 			ironOnCoalExplosionChance = builder.defineInRange("Chance Of Explosion", 0.03, 0, 1);
 			builder.pop();
 
-			builder.push("Obelisk");
+			builder.push("obelisk");
 			obeliskXpValues = builder.define("Default Obelisk Xp Values In Creative Tab", Arrays.asList(250, 500, 1000, 1500));
 			obeliskBreakable = builder.define("Can Obelisk Be Destroyed", false);
 			builder.pop();
 
-			builder.push("MudTrap");
+			builder.push("mud-trap");
 			mudTrapHeightPoisonGas = builder.defineInRange("Default Height Of The Mud Trap Poison Gas", 3, 0, 100);
 			mudTrapDiameterPoisonGas = builder.defineInRange("Default Diameter Of The Mud Trap Poison Gas", 1, 0 , 100);
 			builder.pop();
 
-			builder.push("Spawners");
-			builder.push("SpiderEggs");
+			builder.push("spawners");
+			builder.push("spider-eggs");
 			spiderEggsHorizontalDetectionRangeInBlocks = builder.defineInRange(" Horizontal Detection Range Of Spider Eggs In Blocks", 10, 1, 1000);
 			spiderEggsYDetectionRangeInBlocks = builder.defineInRange(" Y Detection Range Of Spider Eggs", 4, 1, 1000);
 			spiderEggsMobsSpawned = builder.define(" Mobs spawning when activated. Formatted like 'mob namespace; weight'", Collections.singletonList("minecraft:spider;20"));
 			builder.pop();
 			builder.pop();
 
-			builder.push("ResetTrades");
+			builder.push("reset-trades");
 			resetTradeEnabled = builder.comment(" Whether the reset trade button is enabled or not").define(" Reset Trade Enabled", true);
 			resetTradeCostAmount = builder.comment(" Amount of item removed at each reset merchant trade").defineInRange(" Reset Trade Item Amount Cost", 2, 0, 100000);
 			resetTradeCostItem = builder.comment(" Item removed at each reset merchant trade").define("Reset Trade Item Cost", "minecraft:emerald");
@@ -111,6 +112,13 @@ public class Config
 			resetTradeButtonOffsetY = builder.comment(" Vertical position offset of Reset Trade Button in Merchant Trade Screen").defineInRange("Reset Trade Button Offset Y", 0, -10000, 10000);
 			builder.pop();
 
+			builder.push("integration");
+			builder.push("legendary-survival-overhaul");
+			honeyPondLimbHealthRestored = builder
+					.comment(" Amount of health restored of the most damaged limb at each honey pond consumption")
+					.defineInRange("Limb Health Restored", 10, 0, 10000);
+			builder.pop();
+			builder.pop();
 		}
 	}
 	
@@ -122,6 +130,7 @@ public class Config
 		public static int honeyPondMaxCapacity;
 		public static int honeyPondHealthRestored;
 		public static int honeyPondHoneyCapacityRestored;
+		public static int honeyPondLimbHealthRestored;
 
 		public static int xpStorageMaxXpCapacity;
 
@@ -154,6 +163,7 @@ public class Config
 				honeyPondMaxCapacity = COMMON.honeyPondMaxCapacity.get();
 				honeyPondHealthRestored = COMMON.honeyPondHealthRestored.get();
 				honeyPondHoneyCapacityRestored = COMMON.honeyPondHoneyCapacityRestored.get();
+				honeyPondLimbHealthRestored = COMMON.honeyPondLimbHealthRestored.get();
 
 				xpStorageMaxXpCapacity = COMMON.xpStorageMaxXpCapacity.get();
 

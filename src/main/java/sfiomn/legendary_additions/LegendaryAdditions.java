@@ -10,6 +10,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -39,6 +40,8 @@ public class LegendaryAdditions
     public static final String MOD_ID = "legendary_additions";
     public static Path configPath = FMLPaths.CONFIGDIR.get();
 
+    public static boolean legendarySurvivalOverhaulLoaded = false;
+
     // modConfigPath used to create a config directory if necessary
     public static Path modConfigPath = Paths.get(configPath.toAbsolutePath().toString(), "legendary_additions");
 
@@ -63,6 +66,15 @@ public class LegendaryAdditions
 
         // Register ourselves for server and other game events we are interested in
         forgeBus.register(this);
+
+        modIntegration(forgeBus);
+    }
+
+    private void modIntegration(IEventBus forgeBus) {
+        legendarySurvivalOverhaulLoaded = ModList.get().isLoaded("legendarysurvivaloverhaul");
+
+        if (legendarySurvivalOverhaulLoaded)
+            LOGGER.debug("Legendary Survival Overhaul is loaded, enabling compatibility");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
