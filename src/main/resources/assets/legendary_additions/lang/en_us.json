@@ -76,5 +76,5 @@
   "sounds.legendary_additions.mud_trap_powered": "Gaz Leaking",
 
   "tooltip.legendary_additions.reset_trade_button.description_no_cost": "Reset Merchant Trades",
-  "tooltip.legendary_additions.reset_trade_button.description_with_cost": "Reset Merchant Trades\nCost: %s %s"
+  "tooltip.legendary_additions.reset_trade_button.description_with_cost": "Reset Merchant Trades\nCost: %s x %s"
 }
