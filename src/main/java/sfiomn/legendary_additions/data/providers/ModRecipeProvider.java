@@ -11,6 +11,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import org.jetbrains.annotations.NotNull;
 import sfiomn.legendary_additions.registry.BlockRegistry;
+import sfiomn.legendary_additions.registry.ItemRegistry;
 
 import java.util.function.Consumer;
 
@@ -282,6 +283,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('p', ItemTags.PLANKS)
                 .define('t', Items.TORCH)
                 .unlockedBy(getHasName(Items.TORCH), has(Items.TORCH))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.DEATH_SCROLL_ITEM.get())
+                .pattern("eee")
+                .pattern("ppp")
+                .pattern(" g ")
+                .define('e', Items.ENDER_EYE)
+                .define('p', Items.PAPER)
+                .define('g', Items.GOLD_INGOT)
+                .unlockedBy(getHasName(Items.ENDER_EYE), has(Items.ENDER_EYE))
                 .save(consumer);
     }
 

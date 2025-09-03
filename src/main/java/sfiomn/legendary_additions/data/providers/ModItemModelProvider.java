@@ -22,6 +22,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ItemRegistry.EPIC_XP_BOTTLE_ITEM.get());
         basicItem(ItemRegistry.LEGENDARY_XP_BOTTLE_ITEM.get());
 
+        basicItem(ItemRegistry.DEATH_SCROLL_ITEM.get());
+
         basicItem(this.modLoc("moss"));
 
         singleTexture("acacia_window_pane", new ResourceLocation("item/generated"),

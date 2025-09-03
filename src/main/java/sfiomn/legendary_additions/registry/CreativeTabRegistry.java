@@ -81,6 +81,8 @@ public class CreativeTabRegistry {
                                 ItemRegistry.EPIC_XP_BOTTLE_ITEM.get().getDefaultInstance(),
                                 ItemRegistry.LEGENDARY_XP_BOTTLE_ITEM.get().getDefaultInstance(),
 
+                                ItemRegistry.DEATH_SCROLL_ITEM.get().getDefaultInstance(),
+
                                 ItemRegistry.TRIBAL_TORCH.get().getDefaultInstance(),
 
                                 BlockRegistry.ACACIA_WINDOW_BLOCK.get().asItem().getDefaultInstance(),

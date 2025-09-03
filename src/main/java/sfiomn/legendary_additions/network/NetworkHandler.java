@@ -6,6 +6,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import sfiomn.legendary_additions.LegendaryAdditions;
 import sfiomn.legendary_additions.network.packets.MessageObeliskDown;
 import sfiomn.legendary_additions.network.packets.ResetTradeMessage;
+import sfiomn.legendary_additions.network.packets.UpdateDeathPositionPacket;
 
 public class NetworkHandler
 {
@@ -23,5 +24,6 @@ public class NetworkHandler
 
 		INSTANCE.registerMessage(id++, MessageObeliskDown.class, MessageObeliskDown::encode, MessageObeliskDown::decode, MessageObeliskDown::handle);
 		INSTANCE.registerMessage(id++, ResetTradeMessage.class, ResetTradeMessage::encode, ResetTradeMessage::decode, ResetTradeMessage::handle);
+		INSTANCE.registerMessage(id++, UpdateDeathPositionPacket.class, UpdateDeathPositionPacket::encode, UpdateDeathPositionPacket::decode, UpdateDeathPositionPacket::handle);
 	}
 }

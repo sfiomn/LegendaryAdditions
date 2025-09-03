@@ -56,32 +56,36 @@ public class Config
 		public final ForgeConfigSpec.IntValue resetTradeButtonOffsetX;
 		public final ForgeConfigSpec.IntValue resetTradeButtonOffsetY;
 
+		public final ForgeConfigSpec.BooleanValue deathScrollEnabled;
+
 		Common(ForgeConfigSpec.Builder builder)
 		{
-			builder.comment(" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone").push("meat-rack");
+			builder
+					.comment(" Options related to the Meat Rack. It is used to decay rotten meat to leather and then to bone")
+					.push("meat-rack");
 
 			meatRackLeatherTicks = builder.defineInRange("Tick Amount Before Leather, 20 ticks = 1s", 2400, 1, 100000);
 			meatRackBoneTicks = builder.defineInRange("Tick Amount Before Bone, 20 ticks = 1s", 2400, 1, 100000);
 			builder.pop();
 
-			builder.comment(new String [] {
-					" Options related to the Honey Pond. It is used to heal the player and can be refilled with honey bottle"
-			}).push("honey-pond");
+			builder
+					.comment(" Options related to the Honey Pond. It is used to heal the player and can be refilled with honey bottle")
+					.push("honey-pond");
 
 			honeyPondMaxCapacity = builder.defineInRange("Max Healing Charges", 10, 0, 100000);
 			honeyPondHealthRestored = builder.defineInRange("Health Restored Per Use", 6, 0, 100000);
 			honeyPondHoneyCapacityRestored = builder.defineInRange("Healing Charges Restored By Honey Bottle", 5, 0, 100000);
 			builder.pop();
 
-			builder.comment(new String [] {
-					" Options related to the Xp Storage. It stores and gives back player experience"
-			}).push("xp-storage");
+			builder
+					.comment(" Options related to the Xp Storage. It stores and gives back player experience")
+					.push("xp-storage");
 			xpStorageMaxXpCapacity = builder.defineInRange("Maximum Stored Experience", 2000, 0, 1000000);
 			builder.pop();
 
-			builder.comment(new String [] {
-					" Options related to explosion when breaking Coal Ore blocks with Iron Pickaxe."
-			}).push("iron_on-coal-explosion");
+			builder
+					.comment(" Options related to explosion when breaking Coal Ore blocks with Iron Pickaxe.")
+					.push("iron_on-coal-explosion");
 			ironOnCoalExplosionEnabled = builder.define("Enable Iron Pickaxe On Coal Block Explosion", true);
 			ironOnCoalExplosionChance = builder.defineInRange("Chance Of Explosion", 0.03, 0, 1);
 			builder.pop();
@@ -94,6 +98,14 @@ public class Config
 			builder.push("mud-trap");
 			mudTrapHeightPoisonGas = builder.defineInRange("Default Height Of The Mud Trap Poison Gas", 3, 0, 100);
 			mudTrapDiameterPoisonGas = builder.defineInRange("Default Diameter Of The Mud Trap Poison Gas", 1, 0 , 100);
+			builder.pop();
+
+			builder.push("death-scroll");
+			deathScrollEnabled = builder
+					.comment(
+							" Whether the Death Scroll is enabled or not.",
+							" It won't make the item or its recipe disappear, but will prevent the capability management behind the Death Scroll behavior.")
+					.define("Death Scroll Enabled", true);
 			builder.pop();
 
 			builder.push("spawners");
@@ -153,6 +165,8 @@ public class Config
 		public static int resetTradeButtonOffsetX;
 		public static int resetTradeButtonOffsetY;
 
+		public static boolean deathScrollEnabled;
+
 		public static void bakeCommon()
 		{
 			try
@@ -185,6 +199,8 @@ public class Config
 				resetTradeCostItem = COMMON.resetTradeCostItem.get();
 				resetTradeButtonOffsetX = COMMON.resetTradeButtonOffsetX.get();
 				resetTradeButtonOffsetY = COMMON.resetTradeButtonOffsetY.get();
+
+				deathScrollEnabled = COMMON.deathScrollEnabled.get();
 			}
 			catch (Exception e)
 			{

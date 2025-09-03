@@ -71,10 +71,15 @@
   "item.legendary_additions.rare_xp_bottle": "Rare Experience Bottle",
   "item.legendary_additions.epic_xp_bottle": "Epic Experience Bottle",
   "item.legendary_additions.legendary_xp_bottle": "Legendary Experience Bottle",
+  "item.legendary_additions.death_scroll": "Death Scroll",
 
   "sounds.legendary_additions.iron_on_coal": "Iron Scratches Coal",
   "sounds.legendary_additions.mud_trap_powered": "Gaz Leaking",
 
   "tooltip.legendary_additions.reset_trade_button.description_no_cost": "Reset Merchant Trades",
-  "tooltip.legendary_additions.reset_trade_button.description_with_cost": "Reset Merchant Trades\nCost: %s x %s"
+  "tooltip.legendary_additions.reset_trade_button.description_with_cost": "Reset Merchant Trades\nCost: %s x %s",
+  "tooltip.legendary_additions.death_scroll.description": "Return to your death position in the Overworld",
+
+  "message.legendary_additions.death_scroll.already_used": "The Death Scroll has already been used for this death",
+  "message.legendary_additions.death_scroll.no_position": "There are no Overworld death position saved"
 }
