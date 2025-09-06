@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import sfiomn.legendary_additions.LegendaryAdditions;
 
 public class DeathPositionProvider implements ICapabilityProvider, ICapabilitySerializable<CompoundTag>
 {
@@ -20,7 +21,7 @@ public class DeathPositionProvider implements ICapabilityProvider, ICapabilitySe
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side)
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side)
 	{
 		if (capability == DEATH_POSITION_CAPABILITY)
 			return instance.cast();

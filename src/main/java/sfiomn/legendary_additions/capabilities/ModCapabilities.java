@@ -48,8 +48,6 @@ public class ModCapabilities
 				if (orig.level().dimension() == Level.OVERWORLD) {
 					DeathPositionCapability newCap = CapabilityUtil.getDeathPositionCapability(player);
 					newCap.setDeathPosition(orig.blockPosition());
-
-					sendDeathPositionUpdate(player);
 				}
 			}
 		}
@@ -67,6 +65,14 @@ public class ModCapabilities
 				sendDeathPositionUpdate(player);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
+	{
+		Player player = event.getEntity();
+		if (Config.Baked.deathScrollEnabled)
+			sendDeathPositionUpdate(player);
 	}
 
 	@SubscribeEvent
